@@ -1,16 +1,8 @@
-<script>
+<script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Statistics from "@/Components/Statistics.vue";
 import SalesOverview from "@/Components/SalesOverview.vue";
 import Carousal from "@/Components/Carousal.vue";
-export default {
-    components: {
-        AppLayout,
-        SalesOverview,
-        Statistics,
-        Carousal,
-    },
-};
 </script>
 
 <template>
