@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-@import url("../../public/assets/css/nucleo-icons.css");
-@import url("../../public/assets/css/nucleo-svg.css");
-@import url("../../public/assets/css/argon-dashboard.min.css");
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("../src/css/nucleo-icons.css");
+@import url("../src/css/nucleo-svg.css");
+@import url("../src/css/argon-dashboard.min.css");
 
 /* @tailwind base;
 @tailwind components;

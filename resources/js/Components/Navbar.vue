@@ -112,7 +112,7 @@
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
                                             <img
-                                                src="../../../public/assets/img/team-2.jpg"
+                                                src="../../../public/img/team-2.jpg"
                                                 class="avatar avatar-sm me-3"
                                                 alt="user image"
                                             />
@@ -146,7 +146,7 @@
                                     <div class="d-flex py-1">
                                         <div class="my-auto">
                                             <img
-                                                src="../../../public/assets/img/small-logos/logo-spotify.svg"
+                                                src="../../../public/img/small-logos/logo-spotify.svg"
                                                 class="avatar avatar-sm bg-gradient-dark me-3"
                                                 alt="logo spotify"
                                             />

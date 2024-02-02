@@ -15,7 +15,7 @@
                 target="_blank"
             >
                 <img
-                    src="../../../public/assets/img/logo-ct-dark.png"
+                    src="../../../public/img/logo-ct-dark.png"
                     class="navbar-brand-img h-100"
                     alt="main_logo"
                 />
@@ -1546,7 +1546,7 @@
             <div class="card card-plain shadow-none" id="sidenavCard">
                 <img
                     class="w-60 mx-auto"
-                    src="../../../public/assets/img/illustrations/icon-documentation.svg"
+                    src="../../../public/img/illustrations/icon-documentation.svg"
                     alt="sidebar_illustration"
                 />
                 <div class="card-body text-center p-3 w-100 pt-0">

@@ -40,7 +40,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     <img
                                                         class="border-radius-lg"
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-1.jpg"
+                                                        src="../../../public/img/team-1.jpg"
                                                     />
                                                 </a>
                                             </div>
@@ -77,7 +77,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     <img
                                                         class="border-radius-lg"
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-2.jpg"
+                                                        src="../../../public/img/team-2.jpg"
                                                     />
                                                 </a>
                                             </div>
@@ -114,7 +114,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     <img
                                                         class="border-radius-lg"
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-5.jpg"
+                                                        src="../../../public/img/team-5.jpg"
                                                     />
                                                 </a>
                                             </div>
@@ -151,7 +151,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     <img
                                                         class="border-radius-lg"
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-4.jpg"
+                                                        src="../../../public/img/team-4.jpg"
                                                     />
                                                 </a>
                                             </div>
@@ -320,7 +320,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/small-logos/logo-jira.svg"
+                                                        src="../../../public/img/small-logos/logo-jira.svg"
                                                     />
                                                 </a>
                                             </div>
@@ -352,7 +352,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/small-logos/logo-asana.svg"
+                                                        src="../../../public/img/small-logos/logo-asana.svg"
                                                     />
                                                 </a>
                                             </div>
@@ -382,7 +382,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/small-logos/logo-spotify.svg"
+                                                        src="../../../public/img/small-logos/logo-spotify.svg"
                                                     />
                                                 </a>
                                             </div>
@@ -412,7 +412,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/small-logos/bootstrap.svg"
+                                                        src="../../../public/img/small-logos/bootstrap.svg"
                                                     />
                                                 </a>
                                             </div>
@@ -447,7 +447,7 @@ import Carousal from "@/Components/Carousal.vue";
                                 <div class="d-flex align-items-center">
                                     <a href="javascript:;">
                                         <img
-                                            src="../../../public/assets/img/team-4.jpg"
+                                            src="../../../public/img/team-4.jpg"
                                             class="avatar"
                                             alt="profile-image"
                                         />
@@ -537,7 +537,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-5.jpg"
+                                                        src="../../../public/img/team-5.jpg"
                                                         class=""
                                                     />
                                                 </a>
@@ -549,7 +549,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-2.jpg"
+                                                        src="../../../public/img/team-2.jpg"
                                                         class="rounded-circle"
                                                     />
                                                 </a>
@@ -561,7 +561,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                 >
                                                     <img
                                                         alt="Image placeholder"
-                                                        src="../../../public/assets/img/team-1.jpg"
+                                                        src="../../../public/img/team-1.jpg"
                                                         class="rounded-circle"
                                                     />
                                                 </a>
@@ -580,7 +580,7 @@ import Carousal from "@/Components/Carousal.vue";
                                             <img
                                                 alt="Image placeholder"
                                                 class="avatar rounded-circle"
-                                                src="../../../public/assets/img/bruce-mars.jpg"
+                                                src="../../../public/img/bruce-mars.jpg"
                                             />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
@@ -619,7 +619,7 @@ import Carousal from "@/Components/Carousal.vue";
                                             <img
                                                 alt="Image placeholder"
                                                 class="avatar rounded-circle"
-                                                src="../../../public/assets/img/team-5.jpg"
+                                                src="../../../public/img/team-5.jpg"
                                             />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
@@ -659,7 +659,7 @@ import Carousal from "@/Components/Carousal.vue";
                                             <img
                                                 alt="Image placeholder"
                                                 class="avatar rounded-circle me-3"
-                                                src="../../../public/assets/img/team-4.jpg"
+                                                src="../../../public/img/team-4.jpg"
                                             />
                                         </div>
                                         <div class="flex-grow-1 my-auto">
@@ -1255,7 +1255,7 @@ import Carousal from "@/Components/Carousal.vue";
                                         >
                                             <div class="col">
                                                 <img
-                                                    src="../../../public/assets/img/logos/bitcoin.jpg"
+                                                    src="../../../public/img/logos/bitcoin.jpg"
                                                     class="w-30 border-radius-md"
                                                     alt="Image placeholder"
                                                 />
@@ -1350,7 +1350,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     >
                                                         <div>
                                                             <img
-                                                                src="../../../public/assets/img/icons/flags/US.png"
+                                                                src="../../../public/img/icons/flags/US.png"
                                                                 alt="Country flag"
                                                             />
                                                         </div>
@@ -1422,7 +1422,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     >
                                                         <div>
                                                             <img
-                                                                src="../../../public/assets/img/icons/flags/DE.png"
+                                                                src="../../../public/img/icons/flags/DE.png"
                                                                 alt="Country flag"
                                                             />
                                                         </div>
@@ -1494,7 +1494,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     >
                                                         <div>
                                                             <img
-                                                                src="../../../public/assets/img/icons/flags/GB.png"
+                                                                src="../../../public/img/icons/flags/GB.png"
                                                                 alt="Country flag"
                                                             />
                                                         </div>
@@ -1566,7 +1566,7 @@ import Carousal from "@/Components/Carousal.vue";
                                                     >
                                                         <div>
                                                             <img
-                                                                src="../../../public/assets/img/icons/flags/BR.png"
+                                                                src="../../../public/img/icons/flags/BR.png"
                                                                 alt="Country flag"
                                                             />
                                                         </div>

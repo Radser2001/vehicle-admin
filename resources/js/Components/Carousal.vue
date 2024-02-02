@@ -10,7 +10,7 @@
                   <div
                     class="carousel-item h-100 active"
                     style="
-                      background-image: url('../../assets/img/img-2.jpg');
+                      background-image: url('../../img/img-2.jpg');
                       background-size: cover;
                     "
                   >
@@ -34,7 +34,7 @@
                   <div
                     class="carousel-item h-100"
                     style="
-                      background-image: url('../../assets/img/img-1.jpg');
+                      background-image: url('../../img/img-1.jpg');
                       background-size: cover;
                     "
                   >
@@ -58,7 +58,7 @@
                   <div
                     class="carousel-item h-100"
                     style="
-                      background-image: url('../../assets/img/img-3.jpg');
+                      background-image: url('../../img/img-3.jpg');
                       background-size: cover;
                     "
                   >
