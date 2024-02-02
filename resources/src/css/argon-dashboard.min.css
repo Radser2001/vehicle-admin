@@ -18076,7 +18076,7 @@ hr.horizontal.gray-light {
     overflow-y: auto;
     padding: 0;
     box-shadow: none;
-    z-index: 9999;
+    /* z-index: 9999; */
 }
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
     display: block;
@@ -18173,7 +18173,7 @@ hr.horizontal.gray-light {
         overflow-y: auto;
         padding: 0;
         box-shadow: none;
-        z-index: 9999;
+        /* z-index: 9999; */
     }
     .navbar-vertical.navbar-expand-sm .navbar-collapse {
         display: block;
@@ -18274,7 +18274,7 @@ hr.horizontal.gray-light {
         overflow-y: auto;
         padding: 0;
         box-shadow: none;
-        z-index: 9999;
+        /* z-index: 9999; */
     }
     .navbar-vertical.navbar-expand-md .navbar-collapse {
         display: block;
@@ -18375,7 +18375,7 @@ hr.horizontal.gray-light {
         overflow-y: auto;
         padding: 0;
         box-shadow: none;
-        z-index: 9999;
+        /* z-index: 9999; */
     }
     .navbar-vertical.navbar-expand-lg .navbar-collapse {
         display: block;
@@ -18476,7 +18476,7 @@ hr.horizontal.gray-light {
         overflow-y: auto;
         padding: 0;
         box-shadow: none;
-        z-index: 9999;
+        /* z-index: 9999; */
     }
     .navbar-vertical.navbar-expand-xl .navbar-collapse {
         display: block;
@@ -18577,7 +18577,7 @@ hr.horizontal.gray-light {
         overflow-y: auto;
         padding: 0;
         box-shadow: none;
-        z-index: 9999;
+        /* z-index: 9999; */
     }
     .navbar-vertical.navbar-expand-xxl .navbar-collapse {
         display: block;
