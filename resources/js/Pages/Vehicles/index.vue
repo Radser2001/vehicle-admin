@@ -1,5 +1,38 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faFloppyDisk,
+    faCirclePlus,
+    faClone,
+    faCloudArrowDown,
+    faSquarePlus,
+    faPrint,
+    faWrench,
+    faCircleCheck,
+    faCircleMinus,
+    faTrash,
+    faArrowUpFromBracket,
+    faXmark,
+    faPen,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faHouse);
+library.add(faFloppyDisk);
+library.add(faCirclePlus);
+library.add(faClone);
+library.add(faCloudArrowDown);
+library.add(faSquarePlus);
+library.add(faPrint);
+library.add(faArrowUpFromBracket);
+library.add(faWrench);
+library.add(faCircleCheck);
+library.add(faCircleMinus);
+library.add(faTrash);
+library.add(faXmark);
+library.add(faPen);
 
 function newCustomer() {
     $("#newCustomerModal").modal("show");
@@ -24,11 +57,17 @@ function newCustomer() {
                                     <ol
                                         class="breadcrumb breadcrumb-links breadcrumb-dark"
                                     >
-                                        <li class="breadcrumb-item">
-                                            <Link href="/">
+                                        <li class="ml-5 breadcrumb-item">
+                                            <Link :href="route('dashboard')">
                                                 <font-awesome-icon
+                                                    style="
+                                                        color: rgb(
+                                                            175,
+                                                            174,
+                                                            174
+                                                        );
+                                                    "
                                                     icon="fa-solid fa-house"
-                                                    color="#505050"
                                                 />
                                             </Link>
                                         </li>
@@ -81,7 +120,7 @@ function newCustomer() {
                             >
                                 New Customer
                             </h5>
-                     
+
                             <button
                                 type="button"
                                 class="btn-close close btn"

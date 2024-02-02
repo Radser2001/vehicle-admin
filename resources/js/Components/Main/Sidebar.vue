@@ -3,56 +3,66 @@ import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <aside
-        class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
+    <nav
+        class="bg-white sidenav navbar navbar-vertical fixed-start navbar-expand-xs navbar-light"
         id="sidenav-main"
     >
-        <div class="sidenav-header">
-            <i
-                class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-                aria-hidden="true"
-                id="iconSidenav"
-            ></i>
-            <p class="navbar-brand m-0">
-                <img
-                    src="img/logo-ct-dark.png"
-                    class="navbar-brand-img h-100"
-                    alt="main_logo"
-                />
-                <span class="ms-1 font-weight-bold">Vehicle Admin</span>
-            </p>
-        </div>
-        <hr class="horizontal dark mt-0" />
-        <div
-            class="collapse navbar-collapse w-auto h-auto"
-            id="sidenav-collapse-main"
-        >
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <Link :href="route('dashboard')" class="nav-link">
-                        <div
-                            class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center"
+        <div class="collapse navbar-collapse sidebar_menu">
+            <div class="sidenav-header">
+                <i
+                    class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                    aria-hidden="true"
+                    id="iconSidenav"
+                ></i>
+                <p class="navbar-brand m-0">
+                    <img
+                        src="img/logo-ct-dark.png"
+                        class="navbar-brand-img h-100"
+                        alt="main_logo"
+                    />
+                    <span class="ms-1 font-weight-bold">Vehicle Admin</span>
+                </p>
+            </div>
+            <hr class="horizontal dark mt-0" />
+            <div
+                class="collapse navbar-collapse w-auto h-auto"
+                id="sidenav-collapse-main"
+            >
+                <ul class="navbar-nav p-3">
+                    <li class="nav-item">
+                        <Link
+                            :class="{
+                                active: route().current() == 'dashboard',
+                            }"
+                            class="nav-link active-preloader"
+                            :href="route('dashboard')"
                         >
                             <i
-                                class="ni ni-ungroup text-warning text-sm opacity-10"
+                                class="fa-solid fa-computer text-warning text-sm opacity-10"
                             ></i>
-                        </div>
-                        <p class="nav-link-text ms-1">Dashboard</p>
-                    </Link>
-                </li>
-                <li class="nav-item">
-                    <Link class="nav-link" :href="route('vehicles.index')">
-                        <div
-                            class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center"
+                            <span class="ml-2 nav-link-text font-weight-400"
+                                >Dashboard</span
+                            >
+                        </Link>
+                    </li>
+                    <li class="nav-item mt-4">
+                        <Link
+                            :class="{
+                                active: route().current() == 'vehicles.index',
+                            }"
+                            class="nav-link active-preloader"
+                            :href="route('vehicles.index')"
                         >
                             <i
-                                class="ni ni-ui-04 text-info text-sm opacity-10"
+                                class="fa-solid fa-car text-primary text-sm opacity-10"
                             ></i>
-                        </div>
-                        <p class="nav-link-text ms-1">Vehicles</p>
-                    </Link>
-                </li>
-            </ul>
+                            <span class="ml-2 nav-link-text font-weight-400"
+                                >Vehicles</span
+                            >
+                        </Link>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </aside>
+    </nav>
 </template>
