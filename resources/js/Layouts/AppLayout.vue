@@ -1,114 +1,17 @@
 <script setup>
 import Navbar from "@/Components/Navbar.vue";
 import Footer from "@/Components/Footer.vue";
-import Sidebar from "@/Components/Sidebar.vue";
-import { onMounted } from "vue";
-
-onMounted(() => {
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, "rgba(94, 114, 228, 0.2)");
-    gradientStroke1.addColorStop(0.2, "rgba(94, 114, 228, 0.0)");
-    gradientStroke1.addColorStop(0, "rgba(94, 114, 228, 0)");
-
-    new Chart(ctx1, {
-        type: "line",
-        data: {
-            labels: [
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ],
-            datasets: [
-                {
-                    label: "Mobile apps",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    pointRadius: 0,
-                    borderColor: "#5e72e4",
-                    backgroundColor: gradientStroke1,
-                    borderWidth: 3,
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-            interaction: {
-                intersect: false,
-                mode: "index",
-            },
-            scales: {
-                y: {
-                    grid: {
-                        drawBorder: false,
-                        display: true,
-                        drawOnChartArea: true,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                    },
-                    ticks: {
-                        display: true,
-                        padding: 10,
-                        color: "#fbfbfb",
-                        font: {
-                            size: 11,
-                            family: "Open Sans",
-                            style: "normal",
-                            lineHeight: 2,
-                        },
-                    },
-                },
-                x: {
-                    grid: {
-                        drawBorder: false,
-                        display: false,
-                        drawOnChartArea: false,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                    },
-                    ticks: {
-                        display: true,
-                        color: "#ccc",
-                        padding: 20,
-                        font: {
-                            size: 11,
-                            family: "Open Sans",
-                            style: "normal",
-                            lineHeight: 2,
-                        },
-                    },
-                },
-            },
-        },
-    });
-});
+import Sidebar from "@/Components/Main/Sidebar.vue";
 </script>
 
 <template>
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    <div class="min-height-100 bg-primary position-absolute w-100"></div>
     <Sidebar />
     <main class="main-content position-relative border-radius-lg">
         <Navbar />
-
-        <slot name="dashboard" />
-
+        <slot name="header" />
+        <slot name="content" />
+        <slot name="modals" />
         <Footer />
     </main>
 
@@ -116,3 +19,16 @@ onMounted(() => {
         <slot />
     </main> -->
 </template>
+
+<!-- <SideBar />
+        <div class="main-content" id="panel">
+            <NavBar />
+            <slot name="header" />
+            <div class="container-fluid mt--6">
+                <slot name="content" />
+            </div>
+        </div>
+        <slot name="modals" />
+        <Footer />
+        <Notification ref="notification" />
+        <Loader ref="loader" /> -->

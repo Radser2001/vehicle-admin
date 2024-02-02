@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,8 +26,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+Route::get('/', function () {
+    return Inertia::render('Dashboard/index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -35,4 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+Route::prefix('/vehicles')->group(function () {
+    Route::get('/', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/create', function () {
+        return Inertia::render('Vehicles/create');
+    })->name('vehicles.create');
+    Route::get('/edit', function () {
+        return Inertia::render('Vehicles/edit');
+    })->name('vehicles.edit');
+});
+
+
+require __DIR__ . '/auth.php';
