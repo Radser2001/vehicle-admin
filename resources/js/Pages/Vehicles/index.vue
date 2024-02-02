@@ -1,39 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faFloppyDisk,
-    faCirclePlus,
-    faClone,
-    faCloudArrowDown,
-    faSquarePlus,
-    faPrint,
-    faWrench,
-    faCircleCheck,
-    faCircleMinus,
-    faTrash,
-    faArrowUpFromBracket,
-    faXmark,
-    faPen,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faHouse);
-library.add(faFloppyDisk);
-library.add(faCirclePlus);
-library.add(faClone);
-library.add(faCloudArrowDown);
-library.add(faSquarePlus);
-library.add(faPrint);
-library.add(faArrowUpFromBracket);
-library.add(faWrench);
-library.add(faCircleCheck);
-library.add(faCircleMinus);
-library.add(faTrash);
-library.add(faXmark);
-library.add(faPen);
-
+ import Multiselect from 'vue-multiselect'
 function newCustomer() {
     $("#newCustomerModal").modal("show");
 }
@@ -59,7 +27,7 @@ function newCustomer() {
                                     >
                                         <li class="ml-5 breadcrumb-item">
                                             <Link :href="route('dashboard')">
-                                                <font-awesome-icon
+                                                <i
                                                     style="
                                                         color: rgb(
                                                             175,
@@ -67,8 +35,8 @@ function newCustomer() {
                                                             174
                                                         );
                                                     "
-                                                    icon="fa-solid fa-house"
-                                                />
+                                                    class="fa-solid fa-house"
+                                                ></i>
                                             </Link>
                                         </li>
                                         <li
@@ -86,9 +54,7 @@ function newCustomer() {
                                     @click.prevent="newCustomer"
                                     class="btn btn-sm btn-neutral float-end"
                                 >
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-circle-plus"
-                                    />
+                                    <i class="fa-solid fa-circle-plus"></i>
                                     ADD NEW
                                 </a>
                             </div>
@@ -97,7 +63,259 @@ function newCustomer() {
                 </div>
             </div>
         </template>
-        <template #content> </template>
+        <template #content>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow">
+                        <div class="row my-3 mx-2">
+                            <div class="col-md-2 column__right___padding">
+                                <div for="purchase_uom" class="col-form-label">
+                                    CODE
+                                </div>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    name="code"
+                                    id="code"
+                                    placeholder="Code"
+                                    @keyup="getSearch"
+                                />
+                            </div>
+                            <div
+                                class="col-md-2 column__right___padding column__left___padding"
+                            >
+                                <div for="purchase_uom" class="col-form-label">
+                                    NAME
+                                </div>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    name="name"
+                                    id="name"
+                                    placeholder="Customer's Name"
+                                    @keyup="getSearch"
+                                />
+                            </div>
+                            <div
+                                class="col-md-2 column__right___padding column__left___padding"
+                            >
+                                <div for="purchase_uom" class="col-form-label">
+                                    Contact
+                                </div>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    name="contact"
+                                    id="contact"
+                                    placeholder="Customer's Name"
+                                    @keyup="getSearch"
+                                />
+                            </div>
+                            <div class="col-md-2 mt-4 column__left___padding">
+                                <a
+                                    href="javascript:void(0)"
+                                    @click.prevent="clearFilters"
+                                    class="btn btn-sm btn-ash float-end mt-2 pt-2"
+                                >
+                                    CLEAR
+                                </a>
+                            </div>
+                            <div class="text-muted ml-auto mx-4 mt-4">
+                                <div class="inline-block">
+                                    <Multiselect
+                                        class="form-control form-control-sm per-page-entry mt-2"
+                                        :value="100"
+                                    >
+                                        <option />
+                                    </Multiselect>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mx-4">
+                            <div class="table-responsive">
+                                <div class="d-flex flex-row mb-3 rounded">
+                                    <div class="left d-flex">
+                                        <div class="p-2 border icon_item">
+                                            <i
+                                                class="fa-solid fa-clone icon_item-icon"
+                                                style="color: #505050"
+                                            ></i>
+                                        </div>
+                                        <div class="p-2 border icon_item">
+                                            <i
+                                                class="fa-solid fa-arrow-up-from-bracket icon_item-icon"
+                                                style="color: #505050"
+                                            ></i>
+                                        </div>
+                                        <div class="p-2 border icon_item">
+                                            <i
+                                                class="fa-solid fa-cloud-arrow-down icon_item-icon"
+                                                style="color: #505050"
+                                            ></i>
+                                        </div>
+                                        <div class="p-2 border icon_item">
+                                            <i
+                                                class="fa-solid fa-wrench icon_item-icon"
+                                                style="color: #505050"
+                                            ></i>
+                                        </div>
+                                        <div class="p-2 border icon_item">
+                                            <a
+                                                @click.prevent="
+                                                    activeSelectedItems(
+                                                        checkCustomerItems
+                                                    )
+                                                "
+                                            >
+                                                <i
+                                                    class="fa-solid fa-circle-check icon_item-icon"
+                                                    style="color: #505050"
+                                                ></i>
+                                            </a>
+                                        </div>
+                                        <!-- <div class="p-2 border icon_item" v-if="can('inactive_vendor')"> -->
+                                        <div class="p-2 border icon_item">
+                                            <a
+                                                @click.prevent="
+                                                    inactiveSelectedItems(
+                                                        checkCustomerItems
+                                                    )
+                                                "
+                                            >
+                                                <i
+                                                    class="fa-solid fa-circle-minus icon_item-icon"
+                                                    style="color: #505050"
+                                                ></i>
+                                                <font-awesome-icon
+                                                    class="icon_item-icon"
+                                                    icon="fa-solid "
+                                                    color="#eb0505"
+                                                />
+                                            </a>
+                                        </div>
+                                        <!-- <div class="p-2 border icon_item" v-if="this.checkCustomerItems.length > 0 && can('delete_vendor')"> -->
+                                        <div class="p-2 border icon_item">
+                                            <a
+                                                href="javascript:void(0)"
+                                                @click.prevent="
+                                                    deleteSelectedItems(
+                                                        checkCustomerItems
+                                                    )
+                                                "
+                                                ><i
+                                                    class="fa-solid fa-trash icon_item-icon"
+                                                    style="color: #505050"
+                                                ></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="right d-flex ml-auto">
+                                        <div class="p-2 border icon_item">
+                                            <i
+                                                class="fa-solid fa-wrench fa-print"
+                                                style="color: #505050"
+                                            ></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="checkArea">
+                                                <div class="form-check mb-4">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        @click="selectAll"
+                                                    />
+                                                </div>
+                                            </th>
+                                            <th :class="iconClassHead">
+                                                Status
+                                            </th>
+                                            <th :class="textClassHead">Code</th>
+                                            <th :class="textClassHead">Name</th>
+                                            <th :class="textClassHead">
+                                                Contact
+                                            </th>
+                                            <th :class="textClassHead">
+                                                Address
+                                            </th>
+                                            <th :class="textClassHead">City</th>
+
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            v-for="customer in customers"
+                                            :key="customer.id"
+                                            :class="rowClass"
+                                        >
+                                            <td class="checkArea">
+                                                <div class="form-check mb-4">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        v-model="
+                                                            checkCustomerItems
+                                                        "
+                                                        v-bind:value="customer"
+                                                        v-bind:id="customer.id"
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td
+                                                :class="iconClassBody"
+                                                class="pt-2"
+                                            >
+                                                <!-- <label v-if="customer.status == 1"
+                                                    class="badge bg-success text-white fw-bold">Active</label> -->
+                                                <label
+                                                    class="badge bg-warning text-white fw-bold"
+                                                    >Deactive</label
+                                                >
+                                            </td>
+                                            <td :class="textClassBody">
+                                                {{ customer.code }}
+                                            </td>
+                                            <td :class="textClassBody">
+                                                {{ customer.name }}
+                                            </td>
+                                            <td :class="textClassBody">
+                                                {{ customer.contact }}
+                                            </td>
+                                            <td :class="textClassBody">
+                                                {{ customer.address }}
+                                            </td>
+                                            <td :class="textClassBody">
+                                                {{ customer.city }}
+                                            </td>
+                                            <td :class="textClassBody">
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    @click.prevent="
+                                                        editCustomer(
+                                                            customer.id
+                                                        )
+                                                    "
+                                                >
+                                                    <font-awesome-icon
+                                                        icon="fa-solid fa-pen"
+                                                        class="text-ash"
+                                                    />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div></div
+        ></template>
+
         <template #modals>
             <div
                 class="modal fade"
