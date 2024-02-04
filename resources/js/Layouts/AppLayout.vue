@@ -1,26 +1,11 @@
-<script setup>
-import Navbar from "@/Components/Navbar.vue";
-import Footer from "@/Components/Footer.vue";
-import Sidebar from "@/Components/Main/Sidebar.vue";
-</script>
-
 <template>
-    <div class="min-height-100 bg-primary position-absolute w-100"></div>
-    <Sidebar />
-    <main class="main-content position-relative border-radius-lg">
-        <Navbar />
-        <slot name="header" />
-        <slot name="content" />
-        <slot name="modals" />
-        <Footer />
-    </main>
+    <div>
 
-    <!-- <main>
-        <slot />
-    </main> -->
-</template>
-
-<!-- <SideBar />
+        <Head :title="title ? title : 'IMake'">
+            <link rel="icon" type="image/svg+xml" href="/img/logo/logoN.png" />
+            <slot name="meta_head" />
+        </Head>
+        <SideBar />
         <div class="main-content" id="panel">
             <NavBar />
             <slot name="header" />
@@ -31,4 +16,57 @@ import Sidebar from "@/Components/Main/Sidebar.vue";
         <slot name="modals" />
         <Footer />
         <Notification ref="notification" />
-        <Loader ref="loader" /> -->
+        <Loader ref="loader" />
+    </div>
+</template>
+
+
+<script>
+import { Head, Link } from '@inertiajs/vue3'
+import SideBar from '@/Components/Main/SideBar.vue';
+import NavBar from '@/Components/Main/NavBar.vue';
+import Notification from '@/Components/Basic/Notification.vue';
+import Loader from '@/Components/Basic/LoadingBar.vue';
+
+export default {
+    components: {
+        Head,
+        Link,
+        SideBar,
+        NavBar,
+        Notification,
+        Loader,
+    },
+    props: {
+        title: String,
+    },
+    data() {
+
+    },
+    mounted() {
+        this.$root.notify = this.$refs.notification
+        this.$root.loader = this.$refs.loader
+    },
+    methods: {
+
+    },
+}
+</script>
+
+<style lang="scss">
+body {
+    background-image: url('@/../src/img/banner/bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+}
+
+.bg-header {
+    background-color: #55699f;
+}
+
+.table-responsive {
+    overflow: auto;
+}
+</style>

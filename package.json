@@ -20,9 +20,14 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@coders-tm/vue-number-format": "^3.34.1",
         "@fortawesome/fontawesome-svg-core": "^6.5.1",
         "@fortawesome/free-solid-svg-icons": "^6.5.1",
         "@fortawesome/vue-fontawesome": "^3.0.6",
-        "vue-multiselect": "^2.1.8"
+        "laravel-permission-to-vuejs": "^3.0.2",
+        "lodash": "^4.17.21",
+        "sweetalert2": "^11.10.4",
+        "vue-multiselect": "^2.1.8",
+        "vue3-apexcharts": "^1.4.4"
     }
 }
