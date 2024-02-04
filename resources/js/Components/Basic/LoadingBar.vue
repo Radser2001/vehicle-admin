@@ -2,7 +2,7 @@
   <div v-if="loading" class="loading-page">
     <div class="text-center container loading-body">
       <p class="text-success pt-1 animation_i">
-        <img src="/img/logo/logo-loader.png" alt="" class="animation_img">
+        <img src="../../../../public/img/logo-ct-dark.png" alt="" class="animation_img">
       </p>
     </div>
   </div>

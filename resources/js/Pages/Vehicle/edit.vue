@@ -53,16 +53,7 @@
                                     role="tab" aria-controls="bank-accounts" aria-selected="true">
                                     Bank Accounts</a>
                             </li>
-                            <li class="mb-2 nav-item">
-                                <a class="nav-link" id="finance-records-tab" data-toggle="tab" href="#finance-records"
-                                    role="tab" aria-controls="finance-records" aria-selected="true">
-                                    Finance Records</a>
-                            </li>
-                            <li class="mb-2 nav-item">
-                                <a class="nav-link" id="partner-accounts-tab" data-toggle="tab" href="#partner-accounts"
-                                    role="tab" aria-controls="partner-accounts" aria-selected="true">
-                                    Partner Accounts</a>
-                            </li>
+
 
                             <li hidden></li>
                         </ul>

@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Vendor Management">
+    <AppLayout title="Vehicle Management">
         <template #header>
             <div class="header pb-6">
                 <div class="container-fluid">
@@ -20,7 +20,7 @@
                                     </ol>
                                 </nav>
                             </div>
-                            <!-- <div class="col-lg-4 text-right py-4" v-if="can('create_vendor')"> -->
+                            <!-- <div class="col-lg-4 text-right py-4" v-if="can('create_Vehicle')"> -->
                                 <div class="col-lg-4 text-right py-4" >
                                 <a href="javascript:void(0)" @click.prevent="newvehicle"
                                     class="btn btn-sm btn-neutral float-end">
@@ -91,23 +91,23 @@
                                             <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-wrench"
                                                 rotation="{270}" color="#505050" />
                                         </div>
-                                        <div class="p-2 border icon_item" v-if="can('active_vendor')">
-                                            <a @click.prevent="activeSelectedItems(checkvehicleItems)">
+                                        <div class="p-2 border icon_item" v-if="can('active_vehicle')">
+                                            <a @click.prevent="activeSelectedItems(checkVehicleItems)">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-check"
                                                     color="#0bd018" />
                                             </a>
                                         </div>
-                                        <!-- <div class="p-2 border icon_item" v-if="can('inactive_vendor')"> -->
+                                        <!-- <div class="p-2 border icon_item" v-if="can('inactive_Vehicle')"> -->
                                             <div class="p-2 border icon_item" >
-                                            <a @click.prevent="inactiveSelectedItems(checkvehicleItems)">
+                                            <a @click.prevent="inactiveSelectedItems(checkVehicleItems)">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-minus"
                                                     color="#eb0505" />
                                             </a>
                                         </div>
-                                        <!-- <div class="p-2 border icon_item" v-if="this.checkvehicleItems.length > 0 && can('delete_vendor')"> -->
-                                            <div class="p-2 border icon_item" v-if="this.checkvehicleItems.length > 0 ">
+                                        <!-- <div class="p-2 border icon_item" v-if="this.checkVehicleItems.length > 0 && can('delete_Vehicle')"> -->
+                                            <div class="p-2 border icon_item" v-if="this.checkVehicleItems.length > 0 ">
                                             <a href="javascript:void(0)"
-                                                @click.prevent="deleteSelectedItems(checkvehicleItems)">
+                                                @click.prevent="deleteSelectedItems(checkVehicleItems)">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-trash"
                                                     color="#eb0505" />
                                             </a>
@@ -126,7 +126,7 @@
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
                                                     <input class="form-check-input" type="checkbox" @click="selectAll"
-                                                   v-if="this.vehicle.length > 0" :checked="this.checkAllItems.length==this.checkvehicleItems.length"  v-model="checkAllItems" />
+                                                   v-if="this.vehicle.length > 0" :checked="this.checkAllItems.length==this.checkVehicleItems.length"  v-model="checkAllItems" />
                                                 </div>
                                             </th>
                                             <th :class="iconClassHead">Condition</th>
@@ -146,7 +146,7 @@
                                             <td class="checkArea">
                                                 <div class="form-check mb-4">
                                                     <input class="form-check-input" type="checkbox"
-                                                        v-model="checkvehicleItems" v-bind:value="vehicle"
+                                                        v-model="checkVehicleItems" v-bind:value="vehicle"
                                                         v-bind:id="vehicle.id" />
                                                 </div>
                                             </td>
@@ -241,7 +241,7 @@
 
         <template #modals>
             <div class="modal fade" id="newvehicleModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
-                aria-labelledby="newVendorModal" aria-hidden="true">
+                aria-labelledby="newVehicleModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-mb" role="document">
                     <div class="modal-content p-2">
                         <div class="modal-header">
@@ -412,7 +412,7 @@ export default {
             select_country: null,
             select_currency: null,
             vehicles: [],
-            checkvehicleItems: [],
+            checkVehicleItems: [],
             checkAllItems: false,
 
             search_vehicle: {},
@@ -447,14 +447,14 @@ export default {
                     item.selected = value;
                 }
             });
-            if (this.checkvehicleItems.length == this. vehicles.length) {
-                this.checkvehicleItems = [];
+            if (this.checkVehicleItems.length == this. vehicles.length) {
+                this.checkVehicleItems = [];
             } else {
-                this.checkvehicleItems = this.vendors;
+                this.checkVehicleItems = this.Vehicles;
             }
         },
-        checkvehicleItems(value) {
-            if (this.checkvehicleItems.length != this.vehicles.length) {
+        checkVehicleItems(value) {
+            if (this.checkVehicleItems.length != this.vehicles.length) {
                 this.checkAllItems = false;
             }
         },
@@ -515,7 +515,7 @@ export default {
                     const vehicle = (await axios.post(route("vehicles.store"), this.vehicle))
                         .data;
                     window.location.href = route("vehicles.edit", vehicle.id);
-                    $("#newVendorModal").modal("hide");
+                    $("#newVehicleModal").modal("hide");
                     this.vehicle= {};
                     this.$root.notify.success({
                         title: "Success",
@@ -539,26 +539,26 @@ export default {
             },
 
             async clearFilters() {
-                this.search_vendor = {};
+                this.search_Vehicle = {};
                 this.reload();
             },
 
-            async inactiveSelectedItems(checkvehicleItems) {
+            async inactiveSelectedItems(checkVehicleItems) {
             this.$root.loader.start();
-            const ids = this.checkvehicleItems.map((checkvehicleItems) =>this.vehicle.id);
+            const ids = this.checkVehicleItems.map((checkVehicleItems) =>this.vehicle.id);
             axios.post(route("vehicles.inactive.selected"), { ids })
                 .then((response) => {
-                    this.checkVendorItems = [];
+                    this.checkVehicleItems = [];
                     this.reload();
                 });
             this.$root.loader.finish();
             },
 
-            async activeSelectedItems(checkvehicleItems) {
+            async activeSelectedItems(checkVehicleItems) {
                 this.$root.loader.start();
-                const ids = this.checkvehicleItems.map((vehicle) => vehicle.id);
+                const ids = this.checkVehicleItems.map((vehicle) => vehicle.id);
                 axios.post(route("vehicles.active.selected"), { ids }).then((response) => {
-                    this.checkVendorItems = [];
+                    this.checkVehicleItems = [];
                     this.reload();
                 });
                 this.$root.loader.finish();
@@ -566,16 +566,16 @@ export default {
 
             selectAll: function (event) {
                 if (event.target.checked == false) {
-                    this.checkVendorItems = [];
+                    this.checkVehicleItems = [];
                 } else {
                     this.vehicle.forEach((vehicle) => {
-                        this.checkVendorItems.push(vehicle.id);
+                        this.checkVehicleItems.push(vehicle.id);
                     });
                 }
             },
 
 
-            async deleteSelectedItems(checkvehicleItems) {
+            async deleteSelectedItems(checkVehicleItems) {
                 this.$root.loader.start();
                 try {
                     Swal.fire({
@@ -588,14 +588,14 @@ export default {
                         confirmButtonText: "Yes, delete it!",
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            const ids = this.checkVendorItems.map((vehicle) => vehicle.id);
+                            const ids = this.checkVehicleItems.map((vehicle) => vehicle.id);
                             axios.post(route("vehicles.delete.selected"), { ids })
                                 .then((response) => {
                                     this.reload();
                                 });
                             // Swal.fire(
                             //     "Deleted!",
-                            //     `Vendor has been deleted.`,
+                            //     `Vehicle has been deleted.`,
                             //     "success"
                             // );
                         }
