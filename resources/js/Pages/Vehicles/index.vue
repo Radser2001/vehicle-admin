@@ -2,8 +2,41 @@
 import { Link } from "@inertiajs/vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Multiselect from "vue-multiselect";
-function newCustomer() {
-    $("#newCustomerModal").modal("show");
+import axios from "axios";
+
+const vehicle = {
+    make: "",
+    model: "",
+    year: "",
+    condition: "",
+    color: "",
+    mileage: "",
+    fuel_type: "",
+    price: "",
+};
+
+async function createVehicle() {
+    // resetValidationErrors();
+
+    try {
+        const response = await axios.post(route("vehicles.store"), vehicle);
+
+        if (response.data.id) {
+            window.location.href = route("vehicles.edit", response.data.id);
+        }
+
+        notify.success({
+            title: "Success",
+            message: "Vehicle created successfully",
+        });
+    } catch (error) {
+        // convertValidationNotification(error);
+        console.log(error);
+    }
+}
+
+function newVehicle() {
+    $("#staticBackdrop").modal("show");
 }
 </script>
 
@@ -55,7 +88,7 @@ function newCustomer() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop"
                                     href="javascript:void(0)"
-                                    @click.prevent="newCustomer"
+                                    @click.prevent="newvehicle"
                                     class="btn btn-sm btn-neutral float-end"
                                 >
                                     <i class="fa-solid fa-circle-plus"></i>
@@ -130,19 +163,119 @@ function newCustomer() {
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div class="modal-body">...</div>
-                        <div class="modal-footer">
-                            <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">
-                                Understood
-                            </button>
-                        </div>
+                        <form @submit.prevent="createVehicle">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="make" class="form-label"
+                                        >Make</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="make"
+                                        v-model="vehicle.make"
+                                        name="make"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="model" class="form-label"
+                                        >Model</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="model"
+                                        v-model="vehicle.model"
+                                        name="model"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="year" class="form-label"
+                                        >Year</label
+                                    >
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="year"
+                                        v-model="vehicle.year"
+                                        name="year"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="condition" class="form-label"
+                                        >Condition</label
+                                    >
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="condition"
+                                        v-model="vehicle.condition"
+                                        name="condition"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="color" class="form-label"
+                                        >Color</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="color"
+                                        v-model="vehicle.color"
+                                        name="color"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mileage" class="form-label"
+                                        >Mileage</label
+                                    >
+                                    <input
+                                        type="number"
+                                        class="form-control"
+                                        id="mileage"
+                                        v-model="vehicle.mileage"
+                                        name="mileage"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fuel_type" class="form-label"
+                                        >Fuel Type</label
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="fuel_type"
+                                        v-model="vehicle.fuel_type"
+                                        name="fuel_type"
+                                    />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label"
+                                        >Price</label
+                                    >
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        class="form-control"
+                                        id="price"
+                                        v-model="vehicle.price"
+                                        name="price"
+                                    />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div></template

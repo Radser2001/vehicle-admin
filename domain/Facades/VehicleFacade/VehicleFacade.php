@@ -7,7 +7,7 @@ use domain\Services\VehicleService\VehicleService;
 use Illuminate\Support\Facades\Facade;
 
 
-class VehicleFa extends Facade
+class VehicleFacade extends Facade
 {
     /**
      * getFacadeAccessor

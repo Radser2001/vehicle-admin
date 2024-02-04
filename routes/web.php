@@ -38,13 +38,10 @@ Route::middleware('auth')->group(function () {
 
 
 Route::prefix('/vehicles')->group(function () {
-    Route::get('/', [VehicleController::class, 'index'])->name('vehicles.index');
-    Route::get('/create', function () {
-        return Inertia::render('Vehicles/create');
-    })->name('vehicles.create');
-    Route::get('/edit', function () {
-        return Inertia::render('Vehicles/edit');
-    })->name('vehicles.edit');
+    Route::get('/', [VehicleController::class, "index"])->name('vehicles.index');
+    Route::get('/all', [VehicleController::class, "all"])->name('vehicles.all');
+    Route::post('/store', [VehicleController::class, "store"])->name('vehicles.store');
+    Route::get('/{vehicle_id}/edit', [VehicleController::class, "edit"])->name('vehicles.edit');
 });
 
 

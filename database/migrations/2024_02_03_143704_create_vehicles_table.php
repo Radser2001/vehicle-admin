@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
+            $table->string('make')->nullable();
+            $table->string('model')->nullable();
+            $table->unsignedInteger('year')->nullable();
+            $table->bigInteger('condition')->default(1);
+            $table->string('color')->nullable();
+            $table->unsignedInteger('mileage')->nullable();
+            $table->string('fuel_type')->nullable();
+            $table->decimal('price', 10, 2)->nullable(); // Adjust precision and scale as needed
             $table->timestamps();
         });
     }
