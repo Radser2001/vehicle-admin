@@ -68,39 +68,89 @@ function newCustomer() {
             </div>
         </template>
         <template #content>
-            <div class="card">
-                <div class="card-body">
-                    <table class="table p-5">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <form @submit.prevent="createVehicle">
+                <div>
+                    <div class="mb-3">
+                        <label for="make" class="form-label">Make</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="make"
+                            name="make"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Model</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="model"
+                            name="model"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="year"
+                            name="year"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="condition" class="form-label"
+                            >Condition</label
+                        >
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="condition"
+                            name="condition"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="color" class="form-label">Color</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="color"
+                            name="color"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="mileage" class="form-label">Mileage</label>
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="mileage"
+                            name="mileage"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="fuel_type" class="form-label"
+                            >Fuel Type</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="fuel_type"
+                            name="fuel_type"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            class="form-control"
+                            id="price"
+                            name="price"
+                        />
+                    </div>
                 </div>
-            </div></template
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form></template
         >
     </AppLayout>
 </template>

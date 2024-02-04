@@ -1,10 +1,10 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { onMounted, ref } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Multiselect from "vue-multiselect";
 import axios from "axios";
 
-const vehicle = {
+const vehicle = ref({
     make: "",
     model: "",
     year: "",
@@ -13,7 +13,23 @@ const vehicle = {
     mileage: "",
     fuel_type: "",
     price: "",
-};
+});
+
+const vehicles = ref([]);
+
+onMounted(async () => {
+    await getVehicles();
+});
+
+//get all
+async function getVehicles() {
+    try {
+        const response = await axios.get(route("vehicles.all"));
+        vehicles.value = response.data.vehicles;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 async function createVehicle() {
     // resetValidationErrors();
@@ -33,6 +49,10 @@ async function createVehicle() {
         // convertValidationNotification(error);
         console.log(error);
     }
+}
+
+async function editVehicle(vehicleId) {
+    window.location.href = route("vehicles.edit", vehicleId);
 }
 
 function newVehicle() {
@@ -107,34 +127,46 @@ function newVehicle() {
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
+                                <th scope="col">Make</th>
+                                <th scope="col">Model</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Condition</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Mileage</th>
+                                <th scope="col">Fuel Type</th>
+                                <th scope="col">Price</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
+                            <tr
+                                v-for="(vehicle, index) in vehicles"
+                                :key="index"
+                            >
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ vehicle.make }}</td>
+                                <td>{{ vehicle.model }}</td>
+                                <td>{{ vehicle.year }}</td>
+                                <td>{{ vehicle.condition }}</td>
+                                <td>{{ vehicle.color }}</td>
+                                <td>{{ vehicle.mileage }}</td>
+                                <td>{{ vehicle.fuel_type }}</td>
+                                <td>{{ vehicle.price }}</td>
+                                <td>
+                                    <a
+                                        class="btn"
+                                        href="javascript:void(0)"
+                                        @click.prevent="editVehicle(vehicle.id)"
+                                    >
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div></template
-        >
+            </div>
+        </template>
 
         <template #modals>
             <!-- Modal -->
