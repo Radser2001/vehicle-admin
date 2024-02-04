@@ -246,7 +246,7 @@
                     <div class="modal-content p-2">
                         <div class="modal-header">
                             <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
-                                New vehicle
+                                New Vehicle
                             </h5>
                             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">
@@ -257,83 +257,94 @@
                         <div class="modal-body p-0">
                             <div class="card-plain">
                                 <div class="card-body">
-                                    <form role="form text-left" @submit.prevent="createvehicle"
+                                    <form role="form text-left" @submit.prevent="createVehicle"
                                         enctype="multipart/form-data">
                                         <div class="row mb-1">
-                                            <div for="code" class="col-md-3 col-form-label">CODE</div>
+                                            <div for="make" class="col-md-3 col-form-label">MAKE</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="code"
-                                                    id="code" v-model="vehicle.code" placeholder="Code" required />
+                                                <input type="text" class="form-control form-control-sm" name="make"
+                                                    id="make" v-model="vehicle.make" placeholder="make" required />
                                             </div>
 
-                                            <small v-if="validationErrors.name" id="msg_code"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.code
+                                            <small v-if="validationErrors.name" id="msg_make"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.make
                                                 }}</small>
                                         </div>
                                              <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">NAME</div>
+                                            <div for="model" class="col-md-3 col-form-label">MODEL</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="name"
-                                                    id="name" v-model="vehicle.name" placeholder="Name" required />
+                                                <input type="text" class="form-control form-control-sm" name="model"
+                                                    id="model" v-model="vehicle.model" placeholder="model" required />
                                             </div>
 
-                                            <small v-if="validationErrors.name" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.name
+                                            <small v-if="validationErrors.model" id="msg_model"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.model
                                                 }}</small>
                                         </div>
                                              <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">EMAIL</div>
+                                            <div for="year" class="col-md-3 col-form-label">YEAR</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="email"
-                                                    id="email" v-model="vehicle.email" placeholder="Email" required />
+                                                <input type="text" class="form-control form-control-sm" name="year"
+                                                    id="year" v-model="vehicle.year" placeholder="year" required />
                                             </div>
 
-                                            <small v-if="validationErrors.email" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.email
+                                            <small v-if="validationErrors.year" id="msg_name"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.year
                                                 }}</small>
                                         </div>
                                              <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">CONTACT</div>
+                                            <div for="condition" class="col-md-3 col-form-label">CONDITION</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="contact"
-                                                    id="contact" v-model="vehicle.contact" placeholder="Contact" required />
+                                                <input type="text" class="form-control form-control-sm" name="condition"
+                                                    id="condition" v-model="vehicle.condition" placeholder="condition" required />
                                             </div>
 
-                                            <small v-if="validationErrors.contact" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.contact
+                                            <small v-if="validationErrors.condition" id="msg_condition"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.condition
                                                 }}</small>
                                         </div>
                                              <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">ADDRESS</div>
+                                            <div for="color" class="col-md-3 col-form-label">COLOR</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="address"
-                                                    id="address" v-model="vehicle.address" placeholder="Address" required />
+                                                <input type="text" class="form-control form-control-sm" name="color"
+                                                    id="color" v-model="vehicle.color" placeholder="color" required />
                                             </div>
 
-                                            <small v-if="validationErrors.address" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.address
+                                            <small v-if="validationErrors.color" id="msg_color"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.color
                                                 }}</small>
                                         </div>
                                         <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">CITY</div>
+                                            <div for="mileage" class="col-md-3 col-form-label">MILEAGE</div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="name"
-                                                    id="city" v-model="vehicle.city" placeholder="city" required />
+                                                <input type="text" class="form-control form-control-sm" name="mileage"
+                                                    id="mileage" v-model="vehicle.mileage" placeholder="mileage" required />
                                             </div>
 
-                                            <small v-if="validationErrors.city" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.city
+                                            <small v-if="validationErrors.mileage" id="msg_name"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.mileage
                                                 }}</small>
                                         </div>
                                         <div class="row mb-1">
-                                            <div for="name" class="col-md-3 col-form-label">STATE</div>
+                                            <div for="fuel_type" class="col-md-3 col-form-label">FUEL TYPE</div>
                                             <div class="col-md-9">
-                                                <input type="state" class="form-control form-control-sm" name="state"
-                                                    id="state" v-model="vehicle.state" placeholder="State" required />
+                                                <input type="fuel_type" class="form-control form-control-sm" name="fuel_type"
+                                                    id="fuel_type" v-model="vehicle.fuel_type" placeholder="fuel type" required />
                                             </div>
 
-                                            <small v-if="validationErrors.state" id="msg_name"
-                                                class="text-danger form-text text-error-msg error">{{ validationErrors.state
+                                            <small v-if="validationErrors.fuel_type" id="msg_name"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.fuel_type
+                                                }}</small>
+                                        </div>
+                                        <div class="row mb-1">
+                                            <div for="price" class="col-md-3 col-form-label">PRICE</div>
+                                            <div class="col-md-9">
+                                                <input type="price" class="form-control form-control-sm" name="price"
+                                                    id="price" v-model="vehicle.price" placeholder="fuel type" required />
+                                            </div>
+
+                                            <small v-if="validationErrors.price" id="msg_name"
+                                                class="text-danger form-text text-error-msg error">{{ validationErrors.price
                                                 }}</small>
                                         </div>
 
@@ -497,7 +508,7 @@ export default {
                 });
             },
 
-            async createvehicle() {
+            async createVehicle() {
                 this.resetValidationErrors();
                 try {
 

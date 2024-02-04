@@ -3,8 +3,9 @@
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="mb-4 text-center sidenav-header">
-                <Link class="navbar-brand text-primary" :href="route('dashboard')">
-                <img src="/img/logo/iMake-Indigo.png" alt="iMake" class="home-logo mt-1" height="150">
+                <Link class="navbar-brand text-black d-flex align-items-center justify-content-center" :href="route('dashboard')">
+                <img src="../../../../public/img/logo-ct-dark.png" alt="iMake" class="home-logo mt-1" width="50">
+                <h5 class="ml-2">Vehicle - Admin</h5>
                 </Link>
             </div>
             <br>
@@ -21,133 +22,14 @@
                             </Link>
                         </li>
                         <li class="nav-item">
-                            <Link :class="{ 'active': route().current() == 'vehicles' }"
+                            <Link :class="{ 'active': route().current() == 'vehicles.index' }"
                                 class="nav-link active-preloader" :href="route('vehicles.index')">
                             <font-awesome-icon icon="fa-solid fa-desktop" />
                             <span class="ml-2 nav-link-text font-weight-400">Vehicles</span>
                             </Link>
                         </li>
-<!--
-                        <li class="nav-item" v-if="can('read_materials')">
-                            <a class="nav-link" href="#materialMenu" data-toggle="collapse" aria-expanded="true">
-                                <font-awesome-icon icon="fa-solid fa-folder-open" /><span class="ml-2">Material</span>
-                            </a>
-                            <ul :class="{ 'collapse': $page.url.startsWith('/materialCategory') || $page.url.startsWith('/units') || $page.url.startsWith('/warehouses') || $page.url.startsWith('/currency') || $page.url.startsWith('/country') || $page.url.startsWith('/measurement') || $page.url.startsWith('/material-category') || $page.url.startsWith('/material-type') || $page.url.startsWith('/vendors') || route().current() == 'dashboard' || $page.url.startsWith('/unit-conversion') || $page.url.startsWith('/tax') || $page.url.startsWith('/users') || $page.url.startsWith('/grn') }"
-                                class=" list-unstyled" id="materialMenu">
-                                <li class="nav-item">
-                                    <Link :class="{ 'active': $page.url.startsWith('/materials') }"
-                                        class="nav-link active-preloader" :href="route('material.index')">
-                                    <font-awesome-icon icon="fa-solid fa-folder " class="ml-4" />
-                                    <span class="ml-2 hide-menu">All</span>
-                                    </Link>
-                                </li>
-                                <li v-for="materialType in materialTypes" :key="materialType.id" class="nav-item">
-                                    <Link :class="{ 'active': $page.url.startsWith('/materials') }"
-                                        class="nav-link active-preloader"
-                                        :href="route('material.slug.index', materialType.slug)">
-                                    <font-awesome-icon icon="fa-solid fa-folder " class="ml-4" />
-                                    <span class="ml-2 hide-menu">{{ materialType.name }}</span>
-                                    </Link>
-                                </li>
-                                <li v-for="materialType in materialTypes" :key="materialType.id" class="nav-item">
-                                    <Link :class="{ 'active': $page.url.startsWith('/materials') }"
-                                        class="nav-link active-preloader"
-                                        :href="route('material.slug.index', materialType.slug)">
-                                    <font-awesome-icon icon="fa-solid fa-folder " class="ml-4" />
-                                    <span class="ml-2 hide-menu">{{ materialType.name }}</span>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li> -->
-                        <!-- <li class="nav-item" v-if="can('read_vendor')"> -->
-                            <!-- <Link :class="{ 'active': $page.url.startsWith('/vendors') }" class="nav-link active-preloader"
-                                :href="route('vendors.index')">
-                            <font-awesome-icon icon="fa-solid fa-building-user" />
-                            <span class="ml-2 nav-link-text font-weight-400">Vendor</span>
-                            </Link> -->
-                        <!-- </li> -->
-                        <!-- <li class="nav-item" v-if="can('read_grns')">
-                            <Link :class="{ 'active': $page.url.startsWith('/grn') }" class="nav-link active-preloader"
-                                :href="route('grn.index')">
-                            <font-awesome-icon icon="fa-solid fa-people-carry-box" />
-                            <span class="ml-2 nav-link-text font-weight-400">GRN</span>
-                            </Link> -->
-                            <!-- </li> -->
-                         <!-- <li class="nav-item">
-                            <Link :class="{ 'active': $page.url.startsWith('/grn') }" class="nav-link active-preloader"
-                                :href="route('customers.index')">
-                              <font-awesome-icon icon="fa-solid fa-users" />
-                            <span class="ml-2 nav-link-text font-weight-400">customer </span>
-                            </Link>
-                           </li> -->
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#settingsMenu" data-toggle="collapse" aria-expanded="true">
-                                <font-awesome-icon icon="fa-solid fa-gear" /><span class="ml-2">Settings</span>
-                            </a>
-                            <ul :class="{ 'collapse': $page.url.startsWith('/materialRequestNote') || $page.url.startsWith('/report') ||  $page.url.startsWith('/vendors') || $page.url.startsWith('/gi') || $page.url.startsWith('/invoice') ||$page.url.startsWith('/custom-order')|| $page.url.startsWith('/gt') || $page.url.startsWith('/bom') || $page.url.startsWith('/materials') || $page.url.startsWith('/mr') || $page.url.startsWith('/grn') || $page.url.startsWith('/pr') || route().current() == 'dashboard' || $page.url.startsWith('/shipment-orders')||$page.url.startsWith('/customer') || $page.url.startsWith('/crm') || $page.url.startsWith('/barcode-print') || $page.url.startsWith('/po') || $page.url.startsWith('/audit') || $page.url.startsWith('/stock') }"
-                                class=" list-unstyled" id="settingsMenu">
-                                <li class="nav-item" v-if="can('read_types')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/material-type') }"
-                                        class="nav-link active-preloader" :href="route('materialType.index')">
-                                    <font-awesome-icon icon="fa-solid fa-layer-group " class="ml-4" /><span
-                                        class="ml-2 hide-menu">Material Types</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_categories')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/material-category') }"
-                                        class="nav-link active-preloader" :href="route('materialCategory.index')">
-                                    <font-awesome-icon icon="fa-solid fa-folder " class="ml-4" /><span
-                                        class="ml-2 hide-menu">Material Categories</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_unit_measurements')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/units') }"
-                                        class="nav-link active-preloader" :href="route('units.index')">
-                                    <font-awesome-icon icon="fa-solid fa-infinity" class="ml-4" /><span
-                                        class="ml-2 hide-menu">Unit Of Measurements</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_countries')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/country') }"
-                                        class="nav-link active-preloader" :href="route('country.index')">
-                                    <font-awesome-icon icon="fa-solid fa-globe" class="ml-4" /><span class="ml-2 hide-menu">
-                                        Country</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_currencies')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/currency') }"
-                                        class="nav-link active-preloader" :href="route('currency.index')">
-                                    <font-awesome-icon icon="fa-solid fa-money-bill-transfer" class="ml-4" /><span
-                                        class="ml-2 hide-menu">
-                                        Currency</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_unit_conversions')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/unit-conversion') }"
-                                        class="nav-link active-preloader" :href="route('conversion.index')">
-                                    <font-awesome-icon icon="fa-solid fa-dice" class="ml-4" /><span class="ml-2 hide-menu">
-                                        Unit Conversion</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_tax')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/tax') }"
-                                        class="nav-link active-preloader" :href="route('tax.index')">
-                                    <font-awesome-icon icon="fa-solid fa-coins" class="ml-4" /><span class="ml-2 hide-menu">
-                                        Tax</span>
-                                    </Link>
-                                </li>
-                                <li class="nav-item" v-if="can('read_warehouses')">
-                                    <Link :class="{ 'active': $page.url.startsWith('/warehouses') }"
-                                        class="nav-link active-preloader" :href="route('users.index')">
-                                    <font-awesome-icon icon="fa-solid fa-warehouse" class="ml-4" /><span
-                                        class="ml-2 hide-menu">
-                                        User Management</span>
-                                    </Link>
-                                </li>
 
 
-                            </ul>
-                        </li> -->
 
                     </ul>
                 </div>
