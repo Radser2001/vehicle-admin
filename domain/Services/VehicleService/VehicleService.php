@@ -54,6 +54,20 @@ class VehicleService
         return $this->vehicle->create($data);
     }
 
+
+
+    /**
+     * Edit
+     * merge data which retrieved from update function as an array
+     *
+     * @param  mixed $vendor
+     * @param  mixed $data
+     * @return void
+     */
+    protected function edit(Vehicle $vehicle, $data)
+    {
+        return array_merge($vehicle->toArray(), $data);
+    }
     /**
      * Update
      * update existing data using vehicle_id
@@ -69,15 +83,74 @@ class VehicleService
     }
 
     /**
-     * Edit
-     * merge data which retrieved from update function as an array
+     * deleteSelected
      *
-     * @param  mixed $vendor
      * @param  mixed $data
      * @return void
      */
-    protected function edit(Vehicle $vehicle, $data)
+    public function deleteSelected($data)
     {
-        return array_merge($vehicle->toArray(), $data);
+        $ids = $data->input('ids');
+        vehicle::whereIn('id', $ids)->delete();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    /**
+     * inactive
+     *
+     * @param  mixed $data
+     * @return void
+     */
+    public function inactive($data)
+    {
+        $ids = $data->input('ids');
+
+        $vehicles = Vehicle::whereIn('id', $ids)->get();
+
+        foreach ($vehicles as $vehicle) {
+            $vehicle->condition = 0;
+            $vehicle->update();
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+    /**
+     * active
+     *
+     * @param  mixed $data
+     * @return void
+     */
+    public function active($data)
+    {
+
+        $ids = $data->input('ids');
+
+        $vehicles = vehicle::whereIn('id', $ids)->get();
+
+        foreach ($vehicles as $vehicle) {
+            $vehicle->condition = 1;
+            $vehicle->update();
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    /**
+     * Delete
+     * delete specific data using contact_id
+     *
+     * @param  int  $contact_id
+     * @return void
+     */
+    public function delete(int $vehicle_id)
+    {
+        return $this->vehicle->find($vehicle_id)->delete();
     }
 }

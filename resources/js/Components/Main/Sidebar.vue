@@ -1,68 +1,111 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-</script>
+import isArray from "lodash/isArray";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+import { faCartShopping, faDesktop } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faCartShopping);
+library.add(faDesktop);
+
+// this.getMaterialTypes();
+
+if (!window.Laravel) {
+    window.location.reload();
+}
+
+function isActive(route, path) {
+    if (isArray(path)) {
+        return path.includes(route);
+    }
+}
+</script>
 <template>
     <nav
-        class="bg-white sidenav navbar navbar-vertical fixed-start navbar-expand-xs navbar-light"
+        class="bg-white sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light"
         id="sidenav-main"
     >
-        <div class="collapse navbar-collapse sidebar_menu">
-            <div class="sidenav-header">
-                <i
-                    class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-                    aria-hidden="true"
-                    id="iconSidenav"
-                ></i>
-                <p class="navbar-brand m-0">
+        <div class="scrollbar-inner">
+            <!-- Brand -->
+            <div class="mb-4 text-center sidenav-header">
+                <Link
+                    class="navbar-brand text-black d-flex align-items-center justify-content-center"
+                    :href="route('dashboard')"
+                >
                     <img
-                        src="img/logo-ct-dark.png"
-                        class="navbar-brand-img h-100"
-                        alt="main_logo"
+                        src="../../../../public/img/logo-ct-dark.png"
+                        alt="iMake"
+                        class="home-logo mt-1"
+                        width="50"
                     />
-                    <span class="ms-1 font-weight-bold">Vehicle Admin</span>
-                </p>
+                    <h5 class="ml-2">Vehicle - Admin</h5>
+                </Link>
             </div>
-            <hr class="horizontal dark mt-0" />
-            <div
-                class="collapse navbar-collapse w-auto h-auto"
-                id="sidenav-collapse-main"
-            >
-                <ul class="navbar-nav p-3">
-                    <li class="nav-item">
-                        <Link
-                            :class="{
-                                active: route().current() == 'dashboard',
-                            }"
-                            class="nav-link active-preloader"
-                            :href="route('dashboard')"
-                        >
-                            <i
-                                class="fa-solid fa-computer text-warning text-sm opacity-10"
-                            ></i>
-                            <span class="ml-2 nav-link-text font-weight-400"
-                                >Dashboard</span
+            <br />
+            <div class="mt-5 navbar-inner">
+                <!-- Collapse -->
+                <div
+                    class="collapse navbar-collapse sidebar_menu"
+                    id="sidenav-collapse-main"
+                >
+                    <!-- Nav items -->
+                    <ul class="mb-3 navbar-nav">
+                        <li class="nav-item">
+                            <Link
+                                :class="{
+                                    active: route().current() == 'dashboard',
+                                }"
+                                class="nav-link active-preloader"
+                                :href="route('dashboard')"
                             >
-                        </Link>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <Link
-                            :class="{
-                                active: route().current() == 'vehicles.index',
-                            }"
-                            class="nav-link active-preloader"
-                            :href="route('vehicles.index')"
-                        >
-                            <i
-                                class="fa-solid fa-car text-primary text-sm opacity-10"
-                            ></i>
-                            <span class="ml-2 nav-link-text font-weight-400"
-                                >Vehicles</span
+                                <font-awesome-icon
+                                    class="icon_item-icon ml-4"
+                                    icon="fa-solid fa-desktop"
+                                    color="#f74848"
+                                />
+
+                                <span class="ml-4 nav-link-text font-weight-400"
+                                    >Dashboard</span
+                                >
+                            </Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link
+                                :class="{
+                                    active:
+                                        route().current() == 'vehicles.index',
+                                }"
+                                class="nav-link active-preloader"
+                                :href="route('vehicles.index')"
                             >
-                        </Link>
-                    </li>
-                </ul>
+                                <font-awesome-icon
+                                    class="icon_item-icon ml-4"
+                                    icon="fa-solid fa-cart-shopping"
+                                    color="#594dff"
+                                />
+                                <span class="ml-4 nav-link-text font-weight-400"
+                                    >Vehicles</span
+                                >
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 </template>
+
+<style lang="css">
+.navbar-vertical .navbar-brand-img,
+.navbar-vertical .navbar-brand > img {
+    max-width: 100%;
+    max-height: none;
+    margin-top: -60px;
+    margin-left: -10px;
+}
+
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+    margin-top: -50px;
+}
+</style>

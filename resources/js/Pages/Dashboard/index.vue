@@ -1,122 +1,102 @@
 <script setup>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { Head, Link } from "@inertiajs/vue3";
+import { ref, onBeforeMount } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import Statistics from "@/Components/Statistics.vue";
-import SalesOverview from "@/Components/SalesOverview.vue";
-import Carousal from "@/Components/Carousal.vue";
 
-import { onMounted } from "vue";
+library.add(faHouse);
 
-onMounted(() => {
-    var ctx1 = document.getElementById("chart-line").getContext("2d");
+const total_vehicles = ref(Number);
 
-    var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke1.addColorStop(1, "rgba(94, 114, 228, 0.2)");
-    gradientStroke1.addColorStop(0.2, "rgba(94, 114, 228, 0.0)");
-    gradientStroke1.addColorStop(0, "rgba(94, 114, 228, 0)");
-
-    new Chart(ctx1, {
-        type: "line",
-        data: {
-            labels: [
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            ],
-            datasets: [
-                {
-                    label: "Mobile apps",
-                    tension: 0.4,
-                    borderWidth: 0,
-                    pointRadius: 0,
-                    borderColor: "#5e72e4",
-                    backgroundColor: gradientStroke1,
-                    borderWidth: 3,
-                    fill: true,
-                    data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                    maxBarThickness: 6,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-            interaction: {
-                intersect: false,
-                mode: "index",
-            },
-            scales: {
-                y: {
-                    grid: {
-                        drawBorder: false,
-                        display: true,
-                        drawOnChartArea: true,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                    },
-                    ticks: {
-                        display: true,
-                        padding: 10,
-                        color: "#fbfbfb",
-                        font: {
-                            size: 11,
-                            family: "Open Sans",
-                            style: "normal",
-                            lineHeight: 2,
-                        },
-                    },
-                },
-                x: {
-                    grid: {
-                        drawBorder: false,
-                        display: false,
-                        drawOnChartArea: false,
-                        drawTicks: false,
-                        borderDash: [5, 5],
-                    },
-                    ticks: {
-                        display: true,
-                        color: "#ccc",
-                        padding: 20,
-                        font: {
-                            size: 11,
-                            family: "Open Sans",
-                            style: "normal",
-                            lineHeight: 2,
-                        },
-                    },
-                },
-            },
-        },
-    });
+onBeforeMount(() => {
+    if (!window.Laravel) {
+        window.location.reload();
+    }
 });
 </script>
 
 <template>
-    <AppLayout>
-        <template #content>
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <Statistics />
+    <AppLayout title="Vehicle Admin">
+        <template #header>
+            <div class="pb-6 header">
+                <div class="container-fluid">
+                    <div class="header-body">
+                        <div class="py-4 col align-items-center">
+                            <h6 class="mb-0 h2 text-dark d-inline-block">
+                                Dashboard
+                            </h6>
+                            <nav
+                                aria-label="breadcrumb"
+                                class="d-none d-md-block"
+                            >
+                                <ol
+                                    class="breadcrumb breadcrumb-links breadcrumb-dark"
+                                >
+                                    <li class="breadcrumb-item">
+                                        <Link href="/">
+                                            <font-awesome-icon
+                                                icon="fa-solid fa-house"
+                                                color="#505050"
+                                            />
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="breadcrumb-item active breadcrumb-text"
+                                        aria-current="page"
+                                    >
+                                        Dashboard
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <SalesOverview />
-                    <Carousal />
+            </div>
+        </template>
+        <template #content>
+            <div class="mt-3 row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="mb-4 card">
+                                <div class="p-3 card-body">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="numbers">
+                                                <p
+                                                    class="mb-0 text-sm text-uppercase font-weight-bold"
+                                                >
+                                                    Total Vehicles
+                                                </p>
+                                                <h5 class="font-weight-bolder">
+                                                    {{ total_vehicles }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <div
+                                                class="text-center icon icon-shape bg-gradient-danger shadow-danger rounded-circle"
+                                            >
+                                                <i
+                                                    class="text-lg ni ni-world opacity-10"
+                                                    aria-hidden="true"
+                                                ></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
     </AppLayout>
 </template>
+
+<style lang="scss" scoped>
+.breadcrumb-text {
+    color: #6343e9 !important;
+}
+</style>

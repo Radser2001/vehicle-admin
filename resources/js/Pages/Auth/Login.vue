@@ -30,6 +30,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Sign In" />
     <main class="main-content main-content-bg mt-0">
         <div
             class="page-header min-vh-100"
@@ -41,7 +42,7 @@ const submit = () => {
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-7">
-                        <div class="card border-0 mb-0">
+                        <div class="card border-0 mb-0" style="margin-top: 5rem">
                             <div class="card-header bg-transparent">
                                 <h5 class="text-dark text-center mt-2 mb-3">
                                     Sign in
@@ -94,7 +95,7 @@ const submit = () => {
                                     <div class="text-center">
                                         <button
                                             type="submit"
-                                            class="btn btn-primary w-100 my-4 mb-2"
+                                            class="btn bg-primary text-white w-100 my-4 mb-2"
                                         >
                                             Sign in
                                         </button>
@@ -125,7 +126,7 @@ const submit = () => {
                                         <Link
                                             :href="route('register')"
                                             type="button"
-                                            class="btn bg-gradient-dark w-100 mt-2 mb-4"
+                                            class="btn bg-gradient-dark text-white w-100 mt-2 mb-4"
                                         >
                                             Sign up
                                         </Link>

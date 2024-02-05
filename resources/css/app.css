@@ -1,12 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
-@import url("../src/css/nucleo-icons.css");
-@import url("../src/css/nucleo-svg.css");
+@import url("../src/css/argonpro.css");
 @import url("https://kit.fontawesome.com/42d5adcbca.js");
-@import url("../src/css/argon-dashboard.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+@import url("../src/js/plugins/nucleo/css/nucleo.css");
+@import url("https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css");
+/* @import url('vue-select/dist/vue-select.css'); */
+/* @import url('https://rsms.me/inter/inter.css'); */
 /* Language: scss */
 @import url("./style.scss");
-/* @tailwind base;
-@tailwind components; */
+
+@tailwind base;
+@tailwind components;
 /* @tailwind utilities; */
+
+.font-sans {
+    font-family: Nunito, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.flex {
+    display: flex;
+}
