@@ -1,36 +1,62 @@
 <template>
-    <nav class="bg-white sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
+    <nav
+        class="bg-white sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light"
+        id="sidenav-main"
+    >
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="mb-4 text-center sidenav-header">
-                <Link class="navbar-brand text-black d-flex align-items-center justify-content-center" :href="route('dashboard')">
-                <img src="../../../../public/img/logo-ct-dark.png" alt="iMake" class="home-logo mt-1" width="50">
-                <h5 class="ml-2">Vehicle - Admin</h5>
+                <Link
+                    class="navbar-brand text-black d-flex align-items-center justify-content-center"
+                    :href="route('dashboard')"
+                >
+                    <img
+                        src="../../../../public/img/logo-ct-dark.png"
+                        alt="iMake"
+                        class="home-logo mt-1"
+                        width="50"
+                    />
+                    <h5 class="ml-2">Vehicle - Admin</h5>
                 </Link>
             </div>
-            <br>
+            <br />
             <div class="mt-5 navbar-inner">
                 <!-- Collapse -->
-                <div class="collapse navbar-collapse sidebar_menu" id="sidenav-collapse-main">
+                <div
+                    class="collapse navbar-collapse sidebar_menu"
+                    id="sidenav-collapse-main"
+                >
                     <!-- Nav items -->
                     <ul class="mb-3 navbar-nav">
                         <li class="nav-item">
-                            <Link :class="{ 'active': route().current() == 'dashboard' }"
-                                class="nav-link active-preloader" :href="route('dashboard')">
-                            <font-awesome-icon icon="fa-solid fa-desktop" />
-                            <span class="ml-2 nav-link-text font-weight-400">Dashboard</span>
+                            <Link
+                                :class="{
+                                    active: route().current() == 'dashboard',
+                                }"
+                                class="nav-link active-preloader"
+                                :href="route('dashboard')"
+                            >
+                                <font-awesome-icon icon="fa-solid fa-desktop" />
+                                <span class="ml-2 nav-link-text font-weight-400"
+                                    >Dashboard</span
+                                >
                             </Link>
                         </li>
                         <li class="nav-item">
-                            <Link :class="{ 'active': route().current() == 'vehicles.index' }"
-                                class="nav-link active-preloader" :href="route('vehicles.index')">
-                            <font-awesome-icon icon="fa-solid fa-desktop" />
-                            <span class="ml-2 nav-link-text font-weight-400">Vehicles</span>
+                            <Link
+                                :class="{
+                                    active:
+                                        route().current() == 'vehicles.index',
+                                }"
+                                class="nav-link active-preloader"
+                                :href="route('vehicles.index')"
+                            >
+                                <font-awesome-icon icon="fa-solid fa-desktop" />
+                                <span class="ml-2 nav-link-text font-weight-400"
+                                    >Vehicles</span
+                                >
                             </Link>
                         </li>
-
-
-
                     </ul>
                 </div>
             </div>
@@ -38,82 +64,92 @@
     </nav>
 </template>
 
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import isArray from "lodash/isArray";
 
-<script>
-import { Link } from '@inertiajs/vue3'
-import isArray from 'lodash/isArray';
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+    faBook,
+    faNoteSticky,
+    faArrowUpRightFromSquare,
+    faDice,
+    faGift,
+    faMoneyBillTransfer,
+    faFileInvoice,
+    faBuildingUser,
+    faBoxesStacked,
+    faFilePen,
+    faCartShopping,
+    faUsers,
+    faArrowRotateRight,
+    faWarehouse,
+    faCoins,
+    faGlobe,
+    faGear,
+    faDesktop,
+    faLayerGroup,
+    faFolder,
+    faInfinity,
+    faFolderOpen,
+    faTruckField,
+    faChartSimple,
+    faListCheck,
+    faPenToSquare,
+    faRightFromBracket,
+    faPercent,
+    faPeopleCarryBox,
+} from "@fortawesome/free-solid-svg-icons";
 
-import { faBook,faNoteSticky,faArrowUpRightFromSquare, faDice ,faGift, faMoneyBillTransfer, faFileInvoice, faBuildingUser, faBoxesStacked, faFilePen,faCartShopping, faUsers, faArrowRotateRight, faWarehouse, faCoins, faGlobe, faGear, faDesktop, faLayerGroup, faFolder, faInfinity, faFolderOpen, faTruckField, faChartSimple, faListCheck, faPenToSquare, faRightFromBracket, faPercent,faPeopleCarryBox } from '@fortawesome/free-solid-svg-icons'
+library.add(faCartShopping);
+library.add(faDesktop);
+library.add(faCartShopping);
+library.add(faNoteSticky);
+library.add(faArrowUpRightFromSquare);
+library.add(faMoneyBillTransfer);
+library.add(faFileInvoice);
+library.add(faChartSimple);
+library.add(faLayerGroup);
+library.add(faBuildingUser);
+library.add(faDice);
+library.add(faFolder);
+library.add(faFilePen);
+library.add(faInfinity);
+library.add(faPenToSquare);
+library.add(faFolderOpen);
+library.add(faPercent);
+library.add(faGear);
+library.add(faGift);
+library.add(faGlobe);
+library.add(faCoins);
+library.add(faUsers);
+library.add(faBook);
+library.add(faWarehouse);
+library.add(faArrowRotateRight);
+library.add(faTruckField);
+library.add(faListCheck);
+library.add(faBoxesStacked);
+library.add(faRightFromBracket);
+library.add(faCoins);
+library.add(faPeopleCarryBox);
 
-export default {
-    components: {
-        Link,
-        library,
-    },
-    data() {
-        return {
-            materialTypes: [],
-        }
-    },
-    beforeMount() {
-        library.add(faCartShopping)
-        library.add(faDesktop)
-        library.add(faCartShopping)
-        library.add(faNoteSticky)
-        library.add(faArrowUpRightFromSquare)
-        library.add(faMoneyBillTransfer)
-        library.add(faFileInvoice)
-        library.add(faChartSimple)
-        library.add(faLayerGroup)
-        library.add(faBuildingUser)
-        library.add(faDice)
-        library.add(faFolder)
-        library.add(faFilePen)
-        library.add(faInfinity)
-        library.add(faPenToSquare)
-        library.add(faFolderOpen)
-        library.add(faPercent)
-        library.add(faGear)
-        library.add(faGift)
-        library.add(faGlobe)
-        library.add(faCoins)
-        library.add(faUsers)
-        library.add(faBook)
-        library.add(faWarehouse)
-        library.add(faArrowRotateRight)
-        library.add(faTruckField)
-        library.add(faListCheck)
-        library.add(faBoxesStacked)
-        library.add(faRightFromBracket)
-        library.add(faCoins)
-        library.add(faPeopleCarryBox)
+// this.getMaterialTypes();
 
-        // this.getMaterialTypes();
-
-        if(!window.Laravel){
-            window.location.reload();
-        }
-    },
-    methods: {
-        isActive(route, path) {
-            if (isArray(path)) {
-                return path.includes(route);
-            }
-        },
-        async getMaterialTypes() {
-            const materialTypes = (await axios.get(route("materialType.all"))).data;
-            this.materialTypes = materialTypes.data;
-        },
-    },
+if (!window.Laravel) {
+    window.location.reload();
 }
 
+function isActive(route, path) {
+    if (isArray(path)) {
+        return path.includes(route);
+    }
+}
 </script>
 
 <style lang="css">
 .navbar-vertical .navbar-brand-img,
-.navbar-vertical .navbar-brand>img {
+.navbar-vertical .navbar-brand > img {
     max-width: 100%;
     max-height: none;
     margin-top: -60px;
