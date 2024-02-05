@@ -12,6 +12,7 @@ import {
 import BasicEditForm from "@/Pages/Vehicle/Components/Basic/EditForm.vue";
 import BankAccountsAll from "@/Pages/Vehicle/Components/BankAccounts/All.vue";
 import ContactBookAll from "@/Pages/Vehicle/Components/ContactBook/All.vue";
+import UploadImagesForm from "@/Pages/Vehicle/Components/VehicleImages/All.vue";
 
 library.add(faCircleInfo);
 library.add(faCartPlus);
@@ -96,6 +97,19 @@ defineProps({
                             <li class="mb-2 nav-item">
                                 <a
                                     class="nav-link"
+                                    id="upload-images-tab"
+                                    data-toggle="tab"
+                                    href="#upload-images"
+                                    role="tab"
+                                    aria-controls="upload-images"
+                                    aria-selected="true"
+                                >
+                                    Upload Images</a
+                                >
+                            </li>
+                            <li class="mb-2 nav-item">
+                                <a
+                                    class="nav-link"
                                     id="contact-book-tab"
                                     data-toggle="tab"
                                     href="#contact-book"
@@ -134,6 +148,15 @@ defineProps({
                                     role="tabpanel"
                                 >
                                     <BasicEditForm :vehicle_id="vehicle.id" />
+                                </div>
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="upload-images"
+                                    role="tabpanel"
+                                >
+                                    <UploadImagesForm
+                                        :vehicle_id="vehicle.id"
+                                    />
                                 </div>
                                 <div
                                     class="tab-pane fade show"
