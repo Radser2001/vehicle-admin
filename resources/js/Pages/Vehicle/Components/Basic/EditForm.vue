@@ -1,3 +1,80 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import Multiselect from "vue-multiselect";
+import { ref, onMounted } from "vue";
+import Swal from "sweetalert2";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faFloppyDisk,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+
+const { vehicle_id } = defineProps(["vehicle_id"]);
+
+const vehicle = ref({});
+library.add(faHouse);
+library.add(faFloppyDisk);
+library.add(faTrash);
+// console.log(vehicle_id);
+onMounted(() => {
+    getVehicle();
+});
+
+async function getVehicle() {
+    // this.$nextTick(() => {
+    //     this.$root.loader.start();
+    // });
+    const response = (await axios.get(route("vehicles.get", vehicle_id))).data;
+    // console.log(response.data);
+    vehicle.value = response.data;
+    // this.$root.loader.finish();
+}
+
+async function updateVehicleData() {
+    // this.resetValidationErrors();
+    try {
+        await axios.post(route("vehicles.update", vehicle_id), vehicle.value);
+
+        Swal.fire({
+            title: "Success",
+            text: "Vehicle updated successfully",
+            icon: "success",
+            confirmButtonColor: "#6CA925",
+        });
+    } catch (error) {
+        // this.convertValidationError(error);
+        console.log(error);
+    }
+}
+
+async function deleteVehicle() {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(route("vehicles.delete", vehicle_id))
+                    .then((response) => {
+                        window.location.href = route("vehicles.index");
+                    });
+                Swal.fire("Deleted!", `Vehicle has been deleted.`, "success");
+            }
+        });
+    } catch (error) {
+        // this.convertValidationNotification(error);
+        console.log(error);
+    }
+}
+</script>
+
 <template>
     <div id="basic-info">
         <div class="card-header">
@@ -180,82 +257,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import Multiselect from "vue-multiselect";
-import { ref, onMounted } from "vue";
-import Swal from "sweetalert2";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faFloppyDisk,
-    faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-
-const { vehicle_id } = defineProps(["vehicle_id"]);
-
-const vehicle = ref({});
-library.add(faHouse);
-library.add(faFloppyDisk);
-library.add(faTrash);
-// console.log(vehicle_id);
-onMounted(() => {
-    getVehicle();
-});
-
-async function getVehicle() {
-    // this.$nextTick(() => {
-    //     this.$root.loader.start();
-    // });
-    const response = (await axios.get(route("vehicles.get", vehicle_id))).data;
-    // console.log(response.data);
-    vehicle.value = response.data;
-    // this.$root.loader.finish();
-}
-
-async function updateVehicleData() {
-    // this.resetValidationErrors();
-    try {
-        await axios.post(route("vehicles.update", vehicle_id), vehicle.value);
-
-        Swal.fire({
-            title: "Success",
-            text: "vehicle updated successfully",
-            icon: "success",
-        });
-    } catch (error) {
-        // this.convertValidationError(error);
-        console.log(error);
-    }
-}
-
-async function deleteVehicle() {
-    try {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .delete(route("vehicles.delete", vehicle_id))
-                    .then((response) => {
-                        window.location.href = route("vehicles.index");
-                    });
-                Swal.fire("Deleted!", `Vehicle has been deleted.`, "success");
-            }
-        });
-    } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 .custom-button {

@@ -1,3 +1,217 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import { Link } from "@inertiajs/vue3";
+import axios from "axios";
+import Swal from "sweetalert2";
+import Multiselect from "vue-multiselect";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faFloppyDisk,
+    faCirclePlus,
+    faClone,
+    faCloudArrowDown,
+    faSquarePlus,
+    faPrint,
+    faWrench,
+    faCircleCheck,
+    faCircleMinus,
+    faTrash,
+    faArrowUpFromBracket,
+    faXmark,
+    faPen,
+} from "@fortawesome/free-solid-svg-icons";
+
+const textClassHead = ref("text-start text-uppercase");
+const textClassBody = ref("text-start");
+const iconClassHead = ref("text-center");
+const iconClassBody = ref("text-center");
+const rowClass = ref("cursor-pointer");
+
+const search = ref(null);
+const page = ref(1);
+const perPage = ref([25, 50, 100]);
+const pageCount = ref(25);
+const pagination = ref({});
+const vehicle = ref({});
+const vehicles = ref([]);
+const checkVehicleItems = ref([]);
+const checkAllItems = ref(false);
+const searchVehicle = ref({});
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
+library.add(faHouse);
+library.add(faFloppyDisk);
+library.add(faCirclePlus);
+library.add(faClone);
+library.add(faCloudArrowDown);
+library.add(faSquarePlus);
+library.add(faPrint);
+library.add(faArrowUpFromBracket);
+library.add(faWrench);
+library.add(faCircleCheck);
+library.add(faCircleMinus);
+library.add(faTrash);
+library.add(faXmark);
+library.add(faPen);
+
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+
+    Swal.fire({
+        title: "Something went wrong",
+        icon: "error",
+        confirmButtonText: "OK",
+    });
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    validationMessage.value = err.response.data.message;
+    if (err.response.data.errors) {
+        const errors = err.response.data.errors;
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+onMounted(() => {
+    getVehicles();
+});
+
+function setPage(newPage) {
+    page.value = newPage;
+    reload();
+}
+
+function getSearch() {
+    page.value = 1;
+    reload();
+}
+
+function perPageChange() {
+    reload();
+}
+
+async function reload() {
+    // loader.start();
+    const tableData = (
+        await axios.get(route("vehicles.all"), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+                search_vehicle_make: searchVehicle.value.make,
+                search_vehicle_model: searchVehicle.value.model,
+                search_vehicle_color: searchVehicle.value.color,
+            },
+        })
+    ).data;
+
+    vehicles.value = tableData.data;
+    pagination.value = tableData.meta;
+
+    // loader.finish();
+}
+
+async function getVehicles() {
+    //    loader.start();
+    const response = (await axios.get(route("vehicles.all"))).data;
+    vehicles.value = response.data;
+    pagination.value = response.meta;
+    //    loader.finish();
+}
+
+async function createVehicle() {
+    resetValidationErrors();
+    try {
+        const response = (
+            await axios.post(route("vehicles.store"), vehicle.value)
+        ).data;
+        window.location.href = route("vehicles.edit", response.id);
+        vehicle.value = {};
+        Swal.fire({
+            title: "Success",
+            text: "Vehicle created successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+        });
+    } catch (error) {
+        convertValidationNotification(error);
+    }
+}
+
+function editVehicle(vehicleId) {
+    window.location.href = route("vehicles.edit", vehicleId);
+}
+
+async function newVehicle() {
+    vehicle.value = {};
+    $("#newVehicleModal").modal("show");
+}
+
+function clearFilters() {
+    searchVehicle.value = {};
+    reload();
+}
+
+async function inactiveSelectedItems() {
+    const ids = checkVehicleItems.value.map((item) => item.id);
+    await axios.post(route("vehicles.inactive.selected"), { ids });
+    checkVehicleItems.value = [];
+    await reload();
+}
+
+async function activeSelectedItems() {
+    const ids = checkVehicleItems.value.map((item) => item.id);
+    await axios.post(route("vehicles.active.selected"), { ids });
+    checkVehicleItems.value = [];
+    await reload();
+}
+
+function selectAll(event) {
+    if (event.target.checked === false) {
+        checkVehicleItems.value = [];
+    } else {
+        checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
+    }
+}
+
+async function deleteSelectedItems() {
+    try {
+        if (checkVehicleItems.value && checkVehicleItems.value.length > 0) {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#C00202",
+                cancelButtonColor: "#6CA925",
+                confirmButtonText: "Yes, delete it!",
+            });
+
+            if (result.isConfirmed) {
+                const ids = checkVehicleItems.value.map((item) => item.id);
+                await axios.post(route("vehicles.delete.selected"), { ids });
+                await reload();
+            }
+        }
+    } catch (error) {
+        // convertValidationNotification(error);
+        console.log(error);
+    } finally {
+        // loader.finish();
+    }
+}
+</script>
+
 <template>
     <AppLayout title="Vehicle Management">
         <template #header>
@@ -525,7 +739,7 @@
                                             </div>
 
                                             <small
-                                                v-if="validationErrors.name"
+                                                v-if="validationErrors.make"
                                                 id="msg_make"
                                                 class="text-danger form-text text-error-msg error"
                                                 >{{
@@ -755,215 +969,6 @@
         </template>
     </AppLayout>
 </template>
-<script setup>
-import { ref, onMounted } from "vue";
-import { Link } from "@inertiajs/vue3";
-import axios from "axios";
-import Swal from "sweetalert2";
-import Multiselect from "vue-multiselect";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faFloppyDisk,
-    faCirclePlus,
-    faClone,
-    faCloudArrowDown,
-    faSquarePlus,
-    faPrint,
-    faWrench,
-    faCircleCheck,
-    faCircleMinus,
-    faTrash,
-    faArrowUpFromBracket,
-    faXmark,
-    faPen,
-} from "@fortawesome/free-solid-svg-icons";
-
-const textClassHead = ref("text-start text-uppercase");
-const textClassBody = ref("text-start");
-const iconClassHead = ref("text-center");
-const iconClassBody = ref("text-center");
-const rowClass = ref("cursor-pointer");
-
-const search = ref(null);
-const page = ref(1);
-const perPage = ref([25, 50, 100]);
-const pageCount = ref(25);
-const pagination = ref({});
-const vehicle = ref({});
-const vehicles = ref([]);
-const checkVehicleItems = ref([]);
-const checkAllItems = ref(false);
-const searchVehicle = ref({});
-const validationMessage = ref(null);
-const validationErrors = ref({});
-
-library.add(faHouse);
-library.add(faFloppyDisk);
-library.add(faCirclePlus);
-library.add(faClone);
-library.add(faCloudArrowDown);
-library.add(faSquarePlus);
-library.add(faPrint);
-library.add(faArrowUpFromBracket);
-library.add(faWrench);
-library.add(faCircleCheck);
-library.add(faCircleMinus);
-library.add(faTrash);
-library.add(faXmark);
-library.add(faPen);
-
-function resetValidationErrors() {
-    validationErrors.value = {};
-    validationMessage.value = null;
-}
-function convertValidationNotification(err) {
-    resetValidationErrors();
-    if (!(err.response && err.response.data)) return;
-    notify.error({
-        title: "Something went wrong",
-        message: err.response.data.message,
-    });
-}
-function convertValidationError(err) {
-    resetValidationErrors();
-    if (!(err.response && err.response.data)) return;
-    validationMessage.value = err.response.data.message;
-    if (err.response.data.errors) {
-        const errors = err.response.data.errors;
-        for (const error in errors) {
-            validationErrors.value[error] = errors[error][0];
-        }
-    }
-}
-onMounted(() => {
-    getVehicles();
-});
-
-function setPage(newPage) {
-    page.value = newPage;
-    reload();
-}
-
-function getSearch() {
-    page.value = 1;
-    reload();
-}
-
-function perPageChange() {
-    reload();
-}
-
-async function reload() {
-    // loader.start();
-    const tableData = (
-        await axios.get(route("vehicles.all"), {
-            params: {
-                page: page.value,
-                per_page: pageCount.value,
-                "filter[search]": search.value,
-                search_vehicle_make: searchVehicle.value.make,
-                search_vehicle_model: searchVehicle.value.model,
-                search_vehicle_color: searchVehicle.value.color,
-            },
-        })
-    ).data;
-
-    vehicles.value = tableData.data;
-    pagination.value = tableData.meta;
-
-    // loader.finish();
-}
-
-async function getVehicles() {
-    //    loader.start();
-    const response = (await axios.get(route("vehicles.all"))).data;
-    vehicles.value = response.data;
-    pagination.value = response.meta;
-    //    loader.finish();
-}
-
-async function createVehicle() {
-    resetValidationErrors();
-    try {
-        const response = (
-            await axios.post(route("vehicles.store"), vehicle.value)
-        ).data;
-        window.location.href = route("vehicles.edit", response.id);
-        vehicle.value = {};
-        notify.success({
-            title: "Success",
-            message: "Vehicle created successfully",
-        });
-    } catch (error) {
-        // convertValidationNotification(error);
-    }
-}
-
-function editVehicle(vehicleId) {
-    window.location.href = route("vehicles.edit", vehicleId);
-}
-
-async function newVehicle() {
-    vehicle.value = {};
-    $("#newVehicleModal").modal("show");
-}
-
-function clearFilters() {
-    searchVehicle.value = {};
-    reload();
-}
-
-async function inactiveSelectedItems() {
-    const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.inactive.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
-}
-
-async function activeSelectedItems() {
-    const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.active.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
-}
-
-function selectAll(event) {
-    if (event.target.checked === false) {
-        checkVehicleItems.value = [];
-    } else {
-        checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
-    }
-}
-
-async function deleteSelectedItems() {
-    try {
-        if (checkVehicleItems.value && checkVehicleItems.value.length > 0) {
-            const result = await Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#C00202",
-                cancelButtonColor: "#6CA925",
-                confirmButtonText: "Yes, delete it!",
-            });
-
-            if (result.isConfirmed) {
-                const ids = checkVehicleItems.value.map((item) => item.id);
-                await axios.post(route("vehicles.delete.selected"), {ids});
-                await reload();
-            }
-        }
-    } catch (error) {
-        // convertValidationNotification(error);
-        console.log(error);
-    } finally {
-        // loader.finish();
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 .breadcrumb-text {

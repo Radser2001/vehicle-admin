@@ -1,3 +1,125 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faPlusCircle,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { ref } from "vue";
+
+const { vehicle_id } = defineProps(["vehicle_id"]);
+
+const textClassHead = ref("text-start text-uppercase");
+const textClassBody = ref("text-start");
+const iconClassHead = ref("text-right");
+const iconClassBody = ref("text-right");
+const rowClass = ref("cursor-pointer");
+
+const search = ref(null);
+const page = ref(1);
+const perPage = ref([25, 50, 100]);
+const pageCount = ref(25);
+const pagination = ref({});
+
+const contact = ref({});
+const contacts = ref([]);
+
+getContacts();
+library.add(faHouse);
+library.add(faPlusCircle);
+library.add(faTrash);
+
+async function setPage(page) {
+    this.page = page;
+    this.reload();
+}
+async function getSearch() {
+    this.page = 1;
+    this.reload();
+}
+async function perPageChange() {
+    this.reload();
+}
+async function reload() {
+    // this.$root.loader.start();
+    const tableData = (
+        await axios.get(route("vehicles.contact.all", vehicle_id), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+            },
+        })
+    ).data;
+
+    contacts.value = tableData.data;
+    pagination.value = tableData.meta;
+    // $root.value.loader.finish();
+}
+async function getContacts() {
+    // this.$nextTick(() => {
+    //     this.$root.loader.start();
+    // });
+    const response = (
+        await axios.get(route("vehicles.contact.all", vehicle_id))
+    ).data;
+
+    contacts.value = response.data;
+    pagination.value = response.meta;
+    // this.$nextTick(() => {
+    //     this.$root.loader.finish();
+    // });
+}
+async function updateContactData() {
+    // this.resetValidationErrors();
+    console.log(contact);
+    try {
+        await axios.post(
+            route("vehicles.contact.update", vehicle_id),
+            contact.value
+        );
+        contact.value = {};
+        reload();
+
+        Swal.fire({
+            title: "Success",
+            text: "Contact book updated successfully",
+            icon: "success",
+            confirmButtonColor: "#6CA925",
+        });
+    } catch (error) {
+        // this.convertValidationError(error);
+        console.log(error);
+    }
+}
+async function deleteContactData(id) {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202", // Green
+            cancelButtonColor: "#6CA925", // Secondary Color
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(route("vehicles.contact.delete", id))
+                    .then((response) => {
+                        reload();
+                    });
+            }
+        });
+    } catch (error) {
+        // this.convertValidationNotification(error);
+        console.log(error);
+    }
+}
+</script>
+
 <template>
     <div id="contact-book">
         <div class="card-header">
@@ -302,125 +424,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import Swal from "sweetalert2";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faPlusCircle,
-    faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
-
-const { vehicle_id } = defineProps(["vehicle_id"]);
-
-const textClassHead = ref("text-start text-uppercase");
-const textClassBody = ref("text-start");
-const iconClassHead = ref("text-right");
-const iconClassBody = ref("text-right");
-const rowClass = ref("cursor-pointer");
-
-const search = ref(null);
-const page = ref(1);
-const perPage = ref([25, 50, 100]);
-const pageCount = ref(25);
-const pagination = ref({});
-
-const contact = ref({});
-const contacts = ref([]);
-
-getContacts();
-library.add(faHouse);
-library.add(faPlusCircle);
-library.add(faTrash);
-
-async function setPage(page) {
-    this.page = page;
-    this.reload();
-}
-async function getSearch() {
-    this.page = 1;
-    this.reload();
-}
-async function perPageChange() {
-    this.reload();
-}
-async function reload() {
-    // this.$root.loader.start();
-    const tableData = (
-        await axios.get(route("vehicles.contact.all", vehicle_id), {
-            params: {
-                page: page.value,
-                per_page: pageCount.value,
-                "filter[search]": search.value,
-            },
-        })
-    ).data;
-
-    contacts.value = tableData.data;
-    pagination.value = tableData.meta;
-    // $root.value.loader.finish();
-}
-async function getContacts() {
-    // this.$nextTick(() => {
-    //     this.$root.loader.start();
-    // });
-    const response = (
-        await axios.get(route("vehicles.contact.all", vehicle_id))
-    ).data;
-
-    contacts.value = response.data;
-    pagination.value = response.meta;
-    // this.$nextTick(() => {
-    //     this.$root.loader.finish();
-    // });
-}
-async function updateContactData() {
-    // this.resetValidationErrors();
-    console.log(contact);
-    try {
-        await axios.post(
-            route("vehicles.contact.update", vehicle_id),
-            contact.value
-        );
-        contact.value = {};
-        reload();
-        // $root.notify.success({
-        //     title: "Success",
-        //     message: "Contact book updated successfully",
-        // });
-    } catch (error) {
-        // this.convertValidationError(error);
-        console.log(error);
-    }
-}
-async function deleteContactData(id) {
-    try {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .delete(route("vehicles.contact.delete", id))
-                    .then((response) => {
-                       reload();
-                    });
-            }
-        });
-    } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 .custom-button {

@@ -11,8 +11,7 @@ defineProps({
     title: String,
 });
 
-const notification = ref(null);
-const loader = ref(null);
+
 </script>
 
 <template>
@@ -31,7 +30,7 @@ const loader = ref(null);
         </div>
         <slot name="modals" />
         <Footer />
-        <Notification ref="notification" />
+        <Notification ref="notify" />
         <Loader ref="loader" />
     </div>
 </template>

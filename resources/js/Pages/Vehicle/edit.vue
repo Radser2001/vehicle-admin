@@ -1,3 +1,28 @@
+<script setup>
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { Link } from "@inertiajs/vue3";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faCircleInfo,
+    faCartPlus,
+    faDiamond,
+} from "@fortawesome/free-solid-svg-icons";
+
+import BasicEditForm from "@/Pages/Vehicle/Components/Basic/EditForm.vue";
+import BankAccountsAll from "@/Pages/Vehicle/Components/BankAccounts/All.vue";
+import ContactBookAll from "@/Pages/Vehicle/Components/ContactBook/All.vue";
+
+library.add(faCircleInfo);
+library.add(faCartPlus);
+library.add(faDiamond);
+library.add(faHouse);
+
+defineProps({
+    vehicle: Object,
+});
+</script>
+
 <template>
     <AppLayout title="Vendor - Edit">
         <template #header>
@@ -108,27 +133,21 @@
                                     id="basic-data"
                                     role="tabpanel"
                                 >
-                                    <BasicEditForm
-                                        :vehicle_id="vehicle.id"
-                                    />
+                                    <BasicEditForm :vehicle_id="vehicle.id" />
                                 </div>
                                 <div
                                     class="tab-pane fade show"
                                     id="contact-book"
                                     role="tabpanel"
                                 >
-                                    <ContactBookAll
-                                        :vehicle_id="vehicle.id"
-                                    />
+                                    <ContactBookAll :vehicle_id="vehicle.id" />
                                 </div>
                                 <div
                                     class="tab-pane fade show"
                                     id="bank-accounts"
                                     role="tabpanel"
                                 >
-                                    <BankAccountsAll
-                                        :vehicle_id="vehicle.id"
-                                    />
+                                    <BankAccountsAll :vehicle_id="vehicle.id" />
                                 </div>
                                 <!-- <div class="tab-pane fade show" id="finance-records" role="tabpanel">
                                     <FinanceRecordAll :vehicle_id="vehicle.id" />
@@ -144,31 +163,6 @@
         </template>
     </AppLayout>
 </template>
-
-<script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Link } from "@inertiajs/vue3";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faCircleInfo,
-    faCartPlus,
-    faDiamond,
-} from "@fortawesome/free-solid-svg-icons";
-
-import BasicEditForm from "@/Pages/Vehicle/Components/Basic/EditForm.vue";
-import BankAccountsAll from "@/Pages/Vehicle/Components/BankAccounts/All.vue";
-import ContactBookAll from "@/Pages/Vehicle/Components/ContactBook/All.vue";
-
-library.add(faCircleInfo);
-library.add(faCartPlus);
-library.add(faDiamond);
-library.add(faHouse);
-
-defineProps({
-    vehicle: Object,
-});
-</script>
 
 <style lang="scss" scoped>
 .breadcrumb-text {

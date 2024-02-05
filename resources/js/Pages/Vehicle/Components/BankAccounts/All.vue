@@ -1,3 +1,123 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import Multiselect from "vue-multiselect";
+import Swal from "sweetalert2";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faPlusCircle,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { ref } from "vue";
+
+const { vehicle_id } = defineProps(["vehicle_id"]);
+
+const textClassHead = ref("text-start text-uppercase");
+const textClassBody = ref("text-start");
+const iconClassHead = ref("text-right");
+const iconClassBody = ref("text-right");
+const rowClass = ref("cursor-pointer");
+
+const search = ref(null);
+const page = ref(1);
+const perPage = ref([25, 50, 100]);
+const pageCount = ref(25);
+const pagination = ref({});
+
+const bank = ref({});
+const banks = ref([]);
+
+library.add(faHouse);
+library.add(faPlusCircle);
+library.add(faTrash);
+getBanks();
+
+async function setPage(page) {
+    page = page;
+    reload();
+}
+async function getSearch() {
+    page = 1;
+    reload();
+}
+async function perPageChange() {
+    reload();
+}
+async function reload() {
+    //   this.$root.loader.start();
+    const tableData = (
+        await axios.get(route("vehicles.bank.all", vehicle_id), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+            },
+        })
+    ).data;
+
+    banks.value = tableData.data;
+    pagination.value = tableData.meta;
+    //   this.$root.loader.finish();
+}
+async function getBanks() {
+    //   this.$nextTick(() => {
+    //     this.$root.loader.start();
+    //   });
+    const response = (await axios.get(route("vehicles.bank.all", vehicle_id)))
+        .data;
+    console.log(response);
+    banks.value = response.data;
+    pagination.value = banks.meta;
+    //   this.$nextTick(() => {
+    //     this.$root.loader.finish();
+    //   });
+}
+async function updateBankData() {
+    //   this.resetValidationErrors();
+    try {
+        await axios.post(route("vehicles.bank.update", vehicle_id), bank.value);
+        bank.value = {};
+        reload();
+
+        Swal.fire({
+            title: "Success",
+            text: "Bank account updated successfully",
+            icon: "success",
+            confirmButtonColor: "#6CA925",
+            confirmButtonText: "OK",
+        });
+    } catch (error) {
+        //   this.convertValidationError(error);
+        console.log(error);
+    }
+    // this.$root.loader.finish();
+}
+async function deleteBank(id) {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202", // Green
+            cancelButtonColor: "#6CA925", // Secondary Color
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(route("vehicles.bank.delete", id))
+                    .then((response) => {
+                        reload();
+                    });
+            }
+        });
+    } catch (error) {
+        // this.convertValidationNotification(error);
+        console.log(error);
+    }
+}
+</script>
+
 <template>
     <div id="bank-account">
         <div class="card-header">
@@ -326,122 +446,6 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import Multiselect from "vue-multiselect";
-import Swal from "sweetalert2";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faPlusCircle,
-    faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
-
-const { vehicle_id } = defineProps(["vehicle_id"]);
-
-const textClassHead = ref("text-start text-uppercase");
-const textClassBody = ref("text-start");
-const iconClassHead = ref("text-right");
-const iconClassBody = ref("text-right");
-const rowClass = ref("cursor-pointer");
-
-const search = ref(null);
-const page = ref(1);
-const perPage = ref([25, 50, 100]);
-const pageCount = ref(25);
-const pagination = ref({});
-
-const bank = ref({});
-const banks = ref([]);
-
-library.add(faHouse);
-library.add(faPlusCircle);
-library.add(faTrash);
-getBanks();
-
-async function setPage(page) {
-    page = page;
-    reload();
-}
-async function getSearch() {
-    page = 1;
-    reload();
-}
-async function perPageChange() {
-    reload();
-}
-async function reload() {
-    //   this.$root.loader.start();
-    const tableData = (
-        await axios.get(route("vehicles.bank.all", vehicle_id), {
-            params: {
-                page: page.value,
-                per_page: pageCount.value,
-                "filter[search]": search.value,
-            },
-        })
-    ).data;
-
-    banks.value = tableData.data;
-    pagination.value = tableData.meta;
-    //   this.$root.loader.finish();
-}
-async function getBanks() {
-    //   this.$nextTick(() => {
-    //     this.$root.loader.start();
-    //   });
-    const response = (await axios.get(route("vehicles.bank.all", vehicle_id)))
-        .data;
-    console.log(response);
-    banks.value = response.data;
-    pagination.value = banks.meta;
-    //   this.$nextTick(() => {
-    //     this.$root.loader.finish();
-    //   });
-}
-async function updateBankData() {
-    //   this.resetValidationErrors();
-    try {
-        await axios.post(route("vehicles.bank.update", vehicle_id), bank.value);
-        bank.value = {};
-        reload();
-        // this.$root.notify.success({
-        //   title: "Success",
-        //   message: "Bank account updated successfully",
-        // });
-    } catch (error) {
-        //   this.convertValidationError(error);
-        console.log(error);
-    }
-    // this.$root.loader.finish();
-}
-async function deleteBank(id) {
-    try {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .delete(route("vehicles.bank.delete", id))
-                    .then((response) => {
-                        reload();
-                    });
-            }
-        });
-    } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 .custom-button {
