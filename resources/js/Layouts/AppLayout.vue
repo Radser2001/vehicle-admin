@@ -10,8 +10,6 @@ import Loader from "@/Components/Basic/LoadingBar.vue";
 defineProps({
     title: String,
 });
-
-
 </script>
 
 <template>
@@ -23,9 +21,11 @@ defineProps({
         <SideBar />
         <div class="main-content" id="panel">
             <NavBar />
-            <slot name="header" />
-            <div class="container-fluid mt--6">
-                <slot name="content" />
+            <div>
+                <slot name="header" />
+                <div class="container-fluid">
+                    <slot name="content" />
+                </div>
             </div>
         </div>
         <slot name="modals" />

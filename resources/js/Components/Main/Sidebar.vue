@@ -1,3 +1,26 @@
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import isArray from "lodash/isArray";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+import { faCartShopping, faDesktop } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faCartShopping);
+library.add(faDesktop);
+
+// this.getMaterialTypes();
+
+if (!window.Laravel) {
+    window.location.reload();
+}
+
+function isActive(route, path) {
+    if (isArray(path)) {
+        return path.includes(route);
+    }
+}
+</script>
 <template>
     <nav
         class="bg-white sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light"
@@ -36,8 +59,13 @@
                                 class="nav-link active-preloader"
                                 :href="route('dashboard')"
                             >
-                                <font-awesome-icon icon="fa-solid fa-desktop" />
-                                <span class="ml-2 nav-link-text font-weight-400"
+                                <font-awesome-icon
+                                    class="icon_item-icon ml-4"
+                                    icon="fa-solid fa-desktop"
+                                    color="#f74848"
+                                />
+
+                                <span class="ml-4 nav-link-text font-weight-400"
                                     >Dashboard</span
                                 >
                             </Link>
@@ -51,8 +79,12 @@
                                 class="nav-link active-preloader"
                                 :href="route('vehicles.index')"
                             >
-                                <font-awesome-icon icon="fa-solid fa-desktop" />
-                                <span class="ml-2 nav-link-text font-weight-400"
+                                <font-awesome-icon
+                                    class="icon_item-icon ml-4"
+                                    icon="fa-solid fa-cart-shopping"
+                                    color="#594dff"
+                                />
+                                <span class="ml-4 nav-link-text font-weight-400"
                                     >Vehicles</span
                                 >
                             </Link>
@@ -63,89 +95,6 @@
         </div>
     </nav>
 </template>
-
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import isArray from "lodash/isArray";
-
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-import {
-    faBook,
-    faNoteSticky,
-    faArrowUpRightFromSquare,
-    faDice,
-    faGift,
-    faMoneyBillTransfer,
-    faFileInvoice,
-    faBuildingUser,
-    faBoxesStacked,
-    faFilePen,
-    faCartShopping,
-    faUsers,
-    faArrowRotateRight,
-    faWarehouse,
-    faCoins,
-    faGlobe,
-    faGear,
-    faDesktop,
-    faLayerGroup,
-    faFolder,
-    faInfinity,
-    faFolderOpen,
-    faTruckField,
-    faChartSimple,
-    faListCheck,
-    faPenToSquare,
-    faRightFromBracket,
-    faPercent,
-    faPeopleCarryBox,
-} from "@fortawesome/free-solid-svg-icons";
-
-library.add(faCartShopping);
-library.add(faDesktop);
-library.add(faCartShopping);
-library.add(faNoteSticky);
-library.add(faArrowUpRightFromSquare);
-library.add(faMoneyBillTransfer);
-library.add(faFileInvoice);
-library.add(faChartSimple);
-library.add(faLayerGroup);
-library.add(faBuildingUser);
-library.add(faDice);
-library.add(faFolder);
-library.add(faFilePen);
-library.add(faInfinity);
-library.add(faPenToSquare);
-library.add(faFolderOpen);
-library.add(faPercent);
-library.add(faGear);
-library.add(faGift);
-library.add(faGlobe);
-library.add(faCoins);
-library.add(faUsers);
-library.add(faBook);
-library.add(faWarehouse);
-library.add(faArrowRotateRight);
-library.add(faTruckField);
-library.add(faListCheck);
-library.add(faBoxesStacked);
-library.add(faRightFromBracket);
-library.add(faCoins);
-library.add(faPeopleCarryBox);
-
-// this.getMaterialTypes();
-
-if (!window.Laravel) {
-    window.location.reload();
-}
-
-function isActive(route, path) {
-    if (isArray(path)) {
-        return path.includes(route);
-    }
-}
-</script>
 
 <style lang="css">
 .navbar-vertical .navbar-brand-img,
