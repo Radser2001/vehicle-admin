@@ -243,11 +243,11 @@ async function deleteVehicle() {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(route("vehicles.delete", vehicle.id))
+                    .delete(route("vehicles.delete", vehicle_id))
                     .then((response) => {
-                        this.$inertia.visit(route("vehicles.index"));
+                        window.location.href = route("vehicles.index");
                     });
-                // Swal.fire("Deleted!", `Vender has been deleted.`, "success");
+                Swal.fire("Deleted!", `Vehicle has been deleted.`, "success");
             }
         });
     } catch (error) {

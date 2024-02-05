@@ -111,7 +111,7 @@ class VehicleService
         $vehicles = Vehicle::whereIn('id', $ids)->get();
 
         foreach ($vehicles as $vehicle) {
-            $vehicle->status = 0;
+            $vehicle->condition = 0;
             $vehicle->update();
         }
 
@@ -133,7 +133,7 @@ class VehicleService
         $vehicles = vehicle::whereIn('id', $ids)->get();
 
         foreach ($vehicles as $vehicle) {
-            $vehicle->status = 1;
+            $vehicle->condition = 1;
             $vehicle->update();
         }
 

@@ -164,14 +164,11 @@
                                                 color="#505050"
                                             />
                                         </div>
-                                        <div
-                                            class="p-2 border icon_item"
-                                            v-if="can('active_vehicle')"
-                                        >
+                                        <div class="p-2 border icon_item">
                                             <a
                                                 @click.prevent="
                                                     activeSelectedItems(
-                                                        checkVehicleItems
+                                                        checkVehicleItems.value
                                                     )
                                                 "
                                             >
@@ -187,7 +184,7 @@
                                             <a
                                                 @click.prevent="
                                                     inactiveSelectedItems(
-                                                        checkVehicleItems
+                                                        checkVehicleItems.value
                                                     )
                                                 "
                                             >
@@ -198,7 +195,7 @@
                                                 />
                                             </a>
                                         </div>
-                                        <!-- <div class="p-2 border icon_item" v-if="checkVehicleItems.length > 0 && can('delete_Vehicle')"> -->
+                                        <!-- <div class="p-2 border icon_item" v-if="checkVehicleItems.value.length > 0 && can('delete_Vehicle')"> -->
                                         <div
                                             class="p-2 border icon_item"
                                             v-if="checkVehicleItems.length > 0"
@@ -207,7 +204,7 @@
                                                 href="javascript:void(0)"
                                                 @click.prevent="
                                                     deleteSelectedItems(
-                                                        checkVehicleItems
+                                                        checkVehicleItems.value
                                                     )
                                                 "
                                             >
@@ -239,12 +236,10 @@
                                                         type="checkbox"
                                                         @click="selectAll"
                                                         v-if="
-                                                            vehicle.length > 0
+                                                            vehicles &&
+                                                            vehicles.length > 0
                                                         "
-                                                        :checked="
-                                                            checkAllItems.length ==
-                                                            checkVehicleItems.length
-                                                        "
+                                                        :checked="checkAllItems"
                                                         v-model="checkAllItems"
                                                     />
                                                 </div>
@@ -297,7 +292,9 @@
                                                 class="pt-2"
                                             >
                                                 <label
-                                                    v-if="vehicle.condition > 1"
+                                                    v-if="
+                                                        vehicle.condition == 1
+                                                    "
                                                     class="badge bg-success text-white fw-bold"
                                                     >Active</label
                                                 >
@@ -783,6 +780,7 @@ import {
     faPen,
 } from "@fortawesome/free-solid-svg-icons";
 
+const textClassHead = ref("text-start text-uppercase");
 const textClassBody = ref("text-start");
 const iconClassHead = ref("text-center");
 const iconClassBody = ref("text-center");
@@ -815,7 +813,6 @@ library.add(faCircleMinus);
 library.add(faTrash);
 library.add(faXmark);
 library.add(faPen);
-
 
 function resetValidationErrors() {
     validationErrors.value = {};
@@ -881,19 +878,19 @@ async function reload() {
 
 async function getVehicles() {
     //    loader.start();
-    const vehiclesData = (await axios.get(route("vehicles.all"))).data;
-    vehicles.value = vehiclesData.data;
-    pagination.value = vehiclesData.meta;
+    const response = (await axios.get(route("vehicles.all"))).data;
+    vehicles.value = response.data;
+    pagination.value = response.meta;
     //    loader.finish();
 }
 
 async function createVehicle() {
     resetValidationErrors();
     try {
-        const newVehicle = (
+        const response = (
             await axios.post(route("vehicles.store"), vehicle.value)
         ).data;
-        window.location.href = route("vehicles.edit", newVehicle.id);
+        window.location.href = route("vehicles.edit", response.id);
         vehicle.value = {};
         notify.success({
             title: "Success",
@@ -918,54 +915,51 @@ function clearFilters() {
     reload();
 }
 
-async function inactiveSelectedItems(checkVehicleItems) {
-    //    loader.start();
-    const ids = checkVehicleItems.map((item) => item.id);
+async function inactiveSelectedItems() {
+    const ids = checkVehicleItems.value.map((item) => item.id);
     await axios.post(route("vehicles.inactive.selected"), { ids });
-    checkVehicleItems = [];
+    checkVehicleItems.value = [];
     await reload();
-    //    loader.finish();
 }
 
-async function activeSelectedItems(checkVehicleItems) {
-    //    loader.start();
-    const ids = checkVehicleItems.map((item) => item.id);
+async function activeSelectedItems() {
+    const ids = checkVehicleItems.value.map((item) => item.id);
     await axios.post(route("vehicles.active.selected"), { ids });
-    checkVehicleItems = [];
+    checkVehicleItems.value = [];
     await reload();
-    //    loader.finish();
 }
+
 function selectAll(event) {
     if (event.target.checked === false) {
         checkVehicleItems.value = [];
     } else {
-        vehicles.value.forEach((vehicle) => {
-            checkVehicleItems.value.push(vehicle.id);
-        });
+        checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
     }
 }
-async function deleteSelectedItems() {
-    //    loader.start();
-    try {
-        const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#C00202",
-            cancelButtonColor: "#6CA925",
-            confirmButtonText: "Yes, delete it!",
-        });
 
-        if (result.isConfirmed) {
-            const ids = checkVehicleItems.value.map((item) => item.id);
-            await axios.post(route("vehicles.delete.selected"), { ids });
-            await reload();
+async function deleteSelectedItems() {
+    try {
+        if (checkVehicleItems.value && checkVehicleItems.value.length > 0) {
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#C00202",
+                cancelButtonColor: "#6CA925",
+                confirmButtonText: "Yes, delete it!",
+            });
+
+            if (result.isConfirmed) {
+                const ids = checkVehicleItems.value.map((item) => item.id);
+                await axios.post(route("vehicles.delete.selected"), { ids });
+                await reload();
+            }
         }
     } catch (error) {
         convertValidationNotification(error);
     } finally {
-        //    loader.finish();
+        // loader.finish();
     }
 }
 </script>
