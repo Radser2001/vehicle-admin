@@ -36,7 +36,7 @@
                                             class="breadcrumb-item active breadcrumb-text"
                                             aria-current="page"
                                         >
-                                            #{{ this.vehicle.id }}
+                                            #{{ vehicle.id }}
                                         </li>
                                     </ol>
                                 </nav>
@@ -109,7 +109,7 @@
                                     role="tabpanel"
                                 >
                                     <BasicEditForm
-                                        :vehicle_id="this.vehicle.id"
+                                        :vehicle_id="vehicle.id"
                                     />
                                 </div>
                                 <div
@@ -118,7 +118,7 @@
                                     role="tabpanel"
                                 >
                                     <ContactBookAll
-                                        :vehicle_id="this.vehicle.id"
+                                        :vehicle_id="vehicle.id"
                                     />
                                 </div>
                                 <div
@@ -127,14 +127,14 @@
                                     role="tabpanel"
                                 >
                                     <BankAccountsAll
-                                        :vehicle_id="this.vehicle.id"
+                                        :vehicle_id="vehicle.id"
                                     />
                                 </div>
                                 <!-- <div class="tab-pane fade show" id="finance-records" role="tabpanel">
-                                    <FinanceRecordAll :vehicle_id="this.vehicle.id" />
+                                    <FinanceRecordAll :vehicle_id="vehicle.id" />
                                 </div> -->
                                 <!-- <div class="tab-pane fade show" id="partner-accounts" role="tabpanel">
-                                    <PartnerAccountsAll :vehicle_id="this.vehicle.id"  />
+                                    <PartnerAccountsAll :vehicle_id="vehicle.id"  />
                                 </div> -->
                             </div>
                         </div>

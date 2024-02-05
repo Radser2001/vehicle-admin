@@ -25,6 +25,7 @@
 import { Head, Link } from '@inertiajs/vue3'
 import SideBar from '@/Components/Main/SideBar.vue';
 import NavBar from '@/Components/Main/NavBar.vue';
+import Footer from '@/Components/Main/Footer.vue';
 import Notification from '@/Components/Basic/Notification.vue';
 import Loader from '@/Components/Basic/LoadingBar.vue';
 
