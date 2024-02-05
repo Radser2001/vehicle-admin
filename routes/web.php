@@ -47,7 +47,7 @@ Route::prefix('/vehicles')->group(function () {
     Route::get('/{vehicle_id}/edit', [VehicleController::class, "edit"])->name('vehicles.edit');
     Route::post('/{vehicle_id}/vehicle/update', [VehicleController::class, "update"])->name('vehicles.update');
     Route::delete('/{vehicle_id}/delete', [VehicleController::class, "delete"])->name('vehicles.delete');
-    Route::post('/{vehicle_id}/select/vehicle/delete', [VehicleController::class, 'deleteSelectedItems'])->name('vehicles.delete.selected');
+    Route::post('/select/vehicle/delete', [VehicleController::class, 'deleteSelectedItems'])->name('vehicles.delete.selected');
 
     Route::post('/select/vehicle/inactive', [VehicleController::class, 'inactiveSelectedItems'])->name('vehicles.inactive.selected');
     Route::post('/select/vehicle/active', [VehicleController::class, 'activeSelectedItems'])->name('vehicles.active.selected');

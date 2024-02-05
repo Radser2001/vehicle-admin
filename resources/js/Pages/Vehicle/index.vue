@@ -952,12 +952,13 @@ async function deleteSelectedItems() {
 
             if (result.isConfirmed) {
                 const ids = checkVehicleItems.value.map((item) => item.id);
-                await axios.post(route("vehicles.delete.selected"), { ids });
+                await axios.post(route("vehicles.delete.selected"), {ids});
                 await reload();
             }
         }
     } catch (error) {
-        convertValidationNotification(error);
+        // convertValidationNotification(error);
+        console.log(error);
     } finally {
         // loader.finish();
     }
