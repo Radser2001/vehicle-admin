@@ -1,10 +1,7 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import { Head, useForm } from "@inertiajs/vue3";
 
 defineProps({
     status: {
@@ -13,49 +10,70 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    email: "",
 });
 
 const submit = () => {
-    form.post(route('password.email'));
+    form.post(route("password.email"));
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Forgot Password" />
-
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset
-            link that will allow you to choose a new one.
-        </div>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+    <Head title="Forgot Password" />
+    <main class="main-content main-content-bg mt-0">
+        <div
+            class="page-header min-vh-100"
+            style="
+                background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/reset-basic.jpg');
+            "
+        >
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-7">
+                        <div
+                            class="card z-index-0 mb-7"
+                            style="margin-top: 10rem"
+                        >
+                            <div class="card-header text-center pt-4 pb-1">
+                                <h4 class="font-weight-bolder mb-1">
+                                    Reset password
+                                </h4>
+                                <p class="mb-0">
+                                    You will receive an e-mail in maximum 60
+                                    seconds
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                <form @submit.prevent="submit">
+                                    <div class="mb-3">
+                                        <input
+                                            type="email"
+                                            v-model="form.email"
+                                            class="form-control"
+                                            placeholder="Email"
+                                            aria-label="Email"
+                                        />
+                                        <div class="mt-2">
+                                            <InputError
+                                                :message="form.errors.email"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button
+                                            type="submit"
+                                            class="btn text-white bg-gradient-dark btn-lg w-100 my-2 mb-2"
+                                        >
+                                            Send
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </main>
 </template>
