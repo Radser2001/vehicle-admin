@@ -50,7 +50,7 @@ class VehicleController extends Controller
         $query = Vehicle::orderBy('id', 'desc');
         if (request('search_vehicle_make')) {
             $make = request('search_vehicle_make');
-            $query->where('make', $make);
+            $query->where('make','like', "%{$make}%");
         }
         if (request('search_vehicle_model')) {
             $model = request('search_vehicle_model');
@@ -58,11 +58,11 @@ class VehicleController extends Controller
         }
         if (request('search_vehicle_color')) {
             $color = request('search_vehicle_color');
-            $query->where('color', $color);
+            $query->where('color','like', "%{$color}%");
         }
 
         $payload = QueryBuilder::for($query)
-            ->allowedSorts(['code'])
+            ->allowedSorts(['id'])
             ->allowedFilters(
                 AllowedFilter::callback('search', function ($query, $value) {
                     $query->whereHas('make', function (Builder $query) use ($value) {
@@ -72,7 +72,7 @@ class VehicleController extends Controller
                         $query->where('name', 'like', "%{$value}%");
                     });
                     $query->orWhere('id', 'like', "%{$value}%");
-                    $query->orWhere('color', 'like', "%{$value}%");
+                    $query->orWhere('name', 'like', "%{$value}%");
                 })
             )
             ->paginate(request('per_page', config('basic.pagination_per_page')));

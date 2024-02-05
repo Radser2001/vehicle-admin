@@ -114,7 +114,7 @@ async function reload() {
             },
         })
     ).data;
-
+    console.log(tableData);
     vehicles.value = tableData.data;
     pagination.value = tableData.meta;
 
@@ -137,6 +137,7 @@ async function createVehicle() {
         ).data;
         window.location.href = route("vehicles.edit", response.id);
         vehicle.value = {};
+        $("#newVehicleModal").modal("hide");
         Swal.fire({
             title: "Success",
             text: "Vehicle created successfully",
@@ -273,49 +274,49 @@ async function deleteSelectedItems() {
                         <div class="row my-3 mx-2">
                             <div class="col-md-2 column__right___padding">
                                 <div for="purchase_uom" class="col-form-label">
-                                    CODE
+                                    MAKE
                                 </div>
-                                <!-- <input
+                                <input
                                     type="text"
                                     class="form-control form-control-sm"
                                     name="code"
-                                    id="code"
-                                    v-model="search_vehicle.make"
-                                    placeholder="Code"
+                                    id="make"
+                                    v-model="searchVehicle.make"
+                                    placeholder="Make"
                                     @keyup="getSearch"
-                                /> -->
+                                />
                             </div>
                             <div
                                 class="col-md-2 column__right___padding column__left___padding"
                             >
                                 <div for="purchase_uom" class="col-form-label">
-                                    NAME
+                                    MODEL
                                 </div>
-                                <!-- <input
+                                <input
                                     type="text"
                                     class="form-control form-control-sm"
                                     name="name"
                                     id="name"
-                                    v-model="search_vehicle.model"
-                                    placeholder="vehicle's Name"
+                                    v-model="searchVehicle.model"
+                                    placeholder="Model"
                                     @keyup="getSearch"
-                                /> -->
+                                />
                             </div>
                             <div
                                 class="col-md-2 column__right___padding column__left___padding"
                             >
                                 <div for="purchase_uom" class="col-form-label">
-                                    Contact
+                                    Color
                                 </div>
-                                <!-- <input
+                                <input
                                     type="text"
                                     class="form-control form-control-sm"
                                     name="contact"
                                     id="contact"
-                                    v-model="search_vehicle.color"
-                                    placeholder="vehicle's Name"
+                                    v-model="searchVehicle.color"
+                                    placeholder="Color"
                                     @keyup="getSearch"
-                                /> -->
+                                />
                             </div>
                             <div class="col-md-2 mt-4 column__left___padding">
                                 <a
