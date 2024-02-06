@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 class VehicleImageController extends Controller
 {
 
-    public function all()
+    public function all(int $vehicleId)
     {
-        return ImageFacade::all();
+        return ImageFacade::all($vehicleId);
     }
+
 
     public function update(Request $request)
     {
@@ -29,7 +30,7 @@ class VehicleImageController extends Controller
 
     public function delete(int $imageId)
     {
-        $image = ImageFacade::find($imageId);
-        ImageFacade::delete($image);
+
+        ImageFacade::delete($imageId);
     }
 }

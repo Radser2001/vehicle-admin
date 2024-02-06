@@ -26,9 +26,9 @@ class ImageService
      *
      * @return Image
      */
-    public function all()
+    public function all(int $vehicleId)
     {
-        return $this->image->all();
+        return $this->image->where('vehicle_id', $vehicleId)->get();
     }
 
     public function store($image, $vehicleId)
@@ -51,8 +51,9 @@ class ImageService
      * @param  mixed $image
      * @return void
      */
-    public function delete($image)
+    public function delete($imageId)
     {
+        $image = $this->image::find($imageId);
         if (isset($image)) {
             $filePath = str_replace(config('filesystems.disks.do.public_url') . '/', '', $image->name);
             Storage::disk('do')->delete($filePath);

@@ -30,13 +30,25 @@ async function reload() {
     // $root.value.loader.finish();
 }
 
-const deleteImage = async (id) => {
+const deleteImage = async (image_id) => {
     try {
-        const response = await axios.delete(
-            route("vehicles.image.delete", vehicle_id)
-        );
-        console.log(response);
-        reload();
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(route("vehicles.image.delete", image_id))
+                    .then((response) => {
+                        reload();
+                    });
+            }
+        });
     } catch (error) {
         console.log(error);
     }
@@ -46,8 +58,6 @@ const uploadImage = async () => {
     try {
         const formData = new FormData();
         formData.append("image", image.value);
-        console.log(formData.get("image"));
-        console.log(image.value);
         const response = await axios.post(
             route("vehicles.image.update", vehicle_id),
             formData,
@@ -89,8 +99,9 @@ const uploadImage = async () => {
                     <font-awesome-icon icon="fa-solid fa-circle-plus" />
                     ADD
                 </button>
-
-                <div class="row">
+            </form>
+            <div class="mt-5">
+                <div v-if="images && images.length > 0" class="row">
                     <div
                         v-for="image in images"
                         :key="image.id"
@@ -117,7 +128,10 @@ const uploadImage = async () => {
                         </div>
                     </div>
                 </div>
-            </form>
+                <div v-else class="row">
+                    <p class="text-center">No images uploaded yet...</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>

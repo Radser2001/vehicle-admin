@@ -65,7 +65,7 @@ Route::prefix('/vehicles')->group(function () {
 
     Route::post('/{vehicle_id}/image/update', [VehicleImageController::class, "update"])->name('vehicles.image.update');
     Route::get('/{vehicle_id}/image/all', [VehicleImageController::class, "all"])->name('vehicles.image.all');
-    Route::delete('/{vehicle_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
+    Route::delete('/{image_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
 
     // Route::post('/{vehicle_id}/finance/update', [VehicleFinanceRecordController::class, "update"])->name('vehicles.finance.update');
     // Route::get('/{vehicle_id}/finance/get', [VehicleFinanceRecordController::class, "get"])->name('vehicles.finance.get');
