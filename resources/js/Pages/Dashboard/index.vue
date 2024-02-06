@@ -30,25 +30,14 @@ async function fetchTotalVehicles() {
                             <h6 class="mb-0 h2 text-dark d-inline-block">
                                 Dashboard
                             </h6>
-                            <nav
-                                aria-label="breadcrumb"
-                                class="d-none d-md-block"
-                            >
-                                <ol
-                                    class="breadcrumb breadcrumb-links breadcrumb-dark"
-                                >
+                            <nav aria-label="breadcrumb" class="d-none d-md-block">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                     <li class="breadcrumb-item">
                                         <Link href="/">
-                                            <font-awesome-icon
-                                                icon="fa-solid fa-house"
-                                                color="#505050"
-                                            />
+                                        <font-awesome-icon icon="fa-solid fa-house" color="#505050" />
                                         </Link>
                                     </li>
-                                    <li
-                                        class="breadcrumb-item active breadcrumb-text"
-                                        aria-current="page"
-                                    >
+                                    <li class="breadcrumb-item active breadcrumb-text" aria-current="page">
                                         Dashboard
                                     </li>
                                 </ol>
@@ -68,26 +57,18 @@ async function fetchTotalVehicles() {
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p
-                                                    class="mb-3 text-lg text-uppercase font-weight-bold"
-                                                >
+                                                <p class="mb-3 text-lg text-uppercase font-weight-bold">
                                                     Total Vehicles
                                                 </p>
-                                                <h5
-                                                    class="text-lg font-weight-bolder"
-                                                >
+                                                <h5 class="text-lg font-weight-bolder">
                                                     {{ total_vehicles }}
                                                 </h5>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle"
-                                            >
-                                                <font-awesome-icon
-                                                    icon="fa-solid fa-truck"
-                                                    color="#ffffff"
-                                                />
+                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
                                             </div>
                                         </div>
                                     </div>

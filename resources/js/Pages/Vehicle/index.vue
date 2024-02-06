@@ -267,25 +267,14 @@ async function deleteSelectedItems() {
                                 <h6 class="h2 text-dark d-inline-block mb-0">
                                     vehicle
                                 </h6>
-                                <nav
-                                    aria-label="breadcrumb"
-                                    class="d-none d-md-block"
-                                >
-                                    <ol
-                                        class="breadcrumb breadcrumb-links breadcrumb-dark"
-                                    >
+                                <nav aria-label="breadcrumb" class="d-none d-md-block">
+                                    <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                                         <li class="breadcrumb-item">
                                             <Link href="/">
-                                                <font-awesome-icon
-                                                    icon="fa-solid fa-house"
-                                                    color="#505050"
-                                                />
+                                            <font-awesome-icon icon="fa-solid fa-house" color="#505050" />
                                             </Link>
                                         </li>
-                                        <li
-                                            class="breadcrumb-item active breadcrumb-text"
-                                            aria-current="page"
-                                        >
+                                        <li class="breadcrumb-item active breadcrumb-text" aria-current="page">
                                             Vehicle Management
                                         </li>
                                     </ol>
@@ -293,14 +282,9 @@ async function deleteSelectedItems() {
                             </div>
                             <!-- <div class="col-lg-4 text-right py-4" v-if="can('create_Vehicle')"> -->
                             <div class="col-lg-4 text-right py-4">
-                                <a
-                                    href="javascript:void(0)"
-                                    @click.prevent="newVehicle"
-                                    class="btn btn-sm btn-neutral float-end"
-                                >
-                                    <font-awesome-icon
-                                        icon="fa-solid fa-circle-plus"
-                                    />
+                                <a href="javascript:void(0)" @click.prevent="newVehicle"
+                                    class="btn btn-sm btn-neutral float-end">
+                                    <font-awesome-icon icon="fa-solid fa-circle-plus" />
                                     ADD NEW
                                 </a>
                             </div>
@@ -319,71 +303,35 @@ async function deleteSelectedItems() {
                                 <div for="purchase_uom" class="col-form-label">
                                     MAKE
                                 </div>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    name="code"
-                                    id="make"
-                                    v-model="searchVehicle.make"
-                                    placeholder="Make"
-                                    @keyup="getSearch"
-                                />
+                                <input type="text" class="form-control form-control-sm" name="code" id="make"
+                                    v-model="searchVehicle.make" placeholder="Make" @keyup="getSearch" />
                             </div>
-                            <div
-                                class="col-md-2 column__right___padding column__left___padding"
-                            >
+                            <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     MODEL
                                 </div>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    name="name"
-                                    id="name"
-                                    v-model="searchVehicle.model"
-                                    placeholder="Model"
-                                    @keyup="getSearch"
-                                />
+                                <input type="text" class="form-control form-control-sm" name="name" id="name"
+                                    v-model="searchVehicle.model" placeholder="Model" @keyup="getSearch" />
                             </div>
-                            <div
-                                class="col-md-2 column__right___padding column__left___padding"
-                            >
+                            <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     COLOR
                                 </div>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    name="contact"
-                                    id="contact"
-                                    v-model="searchVehicle.color"
-                                    placeholder="Color"
-                                    @keyup="getSearch"
-                                />
+                                <input type="text" class="form-control form-control-sm" name="contact" id="contact"
+                                    v-model="searchVehicle.color" placeholder="Color" @keyup="getSearch" />
                             </div>
                             <div class="col-md-2 mt-4 column__left___padding">
-                                <a
-                                    href="javascript:void(0)"
-                                    @click.prevent="clearFilters"
-                                    class="btn btn-sm btn-ash float-end mt-2 pt-2"
-                                >
+                                <a href="javascript:void(0)" @click.prevent="clearFilters"
+                                    class="btn btn-sm btn-ash float-end mt-2 pt-2">
                                     CLEAR
                                 </a>
                             </div>
                             <div class="text-muted ml-auto mx-4 mt-4">
                                 <div class="inline-block">
-                                    <select
-                                        class="form-control form-control-sm per-page-entry mt-2"
-                                        :value="100"
-                                        v-model="pageCount"
-                                        @change="perPageChange"
-                                    >
-                                        <option
-                                            v-for="perPageCount in perPage"
-                                            :key="perPageCount"
-                                            :value="perPageCount"
-                                            v-text="perPageCount"
-                                        />
+                                    <select class="form-control form-control-sm per-page-entry mt-2" :value="100"
+                                        v-model="pageCount" @change="perPageChange">
+                                        <option v-for="perPageCount in perPage" :key="perPageCount" :value="perPageCount"
+                                            v-text="perPageCount" />
                                     </select>
                                 </div>
                             </div>
@@ -394,93 +342,58 @@ async function deleteSelectedItems() {
                                 <div class="d-flex flex-row mb-3 rounded">
                                     <div class="left d-flex">
                                         <div class="p-2 border icon_item">
-                                            <font-awesome-icon
-                                                class="icon_item-icon"
-                                                icon="fa-solid fa-clone"
-                                                color="#505050"
-                                            />
+                                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-clone"
+                                                color="#505050" />
                                         </div>
                                         <div class="p-2 border icon_item">
-                                            <font-awesome-icon
-                                                class="icon_item-icon"
-                                                icon="fa-solid fa-arrow-up-from-bracket"
-                                                color="#505050"
-                                            />
+                                            <font-awesome-icon class="icon_item-icon"
+                                                icon="fa-solid fa-arrow-up-from-bracket" color="#505050" />
                                         </div>
                                         <div class="p-2 border icon_item">
-                                            <font-awesome-icon
-                                                class="icon_item-icon"
-                                                icon="fa-solid fa-cloud-arrow-down"
-                                                color="#505050"
-                                            />
+                                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-cloud-arrow-down"
+                                                color="#505050" />
                                         </div>
                                         <div class="p-2 border icon_item">
-                                            <font-awesome-icon
-                                                class="icon_item-icon"
-                                                icon="fa-solid fa-wrench"
-                                                rotation="{270}"
-                                                color="#505050"
-                                            />
+                                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-wrench"
+                                                rotation="{270}" color="#505050" />
                                         </div>
                                         <div class="p-2 border icon_item">
-                                            <a
-                                                @click.prevent="
-                                                    activeSelectedItems(
-                                                        checkVehicleItems.value
-                                                    )
-                                                "
-                                            >
-                                                <font-awesome-icon
-                                                    class="icon_item-icon"
-                                                    icon="fa-solid fa-circle-check"
-                                                    color="#0bd018"
-                                                />
+                                            <a @click.prevent="
+                                                activeSelectedItems(
+                                                    checkVehicleItems.value
+                                                )
+                                                ">
+                                                <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-check"
+                                                    color="#0bd018" />
                                             </a>
                                         </div>
                                         <!-- <div class="p-2 border icon_item" v-if="can('inactive_Vehicle')"> -->
                                         <div class="p-2 border icon_item">
-                                            <a
-                                                @click.prevent="
-                                                    inactiveSelectedItems(
-                                                        checkVehicleItems.value
-                                                    )
-                                                "
-                                            >
-                                                <font-awesome-icon
-                                                    class="icon_item-icon"
-                                                    icon="fa-solid fa-circle-minus"
-                                                    color="#eb0505"
-                                                />
+                                            <a @click.prevent="
+                                                inactiveSelectedItems(
+                                                    checkVehicleItems.value
+                                                )
+                                                ">
+                                                <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-minus"
+                                                    color="#eb0505" />
                                             </a>
                                         </div>
                                         <!-- <div class="p-2 border icon_item" v-if="checkVehicleItems.value.length > 0 && can('delete_Vehicle')"> -->
-                                        <div
-                                            class="p-2 border icon_item"
-                                            v-if="checkVehicleItems.length > 0"
-                                        >
-                                            <a
-                                                href="javascript:void(0)"
-                                                @click.prevent="
-                                                    deleteSelectedItems(
-                                                        checkVehicleItems.value
-                                                    )
-                                                "
-                                            >
-                                                <font-awesome-icon
-                                                    class="icon_item-icon"
-                                                    icon="fa-solid fa-trash"
-                                                    color="#eb0505"
-                                                />
+                                        <div class="p-2 border icon_item" v-if="checkVehicleItems.length > 0">
+                                            <a href="javascript:void(0)" @click.prevent="
+                                                deleteSelectedItems(
+                                                    checkVehicleItems.value
+                                                )
+                                                ">
+                                                <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-trash"
+                                                    color="#eb0505" />
                                             </a>
                                         </div>
                                     </div>
                                     <div class="right d-flex ml-auto">
                                         <div class="p-2 border icon_item">
-                                            <font-awesome-icon
-                                                class="icon_item-icon"
-                                                icon="fa-solid fa-print"
-                                                color="#505050"
-                                            />
+                                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-print"
+                                                color="#505050" />
                                         </div>
                                     </div>
                                 </div>
@@ -489,17 +402,9 @@ async function deleteSelectedItems() {
                                         <tr>
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        @click="selectAll"
-                                                        v-if="
-                                                            vehicles &&
-                                                            vehicles.length > 0
-                                                        "
-                                                        :checked="checkAllItems"
-                                                        v-model="checkAllItems"
-                                                    />
+                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="vehicles &&
+                                                        vehicles.length > 0
+                                                        " :checked="checkAllItems" v-model="checkAllItems" />
                                                 </div>
                                             </th>
                                             <th :class="iconClassHead">
@@ -527,42 +432,18 @@ async function deleteSelectedItems() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr
-                                            v-for="vehicle in vehicles"
-                                            :key="vehicle.id"
-                                            :class="rowClass"
-                                        >
+                                        <tr v-for="vehicle in vehicles" :key="vehicle.id" :class="rowClass">
                                             <td class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input
-                                                        class="form-check-input"
-                                                        type="checkbox"
-                                                        v-model="
-                                                            checkVehicleItems
-                                                        "
-                                                        v-bind:value="vehicle"
-                                                        v-bind:id="vehicle.id"
-                                                    />
+                                                    <input class="form-check-input" type="checkbox" v-model="checkVehicleItems
+                                                        " v-bind:value="vehicle" v-bind:id="vehicle.id" />
                                                 </div>
                                             </td>
-                                            <td
-                                                :class="iconClassBody"
-                                                class="pt-2"
-                                            >
-                                                <label
-                                                    v-if="
-                                                        vehicle.condition == 1
-                                                    "
-                                                    class="badge bg-success text-white fw-bold"
-                                                    >Active</label
-                                                >
-                                                <label
-                                                    v-if="
-                                                        vehicle.condition == 0
-                                                    "
-                                                    class="badge bg-warning text-white fw-bold"
-                                                    >Inactive</label
-                                                >
+                                            <td :class="iconClassBody" class="pt-2">
+                                                <label v-if="vehicle.condition == 1
+                                                    " class="badge bg-success text-white fw-bold">Active</label>
+                                                <label v-if="vehicle.condition == 0
+                                                    " class="badge bg-warning text-white fw-bold">Inactive</label>
                                             </td>
                                             <td :class="textClassBody">
                                                 {{ vehicle.make }}
@@ -586,16 +467,10 @@ async function deleteSelectedItems() {
                                                 {{ vehicle.price }}
                                             </td>
                                             <td :class="textClassBody">
-                                                <a
-                                                    href="javascript:void(0)"
-                                                    @click.prevent="
-                                                        editVehicle(vehicle.id)
-                                                    "
-                                                >
-                                                    <font-awesome-icon
-                                                        icon="fa-solid fa-pen"
-                                                        class="text-ash"
-                                                    />
+                                                <a href="javascript:void(0)" @click.prevent="
+                                                    editVehicle(vehicle.id)
+                                                    ">
+                                                    <font-awesome-icon icon="fa-solid fa-pen" class="text-ash" />
                                                 </a>
                                             </td>
                                         </tr>
@@ -604,112 +479,67 @@ async function deleteSelectedItems() {
                             </div>
                         </div>
 
-                        <div
-                            class="flex mt-1 px-3 mx-1 card-footer table-footer align-items-center"
-                        >
+                        <div class="flex mt-1 px-3 mx-1 card-footer table-footer align-items-center">
                             <div class="col-sm-12 col-md-6 p-0">
-                                <div
-                                    class="dataTables_info column__left___padding"
-                                    id="DataTables_Table_0_info"
-                                    role="status"
-                                    aria-live="polite"
-                                >
+                                <div class="dataTables_info column__left___padding" id="DataTables_Table_0_info"
+                                    role="status" aria-live="polite">
                                     Showing {{ pagination.from }} to
                                     {{ pagination.to }} of
                                     {{ pagination.total }} entries
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-6 p-0">
-                                <div
-                                    class="dataTables_paginate paging_simple_numbers column__right___padding"
-                                    id="DataTables_Table_0_paginate"
-                                >
-                                    <nav
-                                        aria-label="Page navigation"
-                                        style="float: right"
-                                    >
+                                <div class="dataTables_paginate paging_simple_numbers column__right___padding"
+                                    id="DataTables_Table_0_paginate">
+                                    <nav aria-label="Page navigation" style="float: right">
                                         <ul class="pagination">
-                                            <li
-                                                class="page-item"
-                                                :class="
-                                                    pagination.current_page == 1
-                                                        ? 'disabled'
-                                                        : ''
-                                                "
-                                            >
-                                                <a
-                                                    class="page-link"
-                                                    href="javascript:void(0)"
-                                                    @click="
-                                                        setPage(
-                                                            pagination.current_page -
-                                                                1
-                                                        )
-                                                    "
-                                                >
-                                                    <i
-                                                        class="fa-solid fa-angles-left"
-                                                    ></i>
+                                            <li class="page-item" :class="pagination.current_page == 1
+                                                    ? 'disabled'
+                                                    : ''
+                                                ">
+                                                <a class="page-link" href="javascript:void(0)" @click="
+                                                    setPage(
+                                                        pagination.current_page -
+                                                        1
+                                                    )
+                                                    ">
+                                                    <i class="fa-solid fa-angles-left"></i>
                                                 </a>
                                             </li>
-                                            <template
-                                                v-for="(
+                                            <template v-for="(
                                                     page, index
-                                                ) in pagination.last_page"
-                                            >
-                                                <template
-                                                    v-if="
-                                                        page == 1 ||
-                                                        page ==
-                                                            pagination.last_page ||
-                                                        Math.abs(
-                                                            page -
-                                                                pagination.current_page
-                                                        ) < 5
-                                                    "
-                                                >
-                                                    <li
-                                                        class="page-item"
-                                                        :key="index"
-                                                        :class="
-                                                            pagination.current_page ==
+                                                ) in pagination.last_page">
+                                                <template v-if="page == 1 ||
+                                                    page ==
+                                                    pagination.last_page ||
+                                                    Math.abs(
+                                                        page -
+                                                        pagination.current_page
+                                                    ) < 5
+                                                    ">
+                                                    <li class="page-item" :key="index" :class="pagination.current_page ==
                                                             page
-                                                                ? 'active'
-                                                                : ''
-                                                        "
-                                                    >
-                                                        <a
-                                                            class="page-link"
-                                                            @click="
-                                                                setPage(page)
-                                                            "
-                                                            >{{ page }}</a
-                                                        >
+                                                            ? 'active'
+                                                            : ''
+                                                        ">
+                                                        <a class="page-link" @click="
+                                                            setPage(page)
+                                                            ">{{ page }}</a>
                                                     </li>
                                                 </template>
                                             </template>
-                                            <li
-                                                class="page-item"
-                                                :class="
-                                                    pagination.current_page ==
+                                            <li class="page-item" :class="pagination.current_page ==
                                                     pagination.last_page
-                                                        ? 'disabled'
-                                                        : ''
-                                                "
-                                            >
-                                                <a
-                                                    class="page-link"
-                                                    href="javascript:void(0)"
-                                                    @click="
-                                                        setPage(
-                                                            pagination.current_page +
-                                                                1
-                                                        )
-                                                    "
-                                                >
-                                                    <i
-                                                        class="fa-solid fa-angles-right"
-                                                    ></i>
+                                                    ? 'disabled'
+                                                    : ''
+                                                ">
+                                                <a class="page-link" href="javascript:void(0)" @click="
+                                                    setPage(
+                                                        pagination.current_page +
+                                                        1
+                                                    )
+                                                    ">
+                                                    <i class="fa-solid fa-angles-right"></i>
                                                 </a>
                                             </li>
                                         </ul>
@@ -723,33 +553,15 @@ async function deleteSelectedItems() {
         </template>
 
         <template #modals>
-            <div
-                class="modal fade"
-                id="newVehicleModal"
-                data-bs-backdrop="static"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="newVehicleModal"
-                aria-hidden="true"
-            >
-                <div
-                    class="modal-dialog modal-dialog-centered modal-mb"
-                    role="document"
-                >
+            <div class="modal fade" id="newVehicleModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="newVehicleModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-mb" role="document">
                     <div class="modal-content p-2">
                         <div class="modal-header">
-                            <h5
-                                class="modal-title font-weight-bolder breadcrumb-text text-gradient"
-                                id="add_brandLabel"
-                            >
+                            <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
                                 New Vehicle
                             </h5>
-                            <button
-                                type="button"
-                                class="close btn"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                            >
+                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">
                                     <i class="fa fa-times"></i>
                                 </span>
@@ -758,246 +570,124 @@ async function deleteSelectedItems() {
                         <div class="modal-body p-0">
                             <div class="card-plain">
                                 <div class="card-body">
-                                    <form
-                                        role="form text-left"
-                                        @submit.prevent="createVehicle"
-                                        enctype="multipart/form-data"
-                                    >
+                                    <form role="form text-left" @submit.prevent="createVehicle"
+                                        enctype="multipart/form-data">
                                         <div class="row mb-1">
-                                            <div
-                                                for="make"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="make" class="col-md-3 col-form-label">
                                                 MAKE
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="make"
-                                                    id="make"
-                                                    v-model="vehicle.make"
-                                                    placeholder="make"
-                                                    required
-                                                /><small
-                                                    v-if="validationErrors.make"
-                                                    id="msg_make"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
+                                                <input type="text" class="form-control form-control-sm" name="make"
+                                                    id="make" v-model="vehicle.make" placeholder="make" required /><small
+                                                    v-if="validationErrors.make" id="msg_make"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.make
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="model"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="model" class="col-md-3 col-form-label">
                                                 MODEL
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="model"
-                                                    id="model"
-                                                    v-model="vehicle.model"
-                                                    placeholder="model"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="
+                                                <input type="text" class="form-control form-control-sm" name="model"
+                                                    id="model" v-model="vehicle.model" placeholder="model" required />
+                                                <small v-if="validationErrors.model
+                                                    " id="msg_model"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.model
-                                                    "
-                                                    id="msg_model"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.model
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="year"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="year" class="col-md-3 col-form-label">
                                                 YEAR
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="year"
-                                                    id="year"
-                                                    v-model="vehicle.year"
-                                                    placeholder="year"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="validationErrors.year"
-                                                    id="msg_name"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
+                                                <input type="text" class="form-control form-control-sm" name="year"
+                                                    id="year" v-model="vehicle.year" placeholder="year" required />
+                                                <small v-if="validationErrors.year" id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.year
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="condition"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="condition" class="col-md-3 col-form-label">
                                                 CONDITION
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="condition"
-                                                    id="condition"
-                                                    v-model="vehicle.condition"
-                                                    placeholder="condition"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="
+                                                <input type="text" class="form-control form-control-sm" name="condition"
+                                                    id="condition" v-model="vehicle.condition" placeholder="condition"
+                                                    required />
+                                                <small v-if="validationErrors.condition
+                                                    " id="msg_condition"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.condition
-                                                    "
-                                                    id="msg_condition"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.condition
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="color"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="color" class="col-md-3 col-form-label">
                                                 COLOR
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="color"
-                                                    id="color"
-                                                    v-model="vehicle.color"
-                                                    placeholder="color"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="
+                                                <input type="text" class="form-control form-control-sm" name="color"
+                                                    id="color" v-model="vehicle.color" placeholder="color" required />
+                                                <small v-if="validationErrors.color
+                                                    " id="msg_color"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.color
-                                                    "
-                                                    id="msg_color"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.color
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="mileage"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="mileage" class="col-md-3 col-form-label">
                                                 MILEAGE
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="text"
-                                                    class="form-control form-control-sm"
-                                                    name="mileage"
-                                                    id="mileage"
-                                                    v-model="vehicle.mileage"
-                                                    placeholder="mileage"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="
+                                                <input type="text" class="form-control form-control-sm" name="mileage"
+                                                    id="mileage" v-model="vehicle.mileage" placeholder="mileage" required />
+                                                <small v-if="validationErrors.mileage
+                                                    " id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.mileage
-                                                    "
-                                                    id="msg_name"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.mileage
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="fuel_type"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="fuel_type" class="col-md-3 col-form-label">
                                                 FUEL TYPE
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="fuel_type"
-                                                    class="form-control form-control-sm"
-                                                    name="fuel_type"
-                                                    id="fuel_type"
-                                                    v-model="vehicle.fuel_type"
-                                                    placeholder="fuel type"
-                                                    required
-                                                />
-                                                <small
-                                                    v-if="
+                                                <input type="fuel_type" class="form-control form-control-sm"
+                                                    name="fuel_type" id="fuel_type" v-model="vehicle.fuel_type"
+                                                    placeholder="fuel type" required />
+                                                <small v-if="validationErrors.fuel_type
+                                                    " id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.fuel_type
-                                                    "
-                                                    id="msg_name"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.fuel_type
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div
-                                                for="price"
-                                                class="col-md-3 col-form-label"
-                                            >
+                                            <div for="price" class="col-md-3 col-form-label">
                                                 PRICE
                                             </div>
                                             <div class="col-md-9">
-                                                <input
-                                                    type="price"
-                                                    class="form-control form-control-sm"
-                                                    name="price"
-                                                    id="price"
-                                                    v-model="vehicle.price"
-                                                    placeholder="fuel type"
-                                                    required
-                                                /><small
-                                                    v-if="
+                                                <input type="price" class="form-control form-control-sm" name="price"
+                                                    id="price" v-model="vehicle.price" placeholder="fuel type"
+                                                    required /><small v-if="validationErrors.price
+                                                        " id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.price
-                                                    "
-                                                    id="msg_name"
-                                                    class="text-danger form-text text-error-msg error"
-                                                    >{{
-                                                        validationErrors.price
-                                                    }}</small
-                                                >
+                                                    }}</small>
                                             </div>
                                         </div>
 
                                         <div class="text-right mt-2">
-                                            <button
-                                                type="submit"
-                                                class="btn btn-round custom-button btn-sm mb-0"
-                                            >
-                                                <font-awesome-icon
-                                                    icon="fa-solid fa-floppy-disk"
-                                                />
+                                            <button type="submit" class="btn btn-round custom-button btn-sm mb-0">
+                                                <font-awesome-icon icon="fa-solid fa-floppy-disk" />
                                                 CREATE
                                             </button>
                                         </div>
