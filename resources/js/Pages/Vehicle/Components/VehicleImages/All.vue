@@ -82,9 +82,11 @@ const uploadImage = async () => {
         <div class="card-header">
             <h5>Vehicle Images</h5>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 container">
             <form @submit.prevent="uploadImage" enctype="multipart/form-data">
-                <p for="formFile" class="form-label mb-4">Upload an Image</p>
+                <p for="formFile" class="form-label mb-4">
+                    Upload Images of the vehicle
+                </p>
                 <input
                     class="form-control"
                     type="file"
@@ -100,7 +102,8 @@ const uploadImage = async () => {
                     ADD
                 </button>
             </form>
-            <div class="mt-5">
+            <hr class="mt-3" />
+            <div class="mt-4">
                 <div v-if="images && images.length > 0" class="row">
                     <div
                         v-for="image in images"
@@ -128,8 +131,10 @@ const uploadImage = async () => {
                         </div>
                     </div>
                 </div>
-                <div v-else class="row">
-                    <p class="text-center">No images uploaded yet...</p>
+                <div v-else>
+                    <p class="text-danger lead text-capitalize">
+                        No images uploaded yet...
+                    </p>
                 </div>
             </div>
         </div>
