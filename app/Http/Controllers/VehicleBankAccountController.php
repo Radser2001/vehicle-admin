@@ -38,8 +38,8 @@ class VehicleBankAccountController extends Controller
     {
         $query = VehicleBankAccount::query()->where('vehicle_id', $vehicleId)->orderBy('id', 'desc');
         $payload = QueryBuilder::for($query)
-            ->allowedSorts(['id', 'name'])
-            ->allowedFilters(AllowedFilter::custom('search', new FuzzyFilter('name', 'designation', 'email', 'mobile_no', 'land_no')))
+            ->allowedSorts(['id', 'bank_name'])
+            ->allowedFilters(AllowedFilter::custom('search', new FuzzyFilter('bank_name', 'bank_code', 'branch_name', 'branch_code', 'swift_code', 'account_no')))
             ->paginate(request('per_page', config('basic.pagination_per_page')));
         return DataResource::collection($payload);
     }

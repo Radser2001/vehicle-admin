@@ -32,17 +32,18 @@ library.add(faPlusCircle);
 library.add(faTrash);
 getBanks();
 
-async function setPage(page) {
-    page = page;
+async function setPage(pg) {
+    page.value = pg;
     reload();
 }
 async function getSearch() {
-    page = 1;
+    page.value = 1;
     reload();
 }
 async function perPageChange() {
     reload();
 }
+
 async function reload() {
     //   this.$root.loader.start();
     const tableData = (
@@ -63,10 +64,17 @@ async function getBanks() {
     //   this.$nextTick(() => {
     //     this.$root.loader.start();
     //   });
-    const response = (await axios.get(route("vehicles.bank.all", vehicle_id)))
-        .data;
-    banks.value = response.data;
-    pagination.value = banks.meta;
+    const tableData = (
+        await axios.get(route("vehicles.bank.all", vehicle_id), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+            },
+        })
+    ).data;
+    banks.value = tableData.data;
+    pagination.value = tableData.meta;
     //   this.$nextTick(() => {
     //     this.$root.loader.finish();
     //   });

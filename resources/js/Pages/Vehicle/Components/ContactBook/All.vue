@@ -31,16 +31,16 @@ library.add(faHouse);
 library.add(faPlusCircle);
 library.add(faTrash);
 
-async function setPage(page) {
-    this.page = page;
-    this.reload();
+async function setPage(pg) {
+    page.value = pg;
+    reload();
 }
 async function getSearch() {
-    this.page = 1;
-    this.reload();
+    page.value = 1;
+    reload();
 }
 async function perPageChange() {
-    this.reload();
+    reload();
 }
 async function reload() {
     // this.$root.loader.start();
