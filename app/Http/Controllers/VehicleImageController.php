@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use domain\Facades\ImageFacade\ImageFacade;
 use Illuminate\Http\Request;
 
-class VehicleImageController extends Controller
+class VehicleImageController extends ParentController
 {
 
     public function all(int $vehicleId)
@@ -13,10 +13,14 @@ class VehicleImageController extends Controller
         return ImageFacade::all($vehicleId);
     }
 
-
+    /**
+     * update
+     *
+     * @param  Request $request
+     * @return void
+     */
     public function update(Request $request)
     {
-        // dd($request->all());
         $image = $request->file('image');
         $vehicleId = $request->vehicle_id;
         $createdImage = ImageFacade::store($image, $vehicleId);
@@ -28,6 +32,12 @@ class VehicleImageController extends Controller
         }
     }
 
+    /**
+     * delete
+     *
+     * @param  int $imageId
+     * @return void
+     */
     public function delete(int $imageId)
     {
 

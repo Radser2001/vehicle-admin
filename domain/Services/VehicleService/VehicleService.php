@@ -32,9 +32,9 @@ class VehicleService
     }
     /**
      * Get
-     * retrieve relevant data using vendor_id
+     * retrieve relevant data using vehicle_id
      *      *
-     * @param  mixed $vendor_id
+     * @param  mixed $vehicle_id
      * @return void
      */
     public function get($vehicle_id)
@@ -60,7 +60,7 @@ class VehicleService
      * Edit
      * merge data which retrieved from update function as an array
      *
-     * @param  mixed $vendor
+     * @param  mixed $vehicle
      * @param  mixed $data
      * @return void
      */

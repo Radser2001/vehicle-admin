@@ -1,6 +1,5 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import isArray from "lodash/isArray";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -9,17 +8,11 @@ import { faCartShopping, faDesktop } from "@fortawesome/free-solid-svg-icons";
 library.add(faCartShopping);
 library.add(faDesktop);
 
-// this.getMaterialTypes();
 
-if (!window.Laravel) {
-    window.location.reload();
-}
+// if (!window.Laravel) {
+//     window.location.reload();
+// }
 
-function isActive(route, path) {
-    if (isArray(path)) {
-        return path.includes(route);
-    }
-}
 </script>
 <template>
     <nav

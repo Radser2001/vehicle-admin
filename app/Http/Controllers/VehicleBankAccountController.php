@@ -11,7 +11,7 @@ use App\Http\Resources\DataResource;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class VehicleBankAccountController extends Controller
+class VehicleBankAccountController extends ParentController
 {
     /**
      * update

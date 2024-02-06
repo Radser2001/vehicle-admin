@@ -20,7 +20,7 @@ class VehicleContactBook extends Model
     /**
      * getAllContacts
      *
-     * @param  int $vendor_id
+     * @param  int $vehicle_id
      * @return void
      */
     public function getAllContacts($vehicle_id)

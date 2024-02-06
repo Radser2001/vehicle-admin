@@ -24,6 +24,7 @@ class ImageService
      * All
      * get all image data
      *
+     * @param  int $vehicleId
      * @return Image
      */
     public function all(int $vehicleId)
@@ -31,6 +32,15 @@ class ImageService
         return $this->image->where('vehicle_id', $vehicleId)->get();
     }
 
+
+    /**
+     * Store
+     * store image data
+     *
+     * @param  mixed $image
+     * @param  int $vehicleId
+     * @return void
+     */
     public function store($image, $vehicleId)
     {
         if (isset($image)) {
