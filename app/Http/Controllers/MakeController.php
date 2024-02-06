@@ -23,7 +23,7 @@ class MakeController extends ParentController
      */
     public function index()
     {
-        return Inertia::render('Settings/Make/all');
+        return Inertia::render('Settings/Make/All');
     }
 
     /**

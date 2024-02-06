@@ -43,8 +43,8 @@
                                 <li class="nav-item">
                                     <Link :class="{
                                         active:
-                                            route().current() == 'vehicles.index',
-                                    }" class="nav-link active-preloader" :href="route('vehicles.index')">
+                                            route().current() == 'make.index',
+                                    }" class="nav-link active-preloader" :href="route('make.index')">
                                     <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
                                     <span class="ml-3 nav-link-text font-weight-400">Make</span>
                                     </Link>
@@ -52,8 +52,8 @@
                                 <li class="nav-item">
                                     <Link :class="{
                                         active:
-                                            route().current() == 'vehicles.index',
-                                    }" class="nav-link active-preloader" :href="route('vehicles.index')">
+                                            route().current() == 'model.index',
+                                    }" class="nav-link active-preloader" :href="route('model.index')">
                                     <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
                                     <span class="ml-3 nav-link-text font-weight-400">Model</span>
                                     </Link>
@@ -75,11 +75,12 @@ import { Link } from "@inertiajs/vue3";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { faCartShopping, faDesktop, faTruck, faCar } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faDesktop, faTruck, faCar } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faTruck);
 library.add(faDesktop);
 library.add(faCar);
+library.add(faGear);
 
 
 
