@@ -19,7 +19,7 @@ class ImageFacade extends Facade
     /**
      * getFacadeAccessor
      *
-     * @return void
+     * @return voidfil
      */
     protected static function getFacadeAccessor()
     {

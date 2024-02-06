@@ -31,7 +31,7 @@ class ImageService
         return $this->image->all();
     }
 
-    public function store($image, $vehicleId): Image
+    public function store($image, $vehicleId)
     {
         if (isset($image)) {
             $filePath = Storage::disk('do')->put(config('filesystems.disks.do.folder'), $image, 'public');
@@ -40,6 +40,8 @@ class ImageService
 
             return $this->image->create($data);
         }
+
+        return null;
     }
 
     /**

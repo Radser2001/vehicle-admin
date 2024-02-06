@@ -94,7 +94,7 @@ defineProps({
                                     vehicles Data</a
                                 >
                             </li>
-                            <!-- <li class="mb-2 nav-item">
+                            <li class="mb-2 nav-item">
                                 <a
                                     class="nav-link"
                                     id="upload-images-tab"
@@ -106,7 +106,7 @@ defineProps({
                                 >
                                     Upload Images</a
                                 >
-                            </li> -->
+                            </li>
                             <li class="mb-2 nav-item">
                                 <a
                                     class="nav-link"
@@ -149,15 +149,15 @@ defineProps({
                                 >
                                     <BasicEditForm :vehicle_id="vehicle.id" />
                                 </div>
-                                <!-- <div
-                                    class="tab-pane fade show active"
+                                <div
+                                    class="tab-pane fade show"
                                     id="upload-images"
                                     role="tabpanel"
                                 >
                                     <UploadImagesForm
                                         :vehicle_id="vehicle.id"
                                     />
-                                </div> -->
+                                </div>
                                 <div
                                     class="tab-pane fade show"
                                     id="contact-book"
