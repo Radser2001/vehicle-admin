@@ -19,6 +19,18 @@ class VehicleService
         $this->vehicle = new Vehicle();
     }
 
+    /**
+     * count
+     * count the number of data in Vehicle model
+     *
+     * @return void
+     */
+
+    public function count()
+    {
+        return $this->vehicle->count();
+    }
+
 
     /**
      * All

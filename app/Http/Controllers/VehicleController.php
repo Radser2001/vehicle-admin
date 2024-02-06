@@ -39,6 +39,15 @@ class VehicleController extends ParentController
         }
     }
 
+    /**
+     * count
+     *
+     * @return void
+     */
+    public function count()
+    {
+        return VehicleFacade::count();
+    }
 
     /**
      * all

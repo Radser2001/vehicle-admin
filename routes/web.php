@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/vehicles')->group(function () {
     Route::get('/', [VehicleController::class, "index"])->name('vehicles.index');
     Route::get('/all', [VehicleController::class, "all"])->name('vehicles.all');
+    Route::get('/count', [VehicleController::class, "count"])->name('vehicles.count');
     Route::get('/{vehicle_id}/get', [VehicleController::class, "get"])->name('vehicles.get');
     Route::post('/store', [VehicleController::class, "store"])->name('vehicles.store');
     Route::get('/{vehicle_id}/edit', [VehicleController::class, "edit"])->name('vehicles.edit');
@@ -66,15 +67,6 @@ Route::prefix('/vehicles')->group(function () {
     Route::post('/{vehicle_id}/image/update', [VehicleImageController::class, "update"])->name('vehicles.image.update');
     Route::get('/{vehicle_id}/image/all', [VehicleImageController::class, "all"])->name('vehicles.image.all');
     Route::delete('/{image_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
-
-    // Route::post('/{vehicle_id}/finance/update', [VehicleFinanceRecordController::class, "update"])->name('vehicles.finance.update');
-    // Route::get('/{vehicle_id}/finance/get', [VehicleFinanceRecordController::class, "get"])->name('vehicles.finance.get');
-
-    // Route::post('/{vehicle_id}/partner/update', [VehiclePartnerAccountController::class, "update"])->name('vehicles.partner.update');
-    // Route::get('/{vehicle_id}/partner/all', [VehiclePartnerAccountController::class, "all"])->name('vehicles.partner.all');
-    // Route::delete('/{vehicle_id}/partner/delete', [VehiclePartnerAccountController::class, "delete"])->name('vehicles.partner.delete');
-
-
 });
 
 
