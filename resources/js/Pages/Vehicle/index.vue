@@ -259,7 +259,7 @@ async function deleteSelectedItems() {
             <Loader ref="loading_bar" />
         </template>
         <template #header>
-            <div class="header pb-6">
+            <div class="header">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="row align-items-center mb-1 mt-1">

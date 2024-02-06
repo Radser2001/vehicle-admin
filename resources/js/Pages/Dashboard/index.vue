@@ -23,7 +23,7 @@ async function fetchTotalVehicles() {
 <template>
     <AppLayout title="Vehicle Admin">
         <template #header>
-            <div class="pb-6 header">
+            <div class="header">
                 <div class="container-fluid">
                     <div class="header-body">
                         <div class="py-4 col align-items-center">
