@@ -262,38 +262,38 @@ async function deleteContactData(id) {
                 </div>
             </form>
             <div>
-                <!-- <div class="py-3 text-sm mt-3">
-          <div class="flex">
-            <div class="flex items-center text-muted">
-              Search:
-              <div class="inline-block ml-2">
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  v-model="search"
-                  @keyup="getSearch"
-                />
-              </div>
-            </div>
-            <div class="flex text-muted ml-auto">
-              <div class="inline-block mx-2">
-                <select
-                  class="form-control form-control-sm per-page-entry"
-                  :value="25"
-                  v-model="pageCount"
-                  @change="perPageChange"
-                >
-                  <option
-                    v-for="perPageCount in perPage"
-                    :key="perPageCount"
-                    :value="perPageCount"
-                    v-text="perPageCount"
-                  />
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> -->
+                <div class="py-3 text-sm mt-3">
+                    <div class="flex">
+                        <div class="flex items-center text-muted">
+                            Search:
+                            <div class="inline-block ml-2">
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    v-model="search"
+                                    @keyup="getSearch"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex text-muted ml-auto">
+                            <div class="inline-block mx-2">
+                                <select
+                                    class="form-control form-control-sm per-page-entry"
+                                    :value="25"
+                                    v-model="pageCount"
+                                    @change="perPageChange"
+                                >
+                                    <option
+                                        v-for="perPageCount in perPage"
+                                        :key="perPageCount"
+                                        :value="perPageCount"
+                                        v-text="perPageCount"
+                                    />
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -347,79 +347,114 @@ async function deleteContactData(id) {
                     </table>
                 </div>
 
-                <!-- <div
-          class="flex mt-1 px-0 mx-0 card-footer table-footer align-items-center"
-        >
-          <div class="col-sm-12 col-md-6 p-0">
-            <div
-              class="dataTables_info column__left___padding"
-              id="DataTables_Table_0_info"
-              role="status"
-              aria-live="polite"
-            >
-              Showing {{ pagination.from }} to {{ pagination.to }} of
-              {{ pagination.total }} entries
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6 p-0">
-            <div
-              class="dataTables_paginate paging_simple_numbers column__right___padding"
-              id="DataTables_Table_0_paginate"
-            >
-              <nav aria-label="Page navigation" style="float: right">
-                <ul class="pagination">
-                  <li
-                    class="page-item"
-                    :class="pagination.current_page == 1 ? 'disabled' : ''"
-                  >
-                    <a
-                      class="page-link"
-                      href="javascript:void(0)"
-                      @click="setPage(pagination.current_page - 1)"
-                    >
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <template v-for="(page, index) in pagination.last_page">
-                    <template
-                      v-if="
-                        page == 1 ||
-                        page == pagination.last_page ||
-                        Math.abs(page - pagination.current_page) < 5
-                      "
-                    >
-                      <li
-                        class="page-item"
-                        :key="index"
-                        :class="pagination.current_page == page ? 'active' : ''"
-                      >
-                        <a class="page-link" @click="setPage(page)">{{
-                          page
-                        }}</a>
-                      </li>
-                    </template>
-                  </template>
-                  <li
-                    class="page-item"
-                    :class="
-                      pagination.current_page == pagination.last_page
-                        ? 'disabled'
-                        : ''
-                    "
-                  >
-                    <a
-                      class="page-link"
-                      href="javascript:void(0)"
-                      @click="setPage(pagination.current_page + 1)"
-                    >
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div> -->
+                <div
+                    class="flex mt-1 px-0 mx-0 card-footer table-footer align-items-center"
+                >
+                    <div class="col-sm-12 col-md-6 p-0">
+                        <div
+                            class="dataTables_info column__left___padding"
+                            id="DataTables_Table_0_info"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            Showing {{ pagination.from }} to
+                            {{ pagination.to }} of
+                            {{ pagination.total }} entries
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 p-0">
+                        <div
+                            class="dataTables_paginate paging_simple_numbers column__right___padding"
+                            id="DataTables_Table_0_paginate"
+                        >
+                            <nav
+                                aria-label="Page navigation"
+                                style="float: right"
+                            >
+                                <ul class="pagination">
+                                    <li
+                                        class="page-item"
+                                        :class="
+                                            pagination.current_page == 1
+                                                ? 'disabled'
+                                                : ''
+                                        "
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="javascript:void(0)"
+                                            @click="
+                                                setPage(
+                                                    pagination.current_page - 1
+                                                )
+                                            "
+                                        >
+                                            <i
+                                                class="fa-solid fa-angles-left"
+                                            ></i>
+                                        </a>
+                                    </li>
+                                    <template
+                                        v-for="(
+                                            page, index
+                                        ) in pagination.last_page"
+                                    >
+                                        <template
+                                            v-if="
+                                                page == 1 ||
+                                                page == pagination.last_page ||
+                                                Math.abs(
+                                                    page -
+                                                        pagination.current_page
+                                                ) < 5
+                                            "
+                                        >
+                                            <li
+                                                class="page-item"
+                                                :key="index"
+                                                :class="
+                                                    pagination.current_page ==
+                                                    page
+                                                        ? 'active'
+                                                        : ''
+                                                "
+                                            >
+                                                <a
+                                                    class="page-link"
+                                                    @click="setPage(page)"
+                                                    >{{ page }}</a
+                                                >
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <li
+                                        class="page-item"
+                                        :class="
+                                            pagination.current_page ==
+                                            pagination.last_page
+                                                ? 'disabled'
+                                                : ''
+                                        "
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="javascript:void(0)"
+                                            @click="
+                                                setPage(
+                                                    pagination.current_page + 1
+                                                )
+                                            "
+                                        >
+                                            <i
+                                                class="fa-solid fa-angles-right"
+                                            ></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
