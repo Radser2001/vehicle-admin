@@ -26,10 +26,61 @@ const pagination = ref({});
 const contact = ref({});
 const contacts = ref([]);
 
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
 getContacts();
 library.add(faHouse);
 library.add(faPlusCircle);
 library.add(faTrash);
+
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
 
 async function setPage(pg) {
     page.value = pg;
@@ -43,7 +94,6 @@ async function perPageChange() {
     reload();
 }
 async function reload() {
-    // this.$root.loader.start();
     const tableData = (
         await axios.get(route("vehicles.contact.all", vehicle_id), {
             params: {
@@ -56,25 +106,17 @@ async function reload() {
 
     contacts.value = tableData.data;
     pagination.value = tableData.meta;
-    // $root.value.loader.finish();
 }
 async function getContacts() {
-    // this.$nextTick(() => {
-    //     this.$root.loader.start();
-    // });
     const response = (
         await axios.get(route("vehicles.contact.all", vehicle_id))
     ).data;
 
     contacts.value = response.data;
     pagination.value = response.meta;
-    // this.$nextTick(() => {
-    //     this.$root.loader.finish();
-    // });
 }
 async function updateContactData() {
-    // this.resetValidationErrors();
-    console.log(contact);
+    resetValidationErrors();
     try {
         await axios.post(
             route("vehicles.contact.update", vehicle_id),
@@ -83,15 +125,9 @@ async function updateContactData() {
         contact.value = {};
         reload();
 
-        Swal.fire({
-            title: "Success",
-            text: "Contact book updated successfully",
-            icon: "success",
-            confirmButtonColor: "#6CA925",
-        });
+        successMessage("Contact details added successfully");
     } catch (error) {
-        // this.convertValidationError(error);
-        console.log(error);
+        convertValidationError(error);
     }
 }
 async function deleteContactData(id) {
@@ -101,8 +137,8 @@ async function deleteContactData(id) {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
@@ -113,8 +149,9 @@ async function deleteContactData(id) {
                     });
             }
         });
+        successMessage("Contact details deleted successfully");
     } catch (error) {
-        // this.convertValidationNotification(error);
+        convertValidationNotification(error);
         console.log(error);
     }
 }
