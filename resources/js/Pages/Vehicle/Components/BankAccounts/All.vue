@@ -144,8 +144,8 @@ async function deleteBank(id) {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
@@ -245,7 +245,7 @@ async function deleteBank(id) {
                     <div
                         class="col-md-2 column__right___padding column__left___padding"
                     >
-                        <label>CODE</label>
+                        <label>BRANCH CODE</label>
                         <div class="input-group">
                             <input
                                 type="text"

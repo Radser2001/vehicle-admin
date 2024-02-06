@@ -286,7 +286,7 @@ async function deleteSelectedItems() {
                                             class="breadcrumb-item active breadcrumb-text"
                                             aria-current="page"
                                         >
-                                            vehicle Management
+                                            Vehicle Management
                                         </li>
                                     </ol>
                                 </nav>
@@ -349,7 +349,7 @@ async function deleteSelectedItems() {
                                 class="col-md-2 column__right___padding column__left___padding"
                             >
                                 <div for="purchase_uom" class="col-form-label">
-                                    Color
+                                    COLOR
                                 </div>
                                 <input
                                     type="text"
