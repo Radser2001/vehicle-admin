@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleBankAccountController;
 use App\Http\Controllers\VehicleContactBookController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehicleImageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +62,10 @@ Route::prefix('/vehicles')->group(function () {
     Route::post('/{vehicle_id}/bank/update', [VehicleBankAccountController::class, "update"])->name('vehicles.bank.update');
     Route::get('/{vehicle_id}/bank/all', [VehicleBankAccountController::class, "all"])->name('vehicles.bank.all');
     Route::delete('/{vehicle_id}/bank/delete', [VehicleBankAccountController::class, "delete"])->name('vehicles.bank.delete');
+
+    Route::post('/{vehicle_id}/image/update', [VehicleImageController::class, "update"])->name('vehicles.image.update');
+    Route::get('/{vehicle_id}/image/all', [VehicleImageController::class, "all"])->name('vehicles.image.all');
+    Route::delete('/{vehicle_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
 
     // Route::post('/{vehicle_id}/finance/update', [VehicleFinanceRecordController::class, "update"])->name('vehicles.finance.update');
     // Route::get('/{vehicle_id}/finance/get', [VehicleFinanceRecordController::class, "get"])->name('vehicles.finance.get');

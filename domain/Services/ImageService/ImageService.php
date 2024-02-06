@@ -21,17 +21,22 @@ class ImageService
     }
 
     /**
-     * Store
-     * stor image data
+     * All
+     * get all image data
      *
-     * @param  mixed $image
      * @return Image
      */
-    public function store($image): Image
+    public function all()
+    {
+        return $this->image->all();
+    }
+
+    public function store($image, $vehicleId): Image
     {
         if (isset($image)) {
             $filePath = Storage::disk('do')->put(config('filesystems.disks.do.folder'), $image, 'public');
             $data['name'] = config('filesystems.disks.do.public_url') . '/' . $filePath;
+            $data['vehicle_id'] = $vehicleId;
 
             return $this->image->create($data);
         }
