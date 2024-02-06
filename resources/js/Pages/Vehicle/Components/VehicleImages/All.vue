@@ -8,6 +8,7 @@ import {
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
+import { onMounted } from "vue";
 library.add(faHouse);
 library.add(faPlusCircle);
 library.add(faTrash);
@@ -16,18 +17,57 @@ const { vehicle_id } = defineProps(["vehicle_id"]);
 const image = ref(null);
 const images = ref([]);
 
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
 function clearImageField() {
     document.getElementById("formFile").value = "";
     image.value = null;
 }
-reload();
+
+onMounted(() => {
+    getImages();
+});
+
 async function reload() {
-    // this.$root.loader.start();
     const response = (await axios.get(route("vehicles.image.all", vehicle_id)))
         .data;
     images.value = response;
+}
 
-    // $root.value.loader.finish();
+async function getImages() {
+    const response = (await axios.get(route("vehicles.image.all", vehicle_id)))
+        .data;
+    images.value = response;
 }
 
 const deleteImage = async (image_id) => {
@@ -47,10 +87,12 @@ const deleteImage = async (image_id) => {
                     .then((response) => {
                         reload();
                     });
+
+                successMessage("Image Deleted Successfully");
             }
         });
     } catch (error) {
-        console.log(error);
+        convertValidationNotification(error);
     }
 };
 
@@ -58,17 +100,12 @@ const uploadImage = async () => {
     try {
         const formData = new FormData();
         formData.append("image", image.value);
-        const response = await axios.post(
-            route("vehicles.image.update", vehicle_id),
-            formData,
-            {
-                headers: {
-                    "Content-Type":
-                        "multipart/form-data; boundary=" + formData._boundary,
-                },
-            }
-        );
-        console.log(response);
+        await axios.post(route("vehicles.image.update", vehicle_id), formData, {
+            headers: {
+                "Content-Type": `multipart/form-data; boundary= ${formData._boundary}`,
+            },
+        });
+        successMessage("Image Uploaded Successfully");
         clearImageField();
         reload();
     } catch (error) {
