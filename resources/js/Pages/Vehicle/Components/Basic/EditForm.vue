@@ -13,38 +13,79 @@ import {
 const { vehicle_id } = defineProps(["vehicle_id"]);
 
 const vehicle = ref({});
+
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
 library.add(faHouse);
 library.add(faFloppyDisk);
 library.add(faTrash);
-// console.log(vehicle_id);
+
 onMounted(() => {
     getVehicle();
 });
 
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
 async function getVehicle() {
-    // this.$nextTick(() => {
-    //     this.$root.loader.start();
-    // });
     const response = (await axios.get(route("vehicles.get", vehicle_id))).data;
-    // console.log(response.data);
     vehicle.value = response.data;
-    // this.$root.loader.finish();
 }
 
 async function updateVehicleData() {
-    // this.resetValidationErrors();
+    resetValidationErrors();
     try {
         await axios.post(route("vehicles.update", vehicle_id), vehicle.value);
 
-        Swal.fire({
-            title: "Success",
-            text: "Vehicle updated successfully",
-            icon: "success",
-            confirmButtonColor: "#6CA925",
-        });
+        successMessage("Vehicle updated successfully");
     } catch (error) {
-        // this.convertValidationError(error);
-        console.log(error);
+        convertValidationError(error);
     }
 }
 
@@ -65,12 +106,11 @@ async function deleteVehicle() {
                     .then((response) => {
                         window.location.href = route("vehicles.index");
                     });
-                Swal.fire("Deleted!", `Vehicle has been deleted.`, "success");
+                successMessage("Vehicle deleted successfully");
             }
         });
     } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
+        convertValidationNotification(error);
     }
 }
 </script>

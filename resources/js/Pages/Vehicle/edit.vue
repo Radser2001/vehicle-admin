@@ -172,6 +172,7 @@ defineProps({
                                 >
                                     <BankAccountsAll :vehicle_id="vehicle.id" />
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
