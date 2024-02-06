@@ -13,6 +13,7 @@ import {
 const { vehicle_id } = defineProps(["vehicle_id"]);
 
 const vehicle = ref({});
+const condition = ["Active", "Inactive"];
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -184,14 +185,19 @@ async function deleteVehicle() {
                     <div for="condition" class="col-md-2 col-form-label">
                         CONDITION
                     </div>
+
                     <div class="col-md-10">
-                        <input
-                            type="text"
-                            class="form-control form-control-sm"
+                        <select
                             name="condition"
                             id="condition"
+                            class="form-select"
+                            aria-label="CONDITION"
                             v-model="vehicle.condition"
-                        />
+                        >
+                            <option value="1">Inactive</option>
+                            <option value="0">Active</option>
+                        </select>
+
                         <small
                             v-if="validationErrors.condition"
                             id="msg_name"
