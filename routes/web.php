@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MakeController;
+use App\Http\Controllers\ModelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleBankAccountController;
 use App\Http\Controllers\VehicleContactBookController;
@@ -40,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+// vehicles
 Route::prefix('/vehicles')->group(function () {
     Route::get('/', [VehicleController::class, "index"])->name('vehicles.index');
     Route::get('/all', [VehicleController::class, "all"])->name('vehicles.all');
@@ -69,5 +71,33 @@ Route::prefix('/vehicles')->group(function () {
     Route::delete('/{image_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
 });
 
+
+// Make Registry
+Route::prefix('make')->group(function () {
+    Route::get('/', [MakeController::class, "index"])->name('make.index');
+    Route::get('/all', [MakeController::class, "all"])->name('make.all');
+    Route::post('/store', [MakeController::class, "store"])->name('make.store');
+    Route::get('/{make_id}/get', [MakeController::class, "get"])->name('make.get');
+    Route::post('/{make_id}/update', [MakeController::class, "update"])->name('make.update');
+    Route::delete('/{make_id}/delete', [MakeController::class, "delete"])->name('make.delete');
+
+    Route::post('/{make_id}/select/make/delete', [MakeController::class, 'deleteSelectedItems'])->name('make.delete.selected');
+    Route::post('/select/make/inactive', [MakeController::class, 'inactiveSelectedItems'])->name('make.inactive.selected');
+    Route::post('/select/make/active', [MakeController::class, 'activeSelectedItems'])->name('make.active.selected');
+});
+
+// Model Registry
+Route::prefix('model')->group(function () {
+    Route::get('/', [ModelController::class, "index"])->name('model.index');
+    Route::get('/all', [ModelController::class, "all"])->name('model.all');
+    Route::post('/store', [ModelController::class, "store"])->name('model.store');
+    Route::get('/{model_id}/get', [ModelController::class, "get"])->name('model.get');
+    Route::post('/{model_id}/update', [ModelController::class, "update"])->name('model.update');
+    Route::delete('/{model_id}/delete', [ModelController::class, "delete"])->name('model.delete');
+
+    Route::post('/{model_id}/select/model/delete', [ModelController::class, 'deleteSelectedItems'])->name('model.delete.selected');
+    Route::post('/select/model/inactive', [ModelController::class, 'inactiveSelectedItems'])->name('model.inactive.selected');
+    Route::post('/select/model/active', [ModelController::class, 'activeSelectedItems'])->name('model.active.selected');
+});
 
 require __DIR__ . '/auth.php';

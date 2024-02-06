@@ -20,9 +20,9 @@
                             <Link :class="{
                                 active: route().current() == 'dashboard',
                             }" class="nav-link active-preloader" :href="route('dashboard')">
-                            <font-awesome-icon class="icon_item-icon ml-4" icon="fa-solid fa-desktop" color="#f74848" />
+                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-desktop" color="#f74848" />
 
-                            <span class="ml-4 nav-link-text font-weight-400">Dashboard</span>
+                            <span class="ml-3 nav-link-text font-weight-400">Dashboard</span>
                             </Link>
                         </li>
                         <li class="nav-item">
@@ -30,10 +30,38 @@
                                 active:
                                     route().current() == 'vehicles.index',
                             }" class="nav-link active-preloader" :href="route('vehicles.index')">
-                            <font-awesome-icon class="icon_item-icon ml-4" icon="fa-solid fa-cart-shopping"
-                                color="#594dff" />
-                            <span class="ml-4 nav-link-text font-weight-400">Vehicles</span>
+                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-truck" color="#594dff" />
+                            <span class="ml-3 nav-link-text font-weight-400">Vehicles</span>
                             </Link>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settingsMenu" data-toggle="collapse" aria-expanded="true">
+                                <font-awesome-icon icon="fa-solid fa-gear" /><span class="ml-2">Settings</span>
+                            </a>
+                            <ul class="list-unstyled" id="settingsMenu">
+                                <li class="nav-item">
+                                    <Link :class="{
+                                        active:
+                                            route().current() == 'vehicles.index',
+                                    }" class="nav-link active-preloader" :href="route('vehicles.index')">
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
+                                    <span class="ml-3 nav-link-text font-weight-400">Make</span>
+                                    </Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link :class="{
+                                        active:
+                                            route().current() == 'vehicles.index',
+                                    }" class="nav-link active-preloader" :href="route('vehicles.index')">
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
+                                    <span class="ml-3 nav-link-text font-weight-400">Model</span>
+                                    </Link>
+                                </li>
+
+
+
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -47,10 +75,12 @@ import { Link } from "@inertiajs/vue3";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { faCartShopping, faDesktop } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faDesktop, faTruck, faCar } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCartShopping);
+library.add(faTruck);
 library.add(faDesktop);
+library.add(faCar);
+
 
 
 // if (!window.Laravel) {
