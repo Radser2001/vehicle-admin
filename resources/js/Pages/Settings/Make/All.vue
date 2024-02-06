@@ -132,11 +132,11 @@
                                 </div>
                                 <table class="table">
                                     <thead>
-                                        <tr>
+                                        <tr>j
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="make &&
-                                                        make.length > 0
+                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="makes &&
+                                                        makes.length > 0
                                                         " :checked="checkAllItems" v-model="checkAllItems" />
                                                 </div>
                                             </th>
@@ -551,7 +551,7 @@ function selectAll(event) {
     if (event.target.checked === false) {
         checkMakeItems.value = [];
     } else {
-        checkMakeItems.value = make.value.map((vehicle) => vehicle.id);
+        checkMakeItems.value = make.value.map((make) => make.id);
     }
     loading_bar.value.finish();
 }
