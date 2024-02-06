@@ -1,13 +1,24 @@
-<script setup>
+<script>
 import { ref } from "vue";
 
-const loading = ref(false);
-function start() {
-    loading = true;
-}
-function finish() {
-    loading = false;
-}
+export default {
+    setup() {
+        const loading = ref(false);
+
+        function start() {
+            loading.value = true;
+        }
+        function finish() {
+            loading.value = false;
+        }
+
+        return {
+            loading,
+            start,
+            finish,
+        };
+    },
+};
 </script>
 
 <template>

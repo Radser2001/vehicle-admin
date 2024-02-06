@@ -5,6 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Loader from "@/Components/Basic/LoadingBar.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faHouse,
@@ -39,8 +40,10 @@ const vehicles = ref([]);
 const checkVehicleItems = ref([]);
 const checkAllItems = ref(false);
 const searchVehicle = ref({});
+
 const validationMessage = ref(null);
 const validationErrors = ref({});
+const loading_bar = ref(null);
 
 library.add(faHouse);
 library.add(faFloppyDisk);
@@ -64,24 +67,47 @@ function resetValidationErrors() {
 function convertValidationNotification(err) {
     resetValidationErrors();
     if (!(err.response && err.response.data)) return;
-
-    Swal.fire({
-        title: "Something went wrong",
-        icon: "error",
-        confirmButtonText: "OK",
-    });
+    const { message } = err.response.data;
+    errorMessage(message);
 }
 function convertValidationError(err) {
     resetValidationErrors();
     if (!(err.response && err.response.data)) return;
-    validationMessage.value = err.response.data.message;
-    if (err.response.data.errors) {
-        const errors = err.response.data.errors;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
         for (const error in errors) {
             validationErrors.value[error] = errors[error][0];
         }
     }
 }
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
 onMounted(() => {
     getVehicles();
 });
@@ -101,7 +127,7 @@ function perPageChange() {
 }
 
 async function reload() {
-    // loader.start();
+    loading_bar.value.start();
     const tableData = (
         await axios.get(route("vehicles.all"), {
             params: {
@@ -114,19 +140,19 @@ async function reload() {
             },
         })
     ).data;
-    console.log(tableData);
+
     vehicles.value = tableData.data;
     pagination.value = tableData.meta;
 
-    // loader.finish();
+    loading_bar.value.finish();
 }
 
 async function getVehicles() {
-    //    loader.start();
+    loading_bar.value.start();
     const response = (await axios.get(route("vehicles.all"))).data;
     vehicles.value = response.data;
     pagination.value = response.meta;
-    //    loader.finish();
+    loading_bar.value.finish();
 }
 
 async function createVehicle() {
@@ -138,12 +164,7 @@ async function createVehicle() {
         window.location.href = route("vehicles.edit", response.id);
         vehicle.value = {};
         $("#newVehicleModal").modal("hide");
-        Swal.fire({
-            title: "Success",
-            text: "Vehicle created successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-        });
+        convertValidationNotification(response);
     } catch (error) {
         convertValidationNotification(error);
     }
@@ -154,8 +175,10 @@ function editVehicle(vehicleId) {
 }
 
 async function newVehicle() {
+    loading_bar.value.start();
     vehicle.value = {};
     $("#newVehicleModal").modal("show");
+    loading_bar.value.finish();
 }
 
 function clearFilters() {
@@ -164,25 +187,37 @@ function clearFilters() {
 }
 
 async function inactiveSelectedItems() {
+    loading_bar.value.start();
     const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.inactive.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
+    await axios
+        .post(route("vehicles.inactive.selected"), { ids })
+        .then((response) => {
+            checkVehicleItems.value = [];
+            reload();
+        });
+    loading_bar.value.finish();
 }
 
 async function activeSelectedItems() {
+    loading_bar.value.start();
     const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.active.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
+    await axios
+        .post(route("vehicles.active.selected"), { ids })
+        .then((response) => {
+            checkVehicleItems.value = [];
+            reload();
+        });
+    loading_bar.value.finish();
 }
 
 function selectAll(event) {
+    loading_bar.value.start();
     if (event.target.checked === false) {
         checkVehicleItems.value = [];
     } else {
         checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
     }
+    loading_bar.value.finish();
 }
 
 async function deleteSelectedItems() {
@@ -199,22 +234,30 @@ async function deleteSelectedItems() {
             });
 
             if (result.isConfirmed) {
+                loading_bar.value.start();
                 const ids = checkVehicleItems.value.map((item) => item.id);
-                await axios.post(route("vehicles.delete.selected"), { ids });
-                await reload();
+                await axios
+                    .post(route("vehicles.delete.selected"), { ids })
+                    .then((response) => {
+                        reload();
+                        checkVehicleItems.value = [];
+                    });
+                successMessage("Vehicle deleted successfully");
             }
         }
     } catch (error) {
-        // convertValidationNotification(error);
-        console.log(error);
+        convertValidationNotification(error);
     } finally {
-        // loader.finish();
+        loading_bar.value.finish();
     }
 }
 </script>
 
 <template>
     <AppLayout title="Vehicle Management">
+        <template #loader>
+            <Loader ref="loading_bar" />
+        </template>
         <template #header>
             <div class="header pb-6">
                 <div class="container-fluid">
