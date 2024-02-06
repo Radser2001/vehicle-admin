@@ -55,7 +55,7 @@ defineProps({
                                                 :href="route('vehicles.index')"
                                                 class="breadcrumb-text"
                                             >
-                                                vehicles Management
+                                                Vehicle Management
                                             </Link>
                                         </li>
                                         <li
@@ -172,7 +172,6 @@ defineProps({
                                 >
                                     <BankAccountsAll :vehicle_id="vehicle.id" />
                                 </div>
-                               
                             </div>
                         </div>
                     </div>
