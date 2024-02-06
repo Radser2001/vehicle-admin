@@ -8,7 +8,7 @@ import {
     faPlusCircle,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const { vehicle_id } = defineProps(["vehicle_id"]);
 
@@ -27,10 +27,64 @@ const pagination = ref({});
 const bank = ref({});
 const banks = ref([]);
 
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
 library.add(faHouse);
 library.add(faPlusCircle);
 library.add(faTrash);
-getBanks();
+
+onMounted(() => {
+    getBanks();
+});
+
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
 
 async function setPage(pg) {
     page.value = pg;
@@ -45,7 +99,6 @@ async function perPageChange() {
 }
 
 async function reload() {
-    //   this.$root.loader.start();
     const tableData = (
         await axios.get(route("vehicles.bank.all", vehicle_id), {
             params: {
@@ -58,12 +111,8 @@ async function reload() {
 
     banks.value = tableData.data;
     pagination.value = tableData.meta;
-    //   this.$root.loader.finish();
 }
 async function getBanks() {
-    //   this.$nextTick(() => {
-    //     this.$root.loader.start();
-    //   });
     const tableData = (
         await axios.get(route("vehicles.bank.all", vehicle_id), {
             params: {
@@ -75,29 +124,18 @@ async function getBanks() {
     ).data;
     banks.value = tableData.data;
     pagination.value = tableData.meta;
-    //   this.$nextTick(() => {
-    //     this.$root.loader.finish();
-    //   });
 }
 async function updateBankData() {
-    //   this.resetValidationErrors();
+    resetValidationErrors();
     try {
         await axios.post(route("vehicles.bank.update", vehicle_id), bank.value);
         bank.value = {};
         reload();
 
-        Swal.fire({
-            title: "Success",
-            text: "Bank account updated successfully",
-            icon: "success",
-            confirmButtonColor: "#6CA925",
-            confirmButtonText: "OK",
-        });
+        successMessage("Bank Account Details Added Successfully");
     } catch (error) {
-        //   this.convertValidationError(error);
-        console.log(error);
+        convertValidationError(error);
     }
-    // this.$root.loader.finish();
 }
 async function deleteBank(id) {
     try {
@@ -116,11 +154,12 @@ async function deleteBank(id) {
                     .then((response) => {
                         reload();
                     });
+
+                successMessage("Bank Account Details Deleted Successfully");
             }
         });
     } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
+        convertValidationNotification(error);
     }
 }
 </script>
