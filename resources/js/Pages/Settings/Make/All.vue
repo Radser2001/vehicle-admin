@@ -11,7 +11,7 @@
                         <div class="row align-items-center mb-1 mt-1">
                             <div class="col-lg-8">
                                 <h6 class="h2 text-dark d-inline-block mb-0">
-                                    vehicle
+                                    Vehicle Make
                                 </h6>
                                 <nav aria-label="breadcrumb" class="d-none d-md-block">
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -21,14 +21,14 @@
                                             </Link>
                                         </li>
                                         <li class="breadcrumb-item active breadcrumb-text" aria-current="page">
-                                            Vehicle Management
+                                            Vehicle Make Management
                                         </li>
                                     </ol>
                                 </nav>
                             </div>
                             <!-- <div class="col-lg-4 text-right py-4" v-if="can('create_Vehicle')"> -->
                             <div class="col-lg-4 text-right py-4">
-                                <a href="javascript:void(0)" @click.prevent="newVehicle"
+                                <a href="javascript:void(0)" @click.prevent="newMake"
                                     class="btn btn-sm btn-neutral float-end">
                                     <font-awesome-icon icon="fa-solid fa-circle-plus" />
                                     ADD NEW
@@ -46,27 +46,14 @@
                     <div class="card shadow">
                         <div class="row my-3 mx-2">
                             <div class="col-md-2 column__right___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    MAKE
+                                Search:
+                                <div class="inline-block ml-2">
+                                    <input type="text" class="form-control form-control-sm" v-model="search"
+                                        @keyup="getSearch" />
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="code" id="make"
-                                    v-model="searchVehicle.make" placeholder="Make" @keyup="getSearch" />
                             </div>
-                            <div class="col-md-2 column__right___padding column__left___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    MODEL
-                                </div>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name"
-                                    v-model="searchVehicle.model" placeholder="Model" @keyup="getSearch" />
-                            </div>
-                            <div class="col-md-2 column__right___padding column__left___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    COLOR
-                                </div>
-                                <input type="text" class="form-control form-control-sm" name="contact" id="contact"
-                                    v-model="searchVehicle.color" placeholder="Color" @keyup="getSearch" />
-                            </div>
-                            <div class="col-md-2 mt-4 column__left___padding">
+
+                            <div class="col-md-2 mt-3 column__left___padding">
                                 <a href="javascript:void(0)" @click.prevent="clearFilters"
                                     class="btn btn-sm btn-ash float-end mt-2 pt-2">
                                     CLEAR
@@ -278,7 +265,7 @@
                     <div class="modal-content p-2">
                         <div class="modal-header">
                             <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
-                                New Vehicle
+                                New Vehicle Make
                             </h5>
                             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">
@@ -391,7 +378,7 @@ const make = ref({});
 const makes = ref([]);
 const checkMakeItems = ref([]);
 const checkAllItems = ref(false);
-const searchVehicle = ref({});
+const searchMake = ref({});
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -486,8 +473,7 @@ async function reload() {
                 page: page.value,
                 per_page: pageCount.value,
                 "filter[search]": search.value,
-                search_vehicle_make: searchVehicle.value.make,
-                search_vehicle_code: searchVehicle.value.code,
+
             },
         })
     ).data;
@@ -520,11 +506,11 @@ async function createMake() {
     }
 }
 
-function editMake(vehicleId) {
-    window.location.href = route("make.edit", vehicleId);
+function editMake(makeId) {
+    window.location.href = route("make.edit", makeId);
 }
 
-async function newVehicle() {
+async function newMake() {
     loading_bar.value.start();
     make.value = {};
     $("#newMakeModal").modal("show");
@@ -532,7 +518,7 @@ async function newVehicle() {
 }
 
 function clearFilters() {
-    searchVehicle.value = {};
+    searchMake.value = {};
     reload();
 }
 
@@ -592,7 +578,7 @@ async function deleteSelectedItems() {
                         reload();
                         checkMakeItems.value = [];
                     });
-                successMessage("Vehicle deleted successfully");
+                successMessage("Vehicle Make deleted successfully");
             }
         }
     } catch (error) {
