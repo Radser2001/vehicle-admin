@@ -96,10 +96,10 @@ const uploadImage = async () => {
 
                 <button
                     type="submit"
-                    class="btn btn-sm btn-round btn-outline--info mb-2"
+                    class="btn btn-round custom-button btn-sm mb-0"
                 >
                     <font-awesome-icon icon="fa-solid fa-circle-plus" />
-                    ADD
+                    Upload Image
                 </button>
             </form>
             <hr class="mt-3" />
@@ -119,7 +119,7 @@ const uploadImage = async () => {
                             />
                             <div class="card-body">
                                 <button
-                                    class="btn btn-sm btn-round btn-outline--danger"
+                                    class="btn btn-sm btn-round btn-outline-danger mb-0"
                                     @click="deleteImage(image.id)"
                                 >
                                     <font-awesome-icon
@@ -140,3 +140,15 @@ const uploadImage = async () => {
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.custom-button {
+    background-color: #ffffff;
+    border-color: #6343e9;
+    color: #6343e9 !important;
+}
+.custom-button:hover {
+    background-color: #6343e9;
+    color: #ffffff !important;
+}
+</style>
