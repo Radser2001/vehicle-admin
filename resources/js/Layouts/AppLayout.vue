@@ -1,19 +1,7 @@
-<script setup>
-import { ref } from "vue";
-import { Head, Link } from "@inertiajs/vue3";
-import SideBar from "@/Components/Main/SideBar.vue";
-import NavBar from "@/Components/Main/NavBar.vue";
-import Footer from "@/Components/Main/Footer.vue";
-import Notification from "@/Components/Basic/Notification.vue";
-import Loader from "@/Components/Basic/LoadingBar.vue";
-
-defineProps({
-    title: String,
-});
-</script>
 
 <template>
     <div>
+
         <Head :title="title ? title : 'IMake'">
             <link rel="icon" type="image/svg+xml" href="/img/logo/logoN.png" />
             <slot name="meta_head" />
@@ -35,6 +23,22 @@ defineProps({
         <slot name="loader" />
     </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { Head, Link } from "@inertiajs/vue3";
+import SideBar from "@/Components/Main/SideBar.vue";
+import NavBar from "@/Components/Main/NavBar.vue";
+import Footer from "@/Components/Main/Footer.vue";
+import Notification from "@/Components/Basic/Notification.vue";
+import Loader from "@/Components/Basic/LoadingBar.vue";
+
+defineProps({
+    title: String,
+});
+</script>
+
+
 
 <style lang="scss">
 body {

@@ -1,24 +1,3 @@
-<script setup>
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faTruck } from "@fortawesome/free-solid-svg-icons";
-import { Head, Link } from "@inertiajs/vue3";
-import { ref, onBeforeMount } from "vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
-
-library.add(faHouse);
-library.add(faTruck);
-
-const total_vehicles = ref(null);
-
-onBeforeMount(() => {
-    fetchTotalVehicles();
-});
-
-async function fetchTotalVehicles() {
-    const response = await axios.get(route("vehicles.count"));
-    total_vehicles.value = response.data;
-}
-</script>
 
 <template>
     <AppLayout title="Vehicle Admin">
@@ -81,6 +60,29 @@ async function fetchTotalVehicles() {
         </template>
     </AppLayout>
 </template>
+
+<script setup>
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faHouse, faTruck } from "@fortawesome/free-solid-svg-icons";
+import { Head, Link } from "@inertiajs/vue3";
+import { ref, onBeforeMount } from "vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+
+library.add(faHouse);
+library.add(faTruck);
+
+const total_vehicles = ref(null);
+
+onBeforeMount(() => {
+    fetchTotalVehicles();
+});
+
+async function fetchTotalVehicles() {
+    const response = await axios.get(route("vehicles.count"));
+    total_vehicles.value = response.data;
+}
+</script>
+
 
 <style lang="scss" scoped>
 .breadcrumb-text {

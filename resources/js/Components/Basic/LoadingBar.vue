@@ -1,3 +1,13 @@
+<template>
+    <div v-if="loading" class="loading-page">
+        <div class="text-center container loading-body">
+            <p class="text-success pt-1 animation_i">
+                <img src="../../../../public/img/logo-ct-dark.png" alt="" class="animation_img" />
+            </p>
+        </div>
+    </div>
+</template>
+
 <script>
 import { ref } from "vue";
 
@@ -21,19 +31,6 @@ export default {
 };
 </script>
 
-<template>
-    <div v-if="loading" class="loading-page">
-        <div class="text-center container loading-body">
-            <p class="text-success pt-1 animation_i">
-                <img
-                    src="../../../../public/img/logo-ct-dark.png"
-                    alt=""
-                    class="animation_img"
-                />
-            </p>
-        </div>
-    </div>
-</template>
 
 <style scoped>
 .animation_i {

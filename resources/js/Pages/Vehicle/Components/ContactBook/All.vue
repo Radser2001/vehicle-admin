@@ -1,162 +1,3 @@
-<script setup>
-import { Link } from "@inertiajs/vue3";
-import Swal from "sweetalert2";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-    faHouse,
-    faPlusCircle,
-    faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
-
-const { vehicle_id } = defineProps(["vehicle_id"]);
-
-const textClassHead = ref("text-start text-uppercase");
-const textClassBody = ref("text-start");
-const iconClassHead = ref("text-right");
-const iconClassBody = ref("text-right");
-const rowClass = ref("cursor-pointer");
-
-const search = ref(null);
-const page = ref(1);
-const perPage = ref([25, 50, 100]);
-const pageCount = ref(25);
-const pagination = ref({});
-
-const contact = ref({});
-const contacts = ref([]);
-
-const validationMessage = ref(null);
-const validationErrors = ref({});
-
-getContacts();
-library.add(faHouse);
-library.add(faPlusCircle);
-library.add(faTrash);
-
-function resetValidationErrors() {
-    validationErrors.value = {};
-    validationMessage.value = null;
-}
-function convertValidationNotification(err) {
-    resetValidationErrors();
-    if (!(err.response && err.response.data)) return;
-    const { message } = err.response.data;
-    errorMessage(message);
-}
-function convertValidationError(err) {
-    resetValidationErrors();
-    if (!(err.response && err.response.data)) return;
-    const { message, errors } = err.response.data;
-    validationMessage.value = message;
-
-    if (errors) {
-        for (const error in errors) {
-            validationErrors.value[error] = errors[error][0];
-        }
-    }
-}
-
-const successMessage = (message) => {
-    Swal.fire({
-        title: "Success",
-        text: message,
-        icon: "success",
-        toast: true,
-        position: "top-end",
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-    });
-};
-const errorMessage = (message) => {
-    Swal.fire({
-        title: "Error",
-        text: message,
-        icon: "error",
-        toast: true,
-        position: "top-end",
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-    });
-};
-
-async function setPage(pg) {
-    page.value = pg;
-    reload();
-}
-async function getSearch() {
-    page.value = 1;
-    reload();
-}
-async function perPageChange() {
-    reload();
-}
-async function reload() {
-    const tableData = (
-        await axios.get(route("vehicles.contact.all", vehicle_id), {
-            params: {
-                page: page.value,
-                per_page: pageCount.value,
-                "filter[search]": search.value,
-            },
-        })
-    ).data;
-
-    contacts.value = tableData.data;
-    pagination.value = tableData.meta;
-}
-async function getContacts() {
-    const response = (
-        await axios.get(route("vehicles.contact.all", vehicle_id))
-    ).data;
-
-    contacts.value = response.data;
-    pagination.value = response.meta;
-}
-async function updateContactData() {
-    resetValidationErrors();
-    try {
-        await axios.post(
-            route("vehicles.contact.update", vehicle_id),
-            contact.value
-        );
-        contact.value = {};
-        reload();
-
-        successMessage("Contact details added successfully");
-    } catch (error) {
-        convertValidationError(error);
-    }
-}
-async function deleteContactData(id) {
-    try {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#C00202",
-            cancelButtonColor: "#6CA925",
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios
-                    .delete(route("vehicles.contact.delete", id))
-                    .then((response) => {
-                        reload();
-                    });
-            }
-        });
-        successMessage("Contact details deleted successfully");
-    } catch (error) {
-        convertValidationNotification(error);
-        console.log(error);
-    }
-}
-</script>
-
 <template>
     <div id="contact-book">
         <div class="card-header">
@@ -355,6 +196,166 @@ async function deleteContactData(id) {
         </div>
     </div>
 </template>
+
+<script setup>
+import { Link } from "@inertiajs/vue3";
+import Swal from "sweetalert2";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+    faHouse,
+    faPlusCircle,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { ref } from "vue";
+
+const { vehicle_id } = defineProps(["vehicle_id"]);
+
+const textClassHead = ref("text-start text-uppercase");
+const textClassBody = ref("text-start");
+const iconClassHead = ref("text-right");
+const iconClassBody = ref("text-right");
+const rowClass = ref("cursor-pointer");
+
+const search = ref(null);
+const page = ref(1);
+const perPage = ref([25, 50, 100]);
+const pageCount = ref(25);
+const pagination = ref({});
+
+const contact = ref({});
+const contacts = ref([]);
+
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
+getContacts();
+library.add(faHouse);
+library.add(faPlusCircle);
+library.add(faTrash);
+
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
+async function setPage(pg) {
+    page.value = pg;
+    reload();
+}
+async function getSearch() {
+    page.value = 1;
+    reload();
+}
+async function perPageChange() {
+    reload();
+}
+async function reload() {
+    const tableData = (
+        await axios.get(route("vehicles.contact.all", vehicle_id), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+            },
+        })
+    ).data;
+
+    contacts.value = tableData.data;
+    pagination.value = tableData.meta;
+}
+async function getContacts() {
+    const response = (
+        await axios.get(route("vehicles.contact.all", vehicle_id))
+    ).data;
+
+    contacts.value = response.data;
+    pagination.value = response.meta;
+}
+async function updateContactData() {
+    resetValidationErrors();
+    try {
+        await axios.post(
+            route("vehicles.contact.update", vehicle_id),
+            contact.value
+        );
+        contact.value = {};
+        reload();
+
+        successMessage("Contact details added successfully");
+    } catch (error) {
+        convertValidationError(error);
+    }
+}
+async function deleteContactData(id) {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(route("vehicles.contact.delete", id))
+                    .then((response) => {
+                        reload();
+                    });
+            }
+        });
+        successMessage("Contact details deleted successfully");
+    } catch (error) {
+        convertValidationNotification(error);
+        console.log(error);
+    }
+}
+</script>
+
 
 <style lang="scss" scoped>
 .custom-button {
