@@ -81,7 +81,7 @@ Route::prefix('make')->group(function () {
     Route::post('/{make_id}/update', [MakeController::class, "update"])->name('make.update');
     Route::delete('/{make_id}/delete', [MakeController::class, "delete"])->name('make.delete');
 
-    Route::post('/{make_id}/select/make/delete', [MakeController::class, 'deleteSelectedItems'])->name('make.delete.selected');
+    Route::post('/select/make/delete', [MakeController::class, 'deleteSelectedItems'])->name('make.delete.selected');
     Route::post('/select/make/inactive', [MakeController::class, 'inactiveSelectedItems'])->name('make.inactive.selected');
     Route::post('/select/make/active', [MakeController::class, 'activeSelectedItems'])->name('make.active.selected');
 });
