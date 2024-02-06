@@ -21,7 +21,7 @@ class VehicleBankAccount extends Model
     /**
      * getAllBankAccounts
      *
-     * @param  int $vendor_id
+     * @param  int $vehicle_id
      * @return void
      */
     public function getAllBankAccounts($vehicle_id)

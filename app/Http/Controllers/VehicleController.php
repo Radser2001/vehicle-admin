@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class VehicleController extends Controller
+class VehicleController extends ParentController
 {
     public function index()
     {
@@ -34,11 +34,20 @@ class VehicleController extends Controller
         if (Auth::user()) {
             return VehicleFacade::store($request->all());
         } else {
-            $response['alert-danger'] = 'You do not have permission to create vendors.';
+            $response['alert-danger'] = 'You do not have permission to create vehicles.';
             return redirect()->route('vehicles.index')->with($response);
         }
     }
 
+    /**
+     * count
+     *
+     * @return void
+     */
+    public function count()
+    {
+        return VehicleFacade::count();
+    }
 
     /**
      * all
@@ -50,7 +59,7 @@ class VehicleController extends Controller
         $query = Vehicle::orderBy('id', 'desc');
         if (request('search_vehicle_make')) {
             $make = request('search_vehicle_make');
-            $query->where('make','like', "%{$make}%");
+            $query->where('make', 'like', "%{$make}%");
         }
         if (request('search_vehicle_model')) {
             $model = request('search_vehicle_model');
@@ -58,7 +67,7 @@ class VehicleController extends Controller
         }
         if (request('search_vehicle_color')) {
             $color = request('search_vehicle_color');
-            $query->where('color','like', "%{$color}%");
+            $query->where('color', 'like', "%{$color}%");
         }
 
         $payload = QueryBuilder::for($query)
@@ -128,7 +137,7 @@ class VehicleController extends Controller
             return VehicleFacade::delete($id);
         } else {
             $response['alert-danger'] = 'You do not have permission to delete vehicle.';
-            return redirect()->route('vendors.index')->with($response);
+            return redirect()->route('vehicles.index')->with($response);
         }
     }
 
@@ -144,7 +153,7 @@ class VehicleController extends Controller
             return VehicleFacade::deleteSelected($request);
         } else {
             $response['alert-danger'] = 'You do not have permission to delete vehicle.';
-            return redirect()->route('vendors.index')->with($response);
+            return redirect()->route('vehicles.index')->with($response);
         }
     }
 
@@ -161,7 +170,7 @@ class VehicleController extends Controller
             return VehicleFacade::inactive($request);
         } else {
             $response['alert-danger'] = 'You do not have permission to inactive vehicle.';
-            return redirect()->route('vendors.index')->with($response);
+            return redirect()->route('vehicles.index')->with($response);
         }
     }
     /**
@@ -177,7 +186,7 @@ class VehicleController extends Controller
             return VehicleFacade::active($request);
         } else {
             $response['alert-danger'] = 'You do not have permission to active vehicle.';
-            return redirect()->route('vendors.index')->with($response);
+            return redirect()->route('vehicles.index')->with($response);
         }
     }
 }

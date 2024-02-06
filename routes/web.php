@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleBankAccountController;
 use App\Http\Controllers\VehicleContactBookController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\VehicleImageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +44,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/vehicles')->group(function () {
     Route::get('/', [VehicleController::class, "index"])->name('vehicles.index');
     Route::get('/all', [VehicleController::class, "all"])->name('vehicles.all');
+    Route::get('/count', [VehicleController::class, "count"])->name('vehicles.count');
     Route::get('/{vehicle_id}/get', [VehicleController::class, "get"])->name('vehicles.get');
     Route::post('/store', [VehicleController::class, "store"])->name('vehicles.store');
     Route::get('/{vehicle_id}/edit', [VehicleController::class, "edit"])->name('vehicles.edit');
@@ -61,14 +64,9 @@ Route::prefix('/vehicles')->group(function () {
     Route::get('/{vehicle_id}/bank/all', [VehicleBankAccountController::class, "all"])->name('vehicles.bank.all');
     Route::delete('/{vehicle_id}/bank/delete', [VehicleBankAccountController::class, "delete"])->name('vehicles.bank.delete');
 
-    // Route::post('/{vehicle_id}/finance/update', [VehicleFinanceRecordController::class, "update"])->name('vehicles.finance.update');
-    // Route::get('/{vehicle_id}/finance/get', [VehicleFinanceRecordController::class, "get"])->name('vehicles.finance.get');
-
-    // Route::post('/{vehicle_id}/partner/update', [VehiclePartnerAccountController::class, "update"])->name('vehicles.partner.update');
-    // Route::get('/{vehicle_id}/partner/all', [VehiclePartnerAccountController::class, "all"])->name('vehicles.partner.all');
-    // Route::delete('/{vehicle_id}/partner/delete', [VehiclePartnerAccountController::class, "delete"])->name('vehicles.partner.delete');
-
-
+    Route::post('/{vehicle_id}/image/update', [VehicleImageController::class, "update"])->name('vehicles.image.update');
+    Route::get('/{vehicle_id}/image/all', [VehicleImageController::class, "all"])->name('vehicles.image.all');
+    Route::delete('/{image_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
 });
 
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Multiselect from "vue-multiselect";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Loader from "@/Components/Basic/LoadingBar.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faHouse,
@@ -39,8 +40,10 @@ const vehicles = ref([]);
 const checkVehicleItems = ref([]);
 const checkAllItems = ref(false);
 const searchVehicle = ref({});
+
 const validationMessage = ref(null);
 const validationErrors = ref({});
+const loading_bar = ref(null);
 
 library.add(faHouse);
 library.add(faFloppyDisk);
@@ -64,24 +67,47 @@ function resetValidationErrors() {
 function convertValidationNotification(err) {
     resetValidationErrors();
     if (!(err.response && err.response.data)) return;
-
-    Swal.fire({
-        title: "Something went wrong",
-        icon: "error",
-        confirmButtonText: "OK",
-    });
+    const { message } = err.response.data;
+    errorMessage(message);
 }
 function convertValidationError(err) {
     resetValidationErrors();
     if (!(err.response && err.response.data)) return;
-    validationMessage.value = err.response.data.message;
-    if (err.response.data.errors) {
-        const errors = err.response.data.errors;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
         for (const error in errors) {
             validationErrors.value[error] = errors[error][0];
         }
     }
 }
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
 onMounted(() => {
     getVehicles();
 });
@@ -101,7 +127,7 @@ function perPageChange() {
 }
 
 async function reload() {
-    // loader.start();
+    loading_bar.value.start();
     const tableData = (
         await axios.get(route("vehicles.all"), {
             params: {
@@ -114,19 +140,19 @@ async function reload() {
             },
         })
     ).data;
-    console.log(tableData);
+
     vehicles.value = tableData.data;
     pagination.value = tableData.meta;
 
-    // loader.finish();
+    loading_bar.value.finish();
 }
 
 async function getVehicles() {
-    //    loader.start();
+    loading_bar.value.start();
     const response = (await axios.get(route("vehicles.all"))).data;
     vehicles.value = response.data;
     pagination.value = response.meta;
-    //    loader.finish();
+    loading_bar.value.finish();
 }
 
 async function createVehicle() {
@@ -138,14 +164,9 @@ async function createVehicle() {
         window.location.href = route("vehicles.edit", response.id);
         vehicle.value = {};
         $("#newVehicleModal").modal("hide");
-        Swal.fire({
-            title: "Success",
-            text: "Vehicle created successfully",
-            icon: "success",
-            confirmButtonText: "OK",
-        });
+        successMessage("Vehicle created successfully");
     } catch (error) {
-        convertValidationNotification(error);
+        convertValidationError(error);
     }
 }
 
@@ -154,8 +175,10 @@ function editVehicle(vehicleId) {
 }
 
 async function newVehicle() {
+    loading_bar.value.start();
     vehicle.value = {};
     $("#newVehicleModal").modal("show");
+    loading_bar.value.finish();
 }
 
 function clearFilters() {
@@ -164,25 +187,37 @@ function clearFilters() {
 }
 
 async function inactiveSelectedItems() {
+    loading_bar.value.start();
     const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.inactive.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
+    await axios
+        .post(route("vehicles.inactive.selected"), { ids })
+        .then((response) => {
+            checkVehicleItems.value = [];
+            reload();
+        });
+    loading_bar.value.finish();
 }
 
 async function activeSelectedItems() {
+    loading_bar.value.start();
     const ids = checkVehicleItems.value.map((item) => item.id);
-    await axios.post(route("vehicles.active.selected"), { ids });
-    checkVehicleItems.value = [];
-    await reload();
+    await axios
+        .post(route("vehicles.active.selected"), { ids })
+        .then((response) => {
+            checkVehicleItems.value = [];
+            reload();
+        });
+    loading_bar.value.finish();
 }
 
 function selectAll(event) {
+    loading_bar.value.start();
     if (event.target.checked === false) {
         checkVehicleItems.value = [];
     } else {
         checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
     }
+    loading_bar.value.finish();
 }
 
 async function deleteSelectedItems() {
@@ -199,22 +234,30 @@ async function deleteSelectedItems() {
             });
 
             if (result.isConfirmed) {
+                loading_bar.value.start();
                 const ids = checkVehicleItems.value.map((item) => item.id);
-                await axios.post(route("vehicles.delete.selected"), { ids });
-                await reload();
+                await axios
+                    .post(route("vehicles.delete.selected"), { ids })
+                    .then((response) => {
+                        reload();
+                        checkVehicleItems.value = [];
+                    });
+                successMessage("Vehicle deleted successfully");
             }
         }
     } catch (error) {
-        // convertValidationNotification(error);
-        console.log(error);
+        convertValidationNotification(error);
     } finally {
-        // loader.finish();
+        loading_bar.value.finish();
     }
 }
 </script>
 
 <template>
     <AppLayout title="Vehicle Management">
+        <template #loader>
+            <Loader ref="loading_bar" />
+        </template>
         <template #header>
             <div class="header pb-6">
                 <div class="container-fluid">
@@ -243,7 +286,7 @@ async function deleteSelectedItems() {
                                             class="breadcrumb-item active breadcrumb-text"
                                             aria-current="page"
                                         >
-                                            vehicle Management
+                                            Vehicle Management
                                         </li>
                                     </ol>
                                 </nav>
@@ -306,7 +349,7 @@ async function deleteSelectedItems() {
                                 class="col-md-2 column__right___padding column__left___padding"
                             >
                                 <div for="purchase_uom" class="col-form-label">
-                                    Color
+                                    COLOR
                                 </div>
                                 <input
                                     type="text"
@@ -736,17 +779,15 @@ async function deleteSelectedItems() {
                                                     v-model="vehicle.make"
                                                     placeholder="make"
                                                     required
-                                                />
+                                                /><small
+                                                    v-if="validationErrors.make"
+                                                    id="msg_make"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.make
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.make"
-                                                id="msg_make"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.make
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -765,16 +806,17 @@ async function deleteSelectedItems() {
                                                     placeholder="model"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="
+                                                        validationErrors.model
+                                                    "
+                                                    id="msg_model"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.model
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.model"
-                                                id="msg_model"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.model
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -793,16 +835,15 @@ async function deleteSelectedItems() {
                                                     placeholder="year"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="validationErrors.year"
+                                                    id="msg_name"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.year
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.year"
-                                                id="msg_name"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.year
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -821,18 +862,17 @@ async function deleteSelectedItems() {
                                                     placeholder="condition"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="
+                                                        validationErrors.condition
+                                                    "
+                                                    id="msg_condition"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.condition
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="
-                                                    validationErrors.condition
-                                                "
-                                                id="msg_condition"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.condition
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -851,16 +891,17 @@ async function deleteSelectedItems() {
                                                     placeholder="color"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="
+                                                        validationErrors.color
+                                                    "
+                                                    id="msg_color"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.color
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.color"
-                                                id="msg_color"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.color
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -879,16 +920,17 @@ async function deleteSelectedItems() {
                                                     placeholder="mileage"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="
+                                                        validationErrors.mileage
+                                                    "
+                                                    id="msg_name"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.mileage
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.mileage"
-                                                id="msg_name"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.mileage
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -907,18 +949,17 @@ async function deleteSelectedItems() {
                                                     placeholder="fuel type"
                                                     required
                                                 />
+                                                <small
+                                                    v-if="
+                                                        validationErrors.fuel_type
+                                                    "
+                                                    id="msg_name"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.fuel_type
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="
-                                                    validationErrors.fuel_type
-                                                "
-                                                id="msg_name"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.fuel_type
-                                                }}</small
-                                            >
                                         </div>
                                         <div class="row mb-1">
                                             <div
@@ -936,17 +977,17 @@ async function deleteSelectedItems() {
                                                     v-model="vehicle.price"
                                                     placeholder="fuel type"
                                                     required
-                                                />
+                                                /><small
+                                                    v-if="
+                                                        validationErrors.price
+                                                    "
+                                                    id="msg_name"
+                                                    class="text-danger form-text text-error-msg error"
+                                                    >{{
+                                                        validationErrors.price
+                                                    }}</small
+                                                >
                                             </div>
-
-                                            <small
-                                                v-if="validationErrors.price"
-                                                id="msg_name"
-                                                class="text-danger form-text text-error-msg error"
-                                                >{{
-                                                    validationErrors.price
-                                                }}</small
-                                            >
                                         </div>
 
                                         <div class="text-right mt-2">

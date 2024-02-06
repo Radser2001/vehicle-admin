@@ -1,19 +1,23 @@
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { Head, Link } from "@inertiajs/vue3";
 import { ref, onBeforeMount } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 library.add(faHouse);
+library.add(faTruck);
 
-const total_vehicles = ref(Number);
+const total_vehicles = ref(null);
 
 onBeforeMount(() => {
-    if (!window.Laravel) {
-        window.location.reload();
-    }
+    fetchTotalVehicles();
 });
+
+async function fetchTotalVehicles() {
+    const response = await axios.get(route("vehicles.count"));
+    total_vehicles.value = response.data;
+}
 </script>
 
 <template>
@@ -65,23 +69,25 @@ onBeforeMount(() => {
                                         <div class="col-8">
                                             <div class="numbers">
                                                 <p
-                                                    class="mb-0 text-sm text-uppercase font-weight-bold"
+                                                    class="mb-3 text-lg text-uppercase font-weight-bold"
                                                 >
                                                     Total Vehicles
                                                 </p>
-                                                <h5 class="font-weight-bolder">
+                                                <h5
+                                                    class="text-lg font-weight-bolder"
+                                                >
                                                     {{ total_vehicles }}
                                                 </h5>
                                             </div>
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-danger shadow-danger rounded-circle"
+                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle"
                                             >
-                                                <i
-                                                    class="text-lg ni ni-world opacity-10"
-                                                    aria-hidden="true"
-                                                ></i>
+                                                <font-awesome-icon
+                                                    icon="fa-solid fa-truck"
+                                                    color="#ffffff"
+                                                />
                                             </div>
                                         </div>
                                     </div>

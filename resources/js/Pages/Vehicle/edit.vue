@@ -91,7 +91,7 @@ defineProps({
                                     aria-controls="basic-data"
                                     aria-selected="true"
                                 >
-                                    vehicles Data</a
+                                    Vehicles Data</a
                                 >
                             </li>
                             <li class="mb-2 nav-item">
@@ -150,7 +150,7 @@ defineProps({
                                     <BasicEditForm :vehicle_id="vehicle.id" />
                                 </div>
                                 <div
-                                    class="tab-pane fade show active"
+                                    class="tab-pane fade show"
                                     id="upload-images"
                                     role="tabpanel"
                                 >
@@ -172,12 +172,7 @@ defineProps({
                                 >
                                     <BankAccountsAll :vehicle_id="vehicle.id" />
                                 </div>
-                                <!-- <div class="tab-pane fade show" id="finance-records" role="tabpanel">
-                                    <FinanceRecordAll :vehicle_id="vehicle.id" />
-                                </div> -->
-                                <!-- <div class="tab-pane fade show" id="partner-accounts" role="tabpanel">
-                                    <PartnerAccountsAll :vehicle_id="vehicle.id"  />
-                                </div> -->
+                               
                             </div>
                         </div>
                     </div>

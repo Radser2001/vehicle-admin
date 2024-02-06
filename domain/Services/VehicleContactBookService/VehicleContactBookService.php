@@ -33,14 +33,14 @@ class VehicleContactBookService
 
     /**
      * GetAllContacts
-     * retrieve relevant data using vendor_id
+     * retrieve relevant data using vehicle_id
      *
-     * @param  mixed $vendor_id
+     * @param  mixed $vehicle_id
      * @return void
      */
-    public function getAllContacts($customer_id)
+    public function getAllContacts($vehicle_id)
     {
-        return $this->contact->getAllContacts($customer_id);
+        return $this->contact->getAllContacts($vehicle_id);
     }
 
     /**

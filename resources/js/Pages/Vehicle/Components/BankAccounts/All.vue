@@ -8,7 +8,7 @@ import {
     faPlusCircle,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const { vehicle_id } = defineProps(["vehicle_id"]);
 
@@ -27,24 +27,78 @@ const pagination = ref({});
 const bank = ref({});
 const banks = ref([]);
 
+const validationMessage = ref(null);
+const validationErrors = ref({});
+
 library.add(faHouse);
 library.add(faPlusCircle);
 library.add(faTrash);
-getBanks();
 
-async function setPage(page) {
-    page = page;
+onMounted(() => {
+    getBanks();
+});
+
+function resetValidationErrors() {
+    validationErrors.value = {};
+    validationMessage.value = null;
+}
+function convertValidationNotification(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message } = err.response.data;
+    errorMessage(message);
+}
+function convertValidationError(err) {
+    resetValidationErrors();
+    if (!(err.response && err.response.data)) return;
+    const { message, errors } = err.response.data;
+    validationMessage.value = message;
+
+    if (errors) {
+        for (const error in errors) {
+            validationErrors.value[error] = errors[error][0];
+        }
+    }
+}
+
+const successMessage = (message) => {
+    Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+const errorMessage = (message) => {
+    Swal.fire({
+        title: "Error",
+        text: message,
+        icon: "error",
+        toast: true,
+        position: "top-end",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+    });
+};
+
+async function setPage(pg) {
+    page.value = pg;
     reload();
 }
 async function getSearch() {
-    page = 1;
+    page.value = 1;
     reload();
 }
 async function perPageChange() {
     reload();
 }
+
 async function reload() {
-    //   this.$root.loader.start();
     const tableData = (
         await axios.get(route("vehicles.bank.all", vehicle_id), {
             params: {
@@ -57,40 +111,31 @@ async function reload() {
 
     banks.value = tableData.data;
     pagination.value = tableData.meta;
-    //   this.$root.loader.finish();
 }
 async function getBanks() {
-    //   this.$nextTick(() => {
-    //     this.$root.loader.start();
-    //   });
-    const response = (await axios.get(route("vehicles.bank.all", vehicle_id)))
-        .data;
-    console.log(response);
-    banks.value = response.data;
-    pagination.value = banks.meta;
-    //   this.$nextTick(() => {
-    //     this.$root.loader.finish();
-    //   });
+    const tableData = (
+        await axios.get(route("vehicles.bank.all", vehicle_id), {
+            params: {
+                page: page.value,
+                per_page: pageCount.value,
+                "filter[search]": search.value,
+            },
+        })
+    ).data;
+    banks.value = tableData.data;
+    pagination.value = tableData.meta;
 }
 async function updateBankData() {
-    //   this.resetValidationErrors();
+    resetValidationErrors();
     try {
         await axios.post(route("vehicles.bank.update", vehicle_id), bank.value);
         bank.value = {};
         reload();
 
-        Swal.fire({
-            title: "Success",
-            text: "Bank account updated successfully",
-            icon: "success",
-            confirmButtonColor: "#6CA925",
-            confirmButtonText: "OK",
-        });
+        successMessage("Bank Account Details Added Successfully");
     } catch (error) {
-        //   this.convertValidationError(error);
-        console.log(error);
+        convertValidationError(error);
     }
-    // this.$root.loader.finish();
 }
 async function deleteBank(id) {
     try {
@@ -99,8 +144,8 @@ async function deleteBank(id) {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#C00202", // Green
-            cancelButtonColor: "#6CA925", // Secondary Color
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
@@ -109,11 +154,12 @@ async function deleteBank(id) {
                     .then((response) => {
                         reload();
                     });
+
+                successMessage("Bank Account Details Deleted Successfully");
             }
         });
     } catch (error) {
-        // this.convertValidationNotification(error);
-        console.log(error);
+        convertValidationNotification(error);
     }
 }
 </script>
@@ -199,7 +245,7 @@ async function deleteBank(id) {
                     <div
                         class="col-md-2 column__right___padding column__left___padding"
                     >
-                        <label>CODE</label>
+                        <label>BRANCH CODE</label>
                         <div class="input-group">
                             <input
                                 type="text"
@@ -282,38 +328,38 @@ async function deleteBank(id) {
                 </div>
             </form>
             <div>
-                <!-- <div class="py-3 text-sm mt-3">
-          <div class="flex">
-            <div class="flex items-center text-muted">
-              Search:
-              <div class="inline-block ml-2">
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  v-model="search"
-                  @keyup="getSearch"
-                />
-              </div>
-            </div>
-            <div class="flex text-muted ml-auto">
-              <div class="inline-block mx-2">
-                <select
-                  class="form-control form-control-sm per-page-entry"
-                  :value="25"
-                  v-model="pageCount"
-                  @change="perPageChange"
-                >
-                  <option
-                    v-for="perPageCount in perPage"
-                    :key="perPageCount"
-                    :value="perPageCount"
-                    v-text="perPageCount"
-                  />
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> -->
+                <div class="py-3 text-sm mt-3">
+                    <div class="flex">
+                        <div class="flex items-center text-muted">
+                            Search:
+                            <div class="inline-block ml-2">
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    v-model="search"
+                                    @keyup="getSearch"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex text-muted ml-auto">
+                            <div class="inline-block mx-2">
+                                <select
+                                    class="form-control form-control-sm per-page-entry"
+                                    :value="25"
+                                    v-model="pageCount"
+                                    @change="perPageChange"
+                                >
+                                    <option
+                                        v-for="perPageCount in perPage"
+                                        :key="perPageCount"
+                                        :value="perPageCount"
+                                        v-text="perPageCount"
+                                    />
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -369,79 +415,114 @@ async function deleteBank(id) {
                     </table>
                 </div>
 
-                <!-- <div
-          class="flex mt-1 px-0 mx-0 card-footer table-footer align-items-center"
-        >
-          <div class="col-sm-12 col-md-6 p-0">
-            <div
-              class="dataTables_info column__left___padding"
-              id="DataTables_Table_0_info"
-              role="status"
-              aria-live="polite"
-            >
-              Showing {{ pagination.from }} to {{ pagination.to }} of
-              {{ pagination.total }} entries
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6 p-0">
-            <div
-              class="p-0 dataTables_paginate paging_simple_numbers"
-              id="DataTables_Table_0_paginate"
-            >
-              <nav aria-label="Page navigation" style="float: right">
-                <ul class="pagination">
-                  <li
-                    class="page-item"
-                    :class="pagination.current_page == 1 ? 'disabled' : ''"
-                  >
-                    <a
-                      class="page-link"
-                      href="javascript:void(0)"
-                      @click="setPage(pagination.current_page - 1)"
-                    >
-                      <i class="fa-solid fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <template v-for="(page, index) in pagination.last_page">
-                    <template
-                      v-if="
-                        page == 1 ||
-                        page == pagination.last_page ||
-                        Math.abs(page - pagination.current_page) < 5
-                      "
-                    >
-                      <li
-                        class="page-item"
-                        :key="index"
-                        :class="pagination.current_page == page ? 'active' : ''"
-                      >
-                        <a class="page-link" @click="setPage(page)">{{
-                          page
-                        }}</a>
-                      </li>
-                    </template>
-                  </template>
-                  <li
-                    class="page-item"
-                    :class="
-                      pagination.current_page == pagination.last_page
-                        ? 'disabled'
-                        : ''
-                    "
-                  >
-                    <a
-                      class="page-link"
-                      href="javascript:void(0)"
-                      @click="setPage(pagination.current_page + 1)"
-                    >
-                      <i class="fa-solid fa-angles-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div> -->
+                <div
+                    class="flex mt-1 px-0 mx-0 card-footer table-footer align-items-center"
+                >
+                    <div class="col-sm-12 col-md-6 p-0">
+                        <div
+                            class="dataTables_info column__left___padding"
+                            id="DataTables_Table_0_info"
+                            role="status"
+                            aria-live="polite"
+                        >
+                            Showing {{ pagination.from }} to
+                            {{ pagination.to }} of
+                            {{ pagination.total }} entries
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 p-0">
+                        <div
+                            class="dataTables_paginate paging_simple_numbers column__right___padding"
+                            id="DataTables_Table_0_paginate"
+                        >
+                            <nav
+                                aria-label="Page navigation"
+                                style="float: right"
+                            >
+                                <ul class="pagination">
+                                    <li
+                                        class="page-item"
+                                        :class="
+                                            pagination.current_page == 1
+                                                ? 'disabled'
+                                                : ''
+                                        "
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="javascript:void(0)"
+                                            @click="
+                                                setPage(
+                                                    pagination.current_page - 1
+                                                )
+                                            "
+                                        >
+                                            <i
+                                                class="fa-solid fa-angles-left"
+                                            ></i>
+                                        </a>
+                                    </li>
+                                    <template
+                                        v-for="(
+                                            page, index
+                                        ) in pagination.last_page"
+                                    >
+                                        <template
+                                            v-if="
+                                                page == 1 ||
+                                                page == pagination.last_page ||
+                                                Math.abs(
+                                                    page -
+                                                        pagination.current_page
+                                                ) < 5
+                                            "
+                                        >
+                                            <li
+                                                class="page-item"
+                                                :key="index"
+                                                :class="
+                                                    pagination.current_page ==
+                                                    page
+                                                        ? 'active'
+                                                        : ''
+                                                "
+                                            >
+                                                <a
+                                                    class="page-link"
+                                                    @click="setPage(page)"
+                                                    >{{ page }}</a
+                                                >
+                                            </li>
+                                        </template>
+                                    </template>
+                                    <li
+                                        class="page-item"
+                                        :class="
+                                            pagination.current_page ==
+                                            pagination.last_page
+                                                ? 'disabled'
+                                                : ''
+                                        "
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="javascript:void(0)"
+                                            @click="
+                                                setPage(
+                                                    pagination.current_page + 1
+                                                )
+                                            "
+                                        >
+                                            <i
+                                                class="fa-solid fa-angles-right"
+                                            ></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

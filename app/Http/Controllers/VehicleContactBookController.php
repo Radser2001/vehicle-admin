@@ -12,32 +12,27 @@ use App\Http\Requests\Vehicle\UpdateContactBookRequest;
 use App\Models\VehicleContactBook;
 use domain\Facades\VehicleContactBookFacade\VehicleContactBookFacade;
 
-class VehicleContactBookController extends Controller
+class VehicleContactBookController extends ParentController
 {
     /**
      * update
      *
      * @param  UpdateContactBookRequest $request
-     * @param  int $vendorId
+     * @param  int $vehicleId
      * @return void
      */
     public function update(UpdateContactBookRequest $request, int $vehicleId)
     {
 
-        // if (Auth::user()->can('update_vendor_contact')) {
+
         $request['vehicle_id'] = $vehicleId;
         VehicleContactBookFacade::store($request->all());
-        // } else {
-        //     $response['alert-danger'] = 'You do not have permission to update Vendor contacts.';
-        //     return redirect()->route('dashboard')->with($response);
-        // }
-
     }
 
     /**
      * get
      *
-     * @param  int $vendorId
+     * @param  int $vehicleId
      * @return void
      */
     public function all(int $vehicleId)
@@ -59,12 +54,7 @@ class VehicleContactBookController extends Controller
     public function delete(int $id)
     {
 
-        // if (Auth::user()->can('delete_vendor_contact')) {
-        return  VehicleContactBookFacade::delete($id);
-        // } else {
-        //     $response['alert-danger'] = 'You do not have permission to delete Vendor contacts.';
-        //     return redirect()->route('dashboard')->with($response);
-        // }
 
+        return  VehicleContactBookFacade::delete($id);
     }
 }

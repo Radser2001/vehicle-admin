@@ -23,6 +23,7 @@ defineProps({
             <NavBar />
             <div>
                 <slot name="header" />
+
                 <div class="container-fluid">
                     <slot name="content" />
                 </div>
@@ -31,7 +32,7 @@ defineProps({
         <slot name="modals" />
         <Footer />
         <Notification ref="notify" />
-        <Loader ref="loader" />
+        <slot name="loader" />
     </div>
 </template>
 
