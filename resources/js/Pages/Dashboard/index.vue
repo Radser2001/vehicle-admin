@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                class="text-center icon icon-shape bg-gradient-red shadow-danger rounded-circle">
                                                 <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
                                             </div>
                                         </div>
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                class="text-center icon icon-shape bg-gradient-green shadow-danger rounded-circle">
                                                 <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                class="text-center icon icon-shape bg-gradient-primary shadow-danger rounded-circle">
                                                 <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
                                             </div>
                                         </div>
@@ -118,7 +118,7 @@
                                         </div>
                                         <div class="col-4 text-end">
                                             <div
-                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                class="text-center icon icon-shape bg-gradient-indigo shadow-danger rounded-circle">
                                                 <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
                                             </div>
                                         </div>
