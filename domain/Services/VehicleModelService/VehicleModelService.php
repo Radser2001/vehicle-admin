@@ -1,11 +1,11 @@
 <?php
 
-namespace domain\Services\CarModelService;
+namespace domain\Services\VehicleModelService;
 
-use App\Models\CarModel;
+use App\Models\VehicleModel;
 use Illuminate\Support\Str;
 
-class CarModelService
+class VehicleModelService
 {
     protected $model;
     /**
@@ -15,7 +15,7 @@ class CarModelService
      */
     public function __construct()
     {
-        $this->model = new CarModel();
+        $this->model = new VehicleModel();
     }
 
     /**
@@ -77,7 +77,7 @@ class CarModelService
      * @param  array $data
      * @return void
      */
-    protected function edit(CarModel $model, array $data)
+    protected function edit(VehicleModel $model, array $data)
     {
         return array_merge($model->toArray(), $data);
     }
@@ -104,7 +104,7 @@ class CarModelService
     public function deleteSelected($data)
     {
         $ids = $data->input('ids');
-        CarModel::whereIn('id', $ids)->delete();
+        VehicleModel::whereIn('id', $ids)->delete();
 
         return response()->json([
             'success' => true,
@@ -115,7 +115,7 @@ class CarModelService
     {
         $ids = $data->input('ids');
 
-        $models = CarModel::whereIn('id', $ids)->get();
+        $models = VehicleModel::whereIn('id', $ids)->get();
 
         foreach ($models as $model) {
             $model->status = 0;
@@ -130,7 +130,7 @@ class CarModelService
     {
         $ids = $data->input('ids');
 
-        $models = CarModel::whereIn('id', $ids)->get();
+        $models = VehicleModel::whereIn('id', $ids)->get();
 
         foreach ($models as $model) {
             $model->status = 1;

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Filters\FuzzyFilter;
-use App\Http\Requests\CarModel\CreateCarModelRequest;
-use App\Http\Requests\CarModel\UpdateCarModelRequest;
+use App\Http\Requests\VehicleModel\CreateVehicleModelRequest;
+use App\Http\Requests\VehicleModel\UpdateVehicleModelRequest;
 use App\Http\Resources\DataResource;
-use App\Models\CarModel;
-use domain\Facades\CarModelFacade\CarModelFacade;
+use App\Models\VehicleModel;
+use domain\Facades\VehicleModelFacade\VehicleModelFacade;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -32,7 +32,7 @@ class ModelController extends ParentController
      */
     public function all()
     {
-        $query = CarModel::orderBy('id', 'desc');
+        $query = VehicleModel::orderBy('id', 'desc');
         $payload = QueryBuilder::for($query)
             ->allowedSorts(['id', 'name'])
             ->allowedFilters(AllowedFilter::custom('search', new FuzzyFilter('name', 'code')))
@@ -43,12 +43,12 @@ class ModelController extends ParentController
     /**
      * store
      *
-     * @param  CreateCarModelRequest $request
+     * @param  CreateVehicleModelRequest $request
      * @return void
      */
-    public function store(CreateCarModelRequest $request)
+    public function store(CreateVehicleModelRequest $request)
     {
-        return CarModelFacade::store($request->all());
+        return VehicleModelFacade::store($request->all());
     }
 
     /**
@@ -59,19 +59,19 @@ class ModelController extends ParentController
      */
     public function delete(int $modelId)
     {
-        return CarModelFacade::delete($modelId);
+        return VehicleModelFacade::delete($modelId);
     }
 
     /**
      * update
      *
-     * @param  UpdateCarModelRequest $request
+     * @param  UpdateVehicleModelRequest $request
      * @param  int $modelId
      * @return void
      */
-    public function update(UpdateCarModelRequest $request, int $modelId)
+    public function update(UpdateVehicleModelRequest $request, int $modelId)
     {
-        return CarModelFacade::update($request->all(), $modelId);
+        return VehicleModelFacade::update($request->all(), $modelId);
     }
 
     /**
@@ -82,21 +82,21 @@ class ModelController extends ParentController
      */
     public function get(int $modelId)
     {
-        $payload = CarModelFacade::get($modelId);
+        $payload = VehicleModelFacade::get($modelId);
         return new DataResource($payload);
     }
     public function deleteSelectedItems(Request $request)
     {
-        return CarModelFacade::deleteSelected($request);
+        return VehicleModelFacade::deleteSelected($request);
     }
 
     public function inactiveSelectedItems(Request $request)
     {
-        return CarModelFacade::inactive($request);
+        return VehicleModelFacade::inactive($request);
     }
     public function activeSelectedItems(Request $request)
     {
 
-        return CarModelFacade::active($request);
+        return VehicleModelFacade::active($request);
     }
 }

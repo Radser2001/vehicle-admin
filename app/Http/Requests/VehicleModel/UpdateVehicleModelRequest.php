@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\CarModel;
+namespace App\Http\Requests\VehicleModel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCarModelRequest extends FormRequest
+class UpdateVehicleModelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CreateCarModelRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'code' => ['required', 'string', 'unique:car_models,code'],
+            // 'code' => ['required', 'string', 'unique:car_models,code,' . $this->id],
             'name' => ['required', 'string', 'max:255'],
         ];
     }
