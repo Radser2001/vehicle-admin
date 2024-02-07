@@ -51,7 +51,7 @@ class VehicleCategoryService
      */
     public function store(array $data)
     {
-        $data['code'] = Str::slug($data['name']);
+        $data['code'] = Str::slug($data['name'], '-');
         return $this->category->create($data);
     }
 
