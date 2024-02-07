@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class CategoryController extends Controller
+class CategoryController extends ParentController
 {
     /**
      * index
