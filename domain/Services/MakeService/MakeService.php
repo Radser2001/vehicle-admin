@@ -29,6 +29,19 @@ class MakeService
         return $this->make->all();
     }
 
+
+    /**
+     * count
+     * count the number of Vehicle models
+     *
+     * @return void
+     */
+
+    public function count()
+    {
+        return $this->make->count();
+    }
+
     /**
      * Store
      * store data in database

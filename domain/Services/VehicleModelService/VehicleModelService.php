@@ -30,6 +30,18 @@ class VehicleModelService
     }
 
     /**
+     * count
+     * count the number of Vehicle models
+     *
+     * @return void
+     */
+
+    public function count()
+    {
+        return $this->model->count();
+    }
+
+    /**
      * Store
      * store data in database
      *

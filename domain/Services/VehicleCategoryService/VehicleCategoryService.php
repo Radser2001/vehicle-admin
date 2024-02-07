@@ -29,6 +29,19 @@ class VehicleCategoryService
         return $this->category->all();
     }
 
+
+    /**
+     * count
+     * count the number of Vehicle models
+     *
+     * @return void
+     */
+
+    public function count()
+    {
+        return $this->category->count();
+    }
+
     /**
      * Store
      * store data in database

@@ -40,6 +40,18 @@ class CategoryController extends Controller
         return DataResource::collection($payload);
     }
 
+
+
+    /**
+     * count
+     *
+     * @return void
+     */
+    public function count()
+    {
+        return VehicleCategoryFacade::count();
+    }
+
     /**
      * store
      *

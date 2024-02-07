@@ -40,6 +40,17 @@ class ModelController extends ParentController
         return DataResource::collection($payload);
     }
 
+
+    /**
+     * count
+     *
+     * @return void
+     */
+    public function count()
+    {
+        return VehicleModel::count();
+    }
+
     /**
      * store
      *

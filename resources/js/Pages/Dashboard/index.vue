@@ -36,11 +36,83 @@
                                     <div class="row">
                                         <div class="col-8">
                                             <div class="numbers">
-                                                <p class="mb-3 text-lg text-uppercase font-weight-bold">
+                                                <p class="mb-3 text-md text-uppercase font-weight-bold">
                                                     Total Vehicles
                                                 </p>
                                                 <h5 class="text-lg font-weight-bolder">
                                                     {{ total_vehicles }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <div
+                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="mb-4 card">
+                                <div class="p-3 card-body">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="numbers">
+                                                <p class="mb-3 text-md text-uppercase font-weight-bold">
+                                                    Total Models
+                                                </p>
+                                                <h5 class="text-lg font-weight-bolder">
+                                                    {{ total_models }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <div
+                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="mb-4 card">
+                                <div class="p-3 card-body">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="numbers">
+                                                <p class="mb-3 text-md text-uppercase font-weight-bold">
+                                                    Total Makes
+                                                </p>
+                                                <h5 class="text-lg font-weight-bolder">
+                                                    {{ total_makes }}
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-end">
+                                            <div
+                                                class="text-center icon icon-shape bg-gradient-purple shadow-danger rounded-circle">
+                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <div class="mb-4 card">
+                                <div class="p-3 card-body">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="numbers">
+                                                <p class="mb-3 text-md text-uppercase font-weight-bold">
+                                                    Total Categories
+                                                </p>
+                                                <h5 class="text-lg font-weight-bolder">
+                                                    {{ total_categories }}
                                                 </h5>
                                             </div>
                                         </div>
@@ -72,14 +144,34 @@ library.add(faHouse);
 library.add(faTruck);
 
 const total_vehicles = ref(null);
+const total_models = ref(null);
+const total_makes = ref(null);
+const total_categories = ref(null);
 
 onBeforeMount(() => {
     fetchTotalVehicles();
+    fetchTotalModels();
+    fetchTotalMakes();
+    fetchTotalCategories();
 });
 
 async function fetchTotalVehicles() {
     const response = await axios.get(route("vehicles.count"));
     total_vehicles.value = response.data;
+}
+async function fetchTotalModels() {
+    const response = await axios.get(route("model.count"));
+    total_models.value = response.data;
+}
+
+async function fetchTotalMakes() {
+    const response = await axios.get(route("make.count"));
+    total_makes.value = response.data;
+}
+
+async function fetchTotalCategories() {
+    const response = await axios.get(route("category.count"));
+    total_categories.value = response.data;
 }
 </script>
 
