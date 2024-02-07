@@ -327,7 +327,7 @@
             </div>
 
 
-
+            <!-- vehicle make edit modal -->
             <div class="modal fade" id="editMakeModal" data-backdrop="static" tabindex="-1" role="dialog"
                 aria-labelledby="editMakeModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -358,21 +358,21 @@
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                              <div for="condition" class="col-md-3 col-form-label">
-                                                    STATUS
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <select name="status" id="status" class="form-select" aria-label="status"
-                                                        required v-model="edit_make.status">
-                                                        <option value="0">Inactive</option>
-                                                        <option value="1">Active</option>
-                                                    </select>
-                                                    <small v-if="validationErrors.condition
-                                                        " id="msg_condition"
-                                                        class="text-danger form-text text-error-msg error">{{
-                                                            validationErrors.condition
-                                                        }}</small>
-                                                </div>
+                                            <div for="condition" class="col-md-3 col-form-label">
+                                                STATUS
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="status" id="status" class="form-select" aria-label="status"
+                                                    required v-model="edit_make.status">
+                                                    <option value="0">Inactive</option>
+                                                    <option value="1">Active</option>
+                                                </select>
+                                                <small v-if="validationErrors.condition
+                                                    " id="msg_condition"
+                                                    class="text-danger form-text text-error-msg error">{{
+                                                        validationErrors.condition
+                                                    }}</small>
+                                            </div>
                                         </div>
                                         <div class="text-right mt-2">
                                             <button type=" submit" class="btn btn-round btn-outline--info btn-sm mb-0">
@@ -587,6 +587,29 @@ async function updateMake() {
         $("#editMakeModal").modal("hide");
         edit_make.value = {};
         successMessage("Vehicle Make updated successfully");
+    } catch (error) {
+        convertValidationNotification(error);
+    }
+}
+
+async function deleteMake(makeId) {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(route("make.delete", makeId)).then((response) => {
+                    reload();
+                });
+            }
+            successMessage("Vehicle Make deleted successfully");
+        });
     } catch (error) {
         convertValidationNotification(error);
     }
