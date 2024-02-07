@@ -301,10 +301,10 @@
                                                 STATUS
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="status" id="status" class="form-select" aria-label="status"
-                                                    required v-model="model.status">
-                                                    <option selected value="0">Inactive</option>
-                                                    <option value="1">Active</option>
+                                                <select name="status" id="status" class="form-control form-control-sm"
+                                                    aria-label="status" required v-model="model.status">
+                                                    <option selected value="0">Used</option>
+                                                    <option value="1">New</option>
                                                 </select>
                                                 <small v-if="validationErrors.condition
                                                     " id="msg_condition"
@@ -364,8 +364,8 @@
                                                 STATUS
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="status" id="status" class="form-select" aria-label="status"
-                                                    required v-model="edit_model.status">
+                                                <select name="status" id="status" class="form-control form-control-sm"
+                                                    aria-label="status" required v-model="edit_model.status">
                                                     <option value="0">Inactive</option>
                                                     <option value="1">Active</option>
                                                 </select>

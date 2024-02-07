@@ -38,10 +38,10 @@
                     </div>
 
                     <div class="col-md-10">
-                        <select name="condition" id="condition" class="form-select" aria-label="CONDITION"
+                        <select name="condition" id="condition" class="form-control form-control-sm" aria-label="CONDITION"
                             v-model="vehicle.condition">
-                            <option value="1">Inactive</option>
-                            <option value="0">Active</option>
+                            <option value="0">New</option>
+                            <option value="1">Used</option>
                         </select>
 
                         <small v-if="validationErrors.condition" id="msg_name"

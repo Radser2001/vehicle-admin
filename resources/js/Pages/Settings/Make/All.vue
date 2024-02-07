@@ -300,8 +300,8 @@
                                                 STATUS
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="status" id="status" class="form-select" aria-label="status"
-                                                    required v-model="make.status">
+                                                <select name="status" id="status" class="form-control form-control-sm"
+                                                    aria-label="status" required v-model="make.status">
                                                     <option selected value="0">Inactive</option>
                                                     <option value="1">Active</option>
                                                 </select>
@@ -362,8 +362,8 @@
                                                 STATUS
                                             </div>
                                             <div class="col-md-9">
-                                                <select name="status" id="status" class="form-select" aria-label="status"
-                                                    required v-model="edit_make.status">
+                                                <select name="status" id="status" class="form-control form-control-sm"
+                                                    aria-label="status" required v-model="edit_make.status">
                                                     <option value="0">Inactive</option>
                                                     <option value="1">Active</option>
                                                 </select>

@@ -187,9 +187,9 @@
                                             </td>
                                             <td :class="iconClassBody" class="pt-2">
                                                 <label v-if="vehicle.condition == 1
-                                                    " class="badge bg-success text-white fw-bold">Active</label>
+                                                    " class="badge bg-success text-white fw-bold">New</label>
                                                 <label v-if="vehicle.condition == 0
-                                                    " class="badge bg-warning text-white fw-bold">Inactive</label>
+                                                    " class="badge bg-warning text-white fw-bold">Used</label>
                                             </td>
                                             <td :class="textClassBody">
                                                 {{ vehicle.make }}
@@ -363,9 +363,13 @@
                                                 CONDITION
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="condition"
-                                                    id="condition" v-model="vehicle.condition" placeholder="condition"
-                                                    required />
+                                                <select class="form-control form-control-sm" v-model="vehicle.condition"
+                                                    name="condition" id="condition" required>
+
+                                                    <option selected value="1">New</option>
+                                                    <option value="0">Used</option>
+                                                </select>
+
                                                 <small v-if="validationErrors.condition
                                                     " id="msg_condition"
                                                     class="text-danger form-text text-error-msg error">{{
