@@ -8,8 +8,12 @@
                 <div class="row mb-1">
                     <div for="make" class="col-md-2 col-form-label">MAKE</div>
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-control-sm" name="make" id="make"
-                            v-model="vehicle.make" />
+                        <!-- <input type="text" class="form-control form-control-sm" name="make" id="make"
+                            v-model="vehicle.make" /> -->
+                        <select v-model="vehicle.make" class="form-control form-control-sm" name="make" id="make">
+                            <option v-for="make in makes" :value="make.name">{{ make.name }}
+                            </option>
+                        </select>
                         <small v-if="validationErrors.make" id="msg_make"
                             class="text-danger form-text text-error-msg error">{{ validationErrors.code }}</small>
                     </div>
@@ -17,8 +21,13 @@
                 <div class="row mb-1">
                     <div for="model" class="col-md-2 col-form-label">MODEL</div>
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-control-sm" name="model" id="model"
-                            v-model="vehicle.model" />
+
+                        <select v-model="vehicle.model" class="form-control form-control-sm" name="model" id="model">
+                            <option v-for="model in models" :value="model.name">{{ model.name }}
+                            </option>
+                        </select>
+                        <!-- <input type="text" class="form-control form-control-sm" name="model" id="model"
+                            v-model="vehicle.model" /> -->
                         <small v-if="validationErrors.model" id="msg_model"
                             class="text-danger form-text text-error-msg error">{{ validationErrors.name }}</small>
                     </div>
@@ -119,7 +128,10 @@ import {
 const { vehicle_id } = defineProps(["vehicle_id"]);
 
 const vehicle = ref({});
-const condition = ["Active", "Inactive"];
+
+const makes = ref([]);
+const models = ref([]);
+const categories = ref([]);
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -130,6 +142,9 @@ library.add(faTrash);
 
 onMounted(() => {
     getVehicle();
+    getMakes();
+    getModels();
+    getCategories();
 });
 
 function resetValidationErrors() {
@@ -183,6 +198,28 @@ const errorMessage = (message) => {
 async function getVehicle() {
     const response = (await axios.get(route("vehicles.get", vehicle_id))).data;
     vehicle.value = response.data;
+}
+
+async function getMakes() {
+
+    const response = (await axios.get(route("make.all"))).data;
+    makes.value = response.data;
+
+
+}
+async function getModels() {
+
+    const response = (await axios.get(route("model.all"))).data;
+    models.value = response.data;
+
+
+}
+async function getCategories() {
+
+    const response = (await axios.get(route("category.all"))).data;
+    categories.value = response.data;
+
+
 }
 
 async function updateVehicleData() {
