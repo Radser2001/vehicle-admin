@@ -394,7 +394,7 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control form-control-sm" name="year"
-                                                    id="year" v-model="vehicle.year" placeholder="year" required />
+                                                    id="year" v-model="vehicle.year" required />
                                                 <small v-if="validationErrors.year" id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.year
@@ -427,7 +427,7 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control form-control-sm" name="mileage"
-                                                    id="mileage" v-model="vehicle.mileage" placeholder="mileage" required />
+                                                    id="mileage" v-model="vehicle.mileage" required />
                                                 <small v-if="validationErrors.mileage
                                                     " id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -440,9 +440,15 @@
                                                 FUEL TYPE
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="fuel_type" class="form-control form-control-sm"
-                                                    name="fuel_type" id="fuel_type" v-model="vehicle.fuel_type"
-                                                    placeholder="fuel type" required />
+                                                <select class="form-control form-control-sm" v-model="vehicle.fuel_type"
+                                                    name="fuel_type" id="fuel_type" required>
+
+                                                    <option value="Petrol (Gasoline)">Petrol (Gasoline)</option>
+                                                    <option value="Diesel">Diesel</option>
+                                                    <option value="Hybrid">Hybrid</option>
+                                                    <option value="Natural Gas">Natural Gas</option>
+                                                    <option value="Hydrogen">Hydrogen</option>
+                                                </select>
                                                 <small v-if="validationErrors.fuel_type
                                                     " id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -456,8 +462,7 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="price" class="form-control form-control-sm" name="price"
-                                                    id="price" v-model="vehicle.price" placeholder="fuel type"
-                                                    required /><small v-if="validationErrors.price
+                                                    id="price" v-model="vehicle.price" required /><small v-if="validationErrors.price
                                                         " id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.price

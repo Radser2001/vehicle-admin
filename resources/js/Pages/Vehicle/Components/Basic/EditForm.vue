@@ -88,8 +88,18 @@
                         FUEL TYPE
                     </div>
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-control-sm" name="fuel_type" id="fuel_type"
-                            v-model="vehicle.fuel_type" />
+
+                        <select class="form-control form-control-sm" v-model="vehicle.fuel_type" name="fuel_type"
+                            id="fuel_type" required>
+
+                            <option value="Petrol (Gasoline)">Petrol (Gasoline)</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Natural Gas">Natural Gas</option>
+                            <option value="Hydrogen">Hydrogen</option>
+                        </select>
+                        <!-- <input type="text" class="form-control form-control-sm" name="fuel_type" id="fuel_type"
+                            v-model="vehicle.fuel_type" /> -->
                         <small v-if="validationErrors.fuel_type" id="msg_name"
                             class="text-danger form-text text-error-msg error">{{ validationErrors.fuel_type }}</small>
                     </div>
