@@ -148,9 +148,9 @@
                                         <tr>
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="vehicles &&
-                                                        vehicles.length > 0
-                                                        " :checked="checkAllItems" v-model="checkAllItems" />
+                                                    <input class="form-check-input" type="checkbox" @click="selectAll"
+                                                        v-if="vehicles && vehicles.length > 0" v-model="checkAllItems"
+                                                        :checked="checkAllItems.length == checkVehicleItems.length" />
                                                 </div>
                                             </th>
                                             <th :class="iconClassHead">
@@ -181,8 +181,10 @@
                                         <tr v-for="vehicle in vehicles" :key="vehicle.id" :class="rowClass">
                                             <td class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input class="form-check-input" type="checkbox" v-model="checkVehicleItems
-                                                        " v-bind:value="vehicle" v-bind:id="vehicle.id" />
+                                                    <input class="form-check-input" type="checkbox"
+                                                        :checked="checkVehicleItems.includes(vehicle)"
+                                                        v-model="checkVehicleItems" v-bind:value="vehicle"
+                                                        v-bind:id="vehicle.id" />
                                                 </div>
                                             </td>
                                             <td :class="iconClassBody" class="pt-2">
@@ -477,6 +479,7 @@ import {
     faXmark,
     faPen,
 } from "@fortawesome/free-solid-svg-icons";
+import { watch } from "vue";
 
 const textClassHead = ref("text-start text-uppercase");
 const textClassBody = ref("text-start");
@@ -536,6 +539,7 @@ function convertValidationError(err) {
         }
     }
 }
+
 
 const successMessage = (message) => {
     Swal.fire({
