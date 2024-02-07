@@ -24,7 +24,7 @@ class UpdateMakeRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => ['required', 'string', 'unique:makes,code,' . $this->id],
+            // 'code' => ['required', 'string', 'unique:makes,code,' . $this->id],
             'name' => ['required', 'string', 'max:255'],
         ];
     }

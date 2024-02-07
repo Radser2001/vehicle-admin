@@ -24,7 +24,7 @@ class CreateMakeRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => ['required', 'string', 'unique:makes,code'],
+            // 'code' => ['required', 'string', 'unique:makes,code'],
             'name' => ['required', 'string', 'max:255'],
         ];
     }

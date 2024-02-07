@@ -3,6 +3,7 @@
 namespace domain\Services\MakeService;
 
 use App\Models\Make;
+use Illuminate\Support\Str;
 
 class MakeService
 {
@@ -37,6 +38,8 @@ class MakeService
      */
     public function store(array $data)
     {
+        //slug of name
+        $data['code'] = Str::slug($data['name']);
         return $this->make->create($data);
     }
 

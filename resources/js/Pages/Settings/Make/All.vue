@@ -132,7 +132,7 @@
                                 </div>
                                 <table class="table">
                                     <thead>
-                                        <tr>j
+                                        <tr>
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
                                                     <input class="form-check-input" type="checkbox" @click="selectAll" v-if="makes &&
@@ -172,11 +172,15 @@
                                                 {{ make.code }}
                                             </td>
 
-                                            <td :class="textClassBody">
+                                            <td :class="iconClassBody">
                                                 <a href="javascript:void(0)" @click.prevent="
                                                     editMake(make.id)
-                                                    ">
+                                                    " class="p-2 float-end">
                                                     <font-awesome-icon icon="fa-solid fa-pen" class="text-ash" />
+                                                </a>
+                                                <a href="javascript:void(0)" @click.prevent="deleteMake(make.id)"
+                                                    class="p-2 float-end">
+                                                    <font-awesome-icon icon="fa-solid fa-trash" class="text-ash" />
                                                 </a>
                                             </td>
                                         </tr>
@@ -277,19 +281,7 @@
                             <div class="card-plain">
                                 <div class="card-body">
                                     <form role="form text-left" @submit.prevent="createMake" enctype="multipart/form-data">
-                                        <div class="row mb-1">
-                                            <div for="code" class="col-md-3 col-form-label">
-                                                CODE
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="code"
-                                                    id="code" v-model="make.code" placeholder="code" required /><small
-                                                    v-if="validationErrors.code" id="msg_code"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.code
-                                                    }}</small>
-                                            </div>
-                                        </div>
+
                                         <div class="row mb-1">
                                             <div for="make" class="col-md-3 col-form-label">
                                                 MAKE
@@ -310,8 +302,8 @@
                                             <div class="col-md-9">
                                                 <select name="status" id="status" class="form-select" aria-label="status"
                                                     required v-model="make.status">
-                                                    <option selected value="1">Inactive</option>
-                                                    <option value="0">Active</option>
+                                                    <option selected value="0">Inactive</option>
+                                                    <option value="1">Active</option>
                                                 </select>
                                                 <small v-if="validationErrors.condition
                                                     " id="msg_condition"
@@ -333,6 +325,70 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <div class="modal fade" id="editMakeModal" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="editMakeModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
+                                Edit Make
+                            </h5>
+                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <font-awesome-icon icon="fa-solid fa-xmark" />
+                                </span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="card-plain">
+                                <div class="card-body m-2">
+                                    <form role="form text-left" @submit.prevent="updateMake" enctype="multipart/form-data">
+
+                                        <div class="row mb-1">
+                                            <div for="name" class="col-md-3 col-form-label">NAME</div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control form-control-sm" name="name"
+                                                    id="name" v-model="edit_make.name" placeholder="Name" required />
+                                                <small v-if="validationErrors.name" id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
+                                                        validationErrors.name }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-1">
+                                              <div for="condition" class="col-md-3 col-form-label">
+                                                    STATUS
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="status" id="status" class="form-select" aria-label="status"
+                                                        required v-model="edit_make.status">
+                                                        <option value="0">Inactive</option>
+                                                        <option value="1">Active</option>
+                                                    </select>
+                                                    <small v-if="validationErrors.condition
+                                                        " id="msg_condition"
+                                                        class="text-danger form-text text-error-msg error">{{
+                                                            validationErrors.condition
+                                                        }}</small>
+                                                </div>
+                                        </div>
+                                        <div class="text-right mt-2">
+                                            <button type=" submit" class="btn btn-round btn-outline--info btn-sm mb-0">
+                                                <font-awesome-icon icon="fa-solid fa-floppy-disk" />
+                                                UPDATE
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </template>
     </AppLayout>
 </template>
@@ -379,6 +435,7 @@ const makes = ref([]);
 const checkMakeItems = ref([]);
 const checkAllItems = ref(false);
 const searchMake = ref({});
+const edit_make = ref({});
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -500,14 +557,39 @@ async function createMake() {
         make.value = {};
         $("#newMakeModal").modal("hide");
         successMessage("Vehicle Make created successfully");
+        reload();
     } catch (error) {
         convertValidationError(error);
-        console.log(error);
+
     }
 }
 
-function editMake(makeId) {
-    window.location.href = route("make.edit", makeId);
+
+async function editMake(makeId) {
+    resetValidationErrors();
+    try {
+        const response = (await axios.get(route("make.get", makeId))).data;
+        edit_make.value = response.data;
+        $("#editMakeModal").modal("show");
+    } catch (error) {
+        convertValidationError(error);
+    }
+}
+
+async function updateMake() {
+    resetValidationErrors();
+    try {
+        await axios.post(
+            route("make.update", edit_make.value.id),
+            edit_make.value
+        );
+        reload();
+        $("#editMakeModal").modal("hide");
+        edit_make.value = {};
+        successMessage("Vehicle Make updated successfully");
+    } catch (error) {
+        convertValidationNotification(error);
+    }
 }
 
 async function newMake() {
@@ -518,7 +600,7 @@ async function newMake() {
 }
 
 function clearFilters() {
-    searchMake.value = {};
+    search.value = null;
     reload();
 }
 
