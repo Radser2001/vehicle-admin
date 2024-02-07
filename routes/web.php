@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MakeController;
 use App\Http\Controllers\ModelController;
@@ -98,6 +99,20 @@ Route::prefix('model')->group(function () {
     Route::post('/{model_id}/select/model/delete', [ModelController::class, 'deleteSelectedItems'])->name('model.delete.selected');
     Route::post('/select/model/inactive', [ModelController::class, 'inactiveSelectedItems'])->name('model.inactive.selected');
     Route::post('/select/model/active', [ModelController::class, 'activeSelectedItems'])->name('model.active.selected');
+});
+
+//Category Registry
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, "index"])->name('category.index');
+    Route::get('/all', [CategoryController::class, "all"])->name('category.all');
+    Route::post('/store', [CategoryController::class, "store"])->name('category.store');
+    Route::get('/{category_id}/get', [CategoryController::class, "get"])->name('category.get');
+    Route::post('/{category_id}/update', [CategoryController::class, "update"])->name('category.update');
+    Route::delete('/{category_id}/delete', [CategoryController::class, "delete"])->name('category.delete');
+
+    Route::post('/select/category/delete', [CategoryController::class, 'deleteSelectedItems'])->name('category.delete.selected');
+    Route::post('/select/category/inactive', [CategoryController::class, 'inactiveSelectedItems'])->name('category.inactive.selected');
+    Route::post('/select/category/active', [CategoryController::class, 'activeSelectedItems'])->name('category.active.selected');
 });
 
 require __DIR__ . '/auth.php';

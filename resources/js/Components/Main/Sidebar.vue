@@ -20,7 +20,7 @@
                             <Link :class="{
                                 active: route().current() == 'dashboard',
                             }" class="nav-link active-preloader" :href="route('dashboard')">
-                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-desktop" color="#f74848" />
+                            <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-desktop" color="#594dff" />
 
                             <span class="ml-3 nav-link-text font-weight-400">Dashboard</span>
                             </Link>
@@ -37,7 +37,8 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="#settingsMenu" data-toggle="collapse" aria-expanded="true">
-                                <font-awesome-icon icon="fa-solid fa-gear" /><span class="ml-2">Settings</span>
+                                <font-awesome-icon icon="fa-solid fa-gear " color="#594dff" /><span
+                                    class="ml-2">Settings</span>
                             </a>
                             <ul class="list-unstyled" id="settingsMenu">
                                 <li class="nav-item">
@@ -45,7 +46,7 @@
                                         active:
                                             route().current() == 'make.index',
                                     }" class="nav-link active-preloader" :href="route('make.index')">
-                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
                                     <span class="ml-3 nav-link-text font-weight-400">Make</span>
                                     </Link>
                                 </li>
@@ -54,8 +55,17 @@
                                         active:
                                             route().current() == 'model.index',
                                     }" class="nav-link active-preloader" :href="route('model.index')">
-                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" color="#594dff" />
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
                                     <span class="ml-3 nav-link-text font-weight-400">Model</span>
+                                    </Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link :class="{
+                                        active:
+                                            route().current() == 'category.index',
+                                    }" class="nav-link active-preloader" :href="route('category.index')">
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
+                                    <span class="ml-3 nav-link-text font-weight-400">Category</span>
                                     </Link>
                                 </li>
 
