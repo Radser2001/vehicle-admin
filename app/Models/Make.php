@@ -4,19 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vehicle extends Model
+class Make extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
-        "make",
-        "model",
-        "year",
-        "condition",
-        "category",
-        "mileage",
-        "fuel_type",
-        'price',
+        'name',
+        'code',
+        'status',
     ];
 }

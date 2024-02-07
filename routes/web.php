@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\MakeController;
+use App\Http\Controllers\ModelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleBankAccountController;
 use App\Http\Controllers\VehicleContactBookController;
@@ -40,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+// vehicles
 Route::prefix('/vehicles')->group(function () {
     Route::get('/', [VehicleController::class, "index"])->name('vehicles.index');
     Route::get('/all', [VehicleController::class, "all"])->name('vehicles.all');
@@ -69,5 +72,50 @@ Route::prefix('/vehicles')->group(function () {
     Route::delete('/{image_id}/image/delete', [VehicleImageController::class, "delete"])->name('vehicles.image.delete');
 });
 
+
+// Make Registry
+Route::prefix('make')->group(function () {
+    Route::get('/', [MakeController::class, "index"])->name('make.index');
+    Route::get('/all', [MakeController::class, "all"])->name('make.all');
+    Route::get('/count', [MakeController::class, "count"])->name('make.count');
+    Route::post('/store', [MakeController::class, "store"])->name('make.store');
+    Route::get('/{make_id}/get', [MakeController::class, "get"])->name('make.get');
+    Route::post('/{make_id}/update', [MakeController::class, "update"])->name('make.update');
+    Route::delete('/{make_id}/delete', [MakeController::class, "delete"])->name('make.delete');
+
+    Route::post('/select/make/delete', [MakeController::class, 'deleteSelectedItems'])->name('make.delete.selected');
+    Route::post('/select/make/inactive', [MakeController::class, 'inactiveSelectedItems'])->name('make.inactive.selected');
+    Route::post('/select/make/active', [MakeController::class, 'activeSelectedItems'])->name('make.active.selected');
+});
+
+// Model Registry
+Route::prefix('model')->group(function () {
+    Route::get('/', [ModelController::class, "index"])->name('model.index');
+    Route::get('/all', [ModelController::class, "all"])->name('model.all');
+    Route::get('/count', [ModelController::class, "count"])->name('model.count');
+    Route::post('/store', [ModelController::class, "store"])->name('model.store');
+    Route::get('/{model_id}/get', [ModelController::class, "get"])->name('model.get');
+    Route::post('/{model_id}/update', [ModelController::class, "update"])->name('model.update');
+    Route::delete('/{model_id}/delete', [ModelController::class, "delete"])->name('model.delete');
+
+    Route::post('/{model_id}/select/model/delete', [ModelController::class, 'deleteSelectedItems'])->name('model.delete.selected');
+    Route::post('/select/model/inactive', [ModelController::class, 'inactiveSelectedItems'])->name('model.inactive.selected');
+    Route::post('/select/model/active', [ModelController::class, 'activeSelectedItems'])->name('model.active.selected');
+});
+
+//Category Registry
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, "index"])->name('category.index');
+    Route::get('/all', [CategoryController::class, "all"])->name('category.all');
+    Route::get('/count', [CategoryController::class, "count"])->name('category.count');
+    Route::post('/store', [CategoryController::class, "store"])->name('category.store');
+    Route::get('/{category_id}/get', [CategoryController::class, "get"])->name('category.get');
+    Route::post('/{category_id}/update', [CategoryController::class, "update"])->name('category.update');
+    Route::delete('/{category_id}/delete', [CategoryController::class, "delete"])->name('category.delete');
+
+    Route::post('/select/category/delete', [CategoryController::class, 'deleteSelectedItems'])->name('category.delete.selected');
+    Route::post('/select/category/inactive', [CategoryController::class, 'inactiveSelectedItems'])->name('category.inactive.selected');
+    Route::post('/select/category/active', [CategoryController::class, 'activeSelectedItems'])->name('category.active.selected');
+});
 
 require __DIR__ . '/auth.php';
