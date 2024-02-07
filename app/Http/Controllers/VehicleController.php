@@ -65,9 +65,9 @@ class VehicleController extends ParentController
             $model = request('search_vehicle_model');
             $query->where('model', 'like', "%{$model}%");
         }
-        if (request('search_vehicle_color')) {
-            $color = request('search_vehicle_color');
-            $query->where('color', 'like', "%{$color}%");
+        if (request('search_vehicle_category')) {
+            $category = request('search_vehicle_category');
+            $query->where('category', 'like', "%{$category}%");
         }
 
         $payload = QueryBuilder::for($query)

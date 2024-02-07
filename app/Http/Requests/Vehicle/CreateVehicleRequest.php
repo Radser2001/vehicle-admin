@@ -28,7 +28,7 @@ class CreateVehicleRequest extends FormRequest
             'model' => ['nullable', 'string'],
             'year' => ['nullable', 'integer'],
             'condition' => ['nullable', 'integer'],
-            'color' => ['nullable', 'string'],
+            'category' => ['nullable', 'string'],
             'mileage' => ['nullable', 'integer'],
             'fuel_type' => ['nullable', 'string'],
             'price' => ['nullable', 'numeric', 'min:0'],

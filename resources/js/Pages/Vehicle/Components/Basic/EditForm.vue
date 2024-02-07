@@ -33,6 +33,20 @@
                     </div>
                 </div>
                 <div class="row mb-1">
+                    <div for="Category" class="col-md-2 col-form-label">CATEGORY</div>
+                    <div class="col-md-10">
+                        <!-- <input type="text" class="form-control form-control-sm" name="category" id="category"
+                            v-model="vehicle.category" /> -->
+                        <select v-model="vehicle.category" class="form-control form-control-sm" name="category"
+                            id="category">
+                            <option v-for="category in categories" :value="category.name">{{ category.name }}
+                            </option>
+                        </select>
+                        <small v-if="validationErrors.category" id="msg_name"
+                            class="text-danger form-text text-error-msg error">{{ validationErrors.category }}</small>
+                    </div>
+                </div>
+                <div class="row mb-1">
                     <div for="year" class="col-md-2 col-form-label">YEAR</div>
                     <div class="col-md-10">
                         <input type="year" class="form-control form-control-sm" name="year" id="year"
@@ -57,15 +71,7 @@
                             class="text-danger form-text text-error-msg error">{{ validationErrors.condition }}</small>
                     </div>
                 </div>
-                <div class="row mb-1">
-                    <div for="color" class="col-md-2 col-form-label">COLOR</div>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control form-control-sm" name="color" id="color"
-                            v-model="vehicle.color" />
-                        <small v-if="validationErrors.color" id="msg_name"
-                            class="text-danger form-text text-error-msg error">{{ validationErrors.color }}</small>
-                    </div>
-                </div>
+
                 <div class="row mb-1">
                     <div for="mileage" class="col-md-2 col-form-label">
                         MILEAGE

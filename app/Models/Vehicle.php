@@ -14,7 +14,7 @@ class Vehicle extends Model
         "model",
         "year",
         "condition",
-        "color",
+        "category",
         "mileage",
         "fuel_type",
         'price',

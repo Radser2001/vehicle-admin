@@ -66,10 +66,15 @@
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
-                                    Category
+                                    CATEGORY
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="contact" id="contact"
-                                    v-model="searchVehicle.color" placeholder="Color" @keyup="getSearch" />
+                                <!-- <input type="text" class="form-control form-control-sm" name="contact" id="contact"
+                                    v-model="searchVehicle.category" placeholder="Category" @keyup="getSearch" /> -->
+                                <select v-model="searchVehicle.category" @change="getSearch"
+                                    class="form-control form-control-sm" name="category" id="category">
+                                    <option v-for="category in categories" :value="category.name">{{ category.name }}
+                                    </option>
+                                </select>
                             </div>
                             <div class="col-md-2 mt-4 column__left___padding">
                                 <a href="javascript:void(0)" @click.prevent="clearFilters"
@@ -165,10 +170,10 @@
                                             <th :class="textClassHead">
                                                 Model
                                             </th>
-                                            <th :class="textClassHead">Year</th>
                                             <th :class="textClassHead">
-                                                Color
+                                                Category
                                             </th>
+                                            <th :class="textClassHead">Year</th>
                                             <th :class="textClassHead">
                                                 Mileage
                                             </th>
@@ -205,10 +210,10 @@
                                                 {{ vehicle.model }}
                                             </td>
                                             <td :class="textClassBody">
-                                                {{ vehicle.year }}
+                                                {{ vehicle.category }}
                                             </td>
                                             <td :class="textClassBody">
-                                                {{ vehicle.color }}
+                                                {{ vehicle.year }}
                                             </td>
                                             <td :class="textClassBody">
                                                 {{ vehicle.mileage }}
@@ -332,8 +337,8 @@
                                             <div class="col-md-9">
                                                 <!-- <input type="text" class="form-control form-control-sm" name="make"
                                                     id="make" v-model="vehicle.make" placeholder="make" required /> -->
-                                                <select v-model="vehicle.make" @change="getSearch"
-                                                    class="form-control form-control-sm" name="make" id="make">
+                                                <select v-model="vehicle.make" class=" form-control form-control-sm"
+                                                    name="make" id="make">
                                                     <option v-for="make in makes" :value="make.name">{{ make.name }}
                                                     </option>
                                                 </select>
@@ -350,8 +355,8 @@
                                             <div class="col-md-9">
                                                 <!-- <input type="text" class="form-control form-control-sm" name="model"
                                                     id="model" v-model="vehicle.model" placeholder="model" required /> -->
-                                                <select v-model="vehicle.model" @change="getSearch"
-                                                    class="form-control form-control-sm" name="model" id="model">
+                                                <select v-model="vehicle.model" class=" form-control form-control-sm"
+                                                    name="model" id="model">
                                                     <option v-for="model in models" :value="model.name">{{ model.name }}
                                                     </option>
                                                 </select>
@@ -359,6 +364,27 @@
                                                     " id="msg_model"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.model
+                                                    }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-1">
+                                            <div for="category" class="col-md-3 col-form-label">
+                                                CATEGORY
+                                            </div>
+                                            <div class="col-md-9">
+                                                <!-- <input type="text" class="form-control form-control-sm" name="category"
+                                                    id="category" v-model="vehicle.category" placeholder="category"
+                                                    required /> -->
+                                                <select v-model="vehicle.category" @change="getSearch"
+                                                    class="form-control form-control-sm" name="category" id="category">
+                                                    <option v-for="category in categories" :value="category.name">{{
+                                                        category.name }}
+                                                    </option>
+                                                </select>
+                                                <small v-if="validationErrors.category
+                                                    " id="msg_category"
+                                                    class="text-danger form-text text-error-msg error">{{
+                                                        validationErrors.category
                                                     }}</small>
                                             </div>
                                         </div>
@@ -394,20 +420,7 @@
                                                     }}</small>
                                             </div>
                                         </div>
-                                        <div class="row mb-1">
-                                            <div for="color" class="col-md-3 col-form-label">
-                                                COLOR
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="color"
-                                                    id="color" v-model="vehicle.color" placeholder="color" required />
-                                                <small v-if="validationErrors.color
-                                                    " id="msg_color"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.color
-                                                    }}</small>
-                                            </div>
-                                        </div>
+
                                         <div class="row mb-1">
                                             <div for="mileage" class="col-md-3 col-form-label">
                                                 MILEAGE
@@ -616,7 +629,7 @@ async function reload() {
                 "filter[search]": search.value,
                 search_vehicle_make: searchVehicle.value.make,
                 search_vehicle_model: searchVehicle.value.model,
-                search_vehicle_color: searchVehicle.value.color,
+                search_vehicle_category: searchVehicle.value.category,
             },
         })
     ).data;

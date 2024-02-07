@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->unsignedInteger('year')->nullable();
             $table->bigInteger('condition')->default(1);
-            $table->string('color')->nullable();
+            $table->string('category')->nullable();
             $table->unsignedInteger('mileage')->nullable();
             $table->string('fuel_type')->nullable();
-            $table->decimal('price', 10, 2)->nullable(); // Adjust precision and scale as needed
+            $table->decimal('price', 10, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -28,7 +28,7 @@ class UpdateVehicleRequest extends FormRequest
             'model' => ['string', 'max:255'],
             'year' => ['integer', 'digits:4'],
             'condition' => ['integer'],
-            'color' => ['string', 'max:255'],
+            'category' => ['string', 'max:255'],
             'mileage' => ['integer'],
             'fuel_type' => ['string', 'max:255'],
             'price' => ['numeric', 'between:0,9999999.99'],
