@@ -3,6 +3,7 @@
 namespace domain\Services\CarModelService;
 
 use App\Models\CarModel;
+use Illuminate\Support\Str;
 
 class CarModelService
 {
@@ -37,6 +38,7 @@ class CarModelService
      */
     public function store(array $data)
     {
+        $data['code'] = Str::slug($data['name']);
         return $this->model->create($data);
     }
 
@@ -63,6 +65,7 @@ class CarModelService
     public function update(array $data, int $model_id)
     {
         $model = $this->model->find($model_id);
+        $model['code'] = Str::slug($model['name']);
         return $model->update($this->edit($model, $data));
     }
 

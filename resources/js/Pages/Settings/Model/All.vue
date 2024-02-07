@@ -11,7 +11,7 @@
                         <div class="row align-items-center mb-1 mt-1">
                             <div class="col-lg-8">
                                 <h6 class="h2 text-dark d-inline-block mb-0">
-                                    vehicle
+                                    Vehicle Model
                                 </h6>
                                 <nav aria-label="breadcrumb" class="d-none d-md-block">
                                     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
@@ -21,14 +21,14 @@
                                             </Link>
                                         </li>
                                         <li class="breadcrumb-item active breadcrumb-text" aria-current="page">
-                                            Vehicle Management
+                                            Vehicle Model Management
                                         </li>
                                     </ol>
                                 </nav>
                             </div>
                             <!-- <div class="col-lg-4 text-right py-4" v-if="can('create_Vehicle')"> -->
                             <div class="col-lg-4 text-right py-4">
-                                <a href="javascript:void(0)" @click.prevent="newVehicle"
+                                <a href="javascript:void(0)" @click.prevent="newCarModel"
                                     class="btn btn-sm btn-neutral float-end">
                                     <font-awesome-icon icon="fa-solid fa-circle-plus" />
                                     ADD NEW
@@ -46,27 +46,14 @@
                     <div class="card shadow">
                         <div class="row my-3 mx-2">
                             <div class="col-md-2 column__right___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    MAKE
+                                Search:
+                                <div class="inline-block ml-2">
+                                    <input type="text" class="form-control form-control-sm" v-model="search"
+                                        @keyup="getSearch" />
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="code" id="make"
-                                    v-model="searchVehicle.make" placeholder="Make" @keyup="getSearch" />
                             </div>
-                            <div class="col-md-2 column__right___padding column__left___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    MODEL
-                                </div>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name"
-                                    v-model="searchVehicle.model" placeholder="Model" @keyup="getSearch" />
-                            </div>
-                            <div class="col-md-2 column__right___padding column__left___padding">
-                                <div for="purchase_uom" class="col-form-label">
-                                    COLOR
-                                </div>
-                                <input type="text" class="form-control form-control-sm" name="contact" id="contact"
-                                    v-model="searchVehicle.color" placeholder="Color" @keyup="getSearch" />
-                            </div>
-                            <div class="col-md-2 mt-4 column__left___padding">
+
+                            <div class="col-md-2 mt-3 column__left___padding">
                                 <a href="javascript:void(0)" @click.prevent="clearFilters"
                                     class="btn btn-sm btn-ash float-end mt-2 pt-2">
                                     CLEAR
@@ -106,7 +93,7 @@
                                         <div class="p-2 border icon_item">
                                             <a @click.prevent="
                                                 activeSelectedItems(
-                                                    checkVehicleItems.value
+                                                    checkModelItems.value
                                                 )
                                                 ">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-check"
@@ -117,18 +104,18 @@
                                         <div class="p-2 border icon_item">
                                             <a @click.prevent="
                                                 inactiveSelectedItems(
-                                                    checkVehicleItems.value
+                                                    checkModelItems.value
                                                 )
                                                 ">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-circle-minus"
                                                     color="#eb0505" />
                                             </a>
                                         </div>
-                                        <!-- <div class="p-2 border icon_item" v-if="checkVehicleItems.value.length > 0 && can('delete_Vehicle')"> -->
-                                        <div class="p-2 border icon_item" v-if="checkVehicleItems.length > 0">
+                                        <!-- <div class="p-2 border icon_item" v-if="checkModelItems.value.length > 0 && can('delete_Vehicle')"> -->
+                                        <div class="p-2 border icon_item" v-if="checkModelItems.length > 0">
                                             <a href="javascript:void(0)" @click.prevent="
                                                 deleteSelectedItems(
-                                                    checkVehicleItems.value
+                                                    checkModelItems.value
                                                 )
                                                 ">
                                                 <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-trash"
@@ -148,75 +135,52 @@
                                         <tr>
                                             <th class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="vehicles &&
-                                                        vehicles.length > 0
+                                                    <input class="form-check-input" type="checkbox" @click="selectAll" v-if="models &&
+                                                        models.length > 0
                                                         " :checked="checkAllItems" v-model="checkAllItems" />
                                                 </div>
                                             </th>
                                             <th :class="iconClassHead">
-                                                Condition
+                                                Status
                                             </th>
-                                            <th :class="iconClassHead">Make</th>
+                                            <th :class="iconClassHead">Model</th>
                                             <th :class="textClassHead">
-                                                Model
-                                            </th>
-                                            <th :class="textClassHead">Year</th>
-                                            <th :class="textClassHead">
-                                                Color
-                                            </th>
-                                            <th :class="textClassHead">
-                                                Mileage
-                                            </th>
-                                            <th :class="textClassHead">
-                                                Fuel Type
-                                            </th>
-                                            <th :class="textClassHead">
-                                                Price
+                                                Code
                                             </th>
 
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="vehicle in vehicles" :key="vehicle.id" :class="rowClass">
+                                        <tr v-for="model in models" :key="model.id" :class="rowClass">
                                             <td class="checkArea">
                                                 <div class="form-check mb-4">
-                                                    <input class="form-check-input" type="checkbox" v-model="checkVehicleItems
-                                                        " v-bind:value="vehicle" v-bind:id="vehicle.id" />
+                                                    <input class="form-check-input" type="checkbox" v-model="checkModelItems
+                                                        " v-bind:value="model" v-bind:id="model.id" />
                                                 </div>
                                             </td>
                                             <td :class="iconClassBody" class="pt-2">
-                                                <label v-if="vehicle.condition == 1
+                                                <label v-if="model.status == 1
                                                     " class="badge bg-success text-white fw-bold">Active</label>
-                                                <label v-if="vehicle.condition == 0
+                                                <label v-if="model.status == 0
                                                     " class="badge bg-warning text-white fw-bold">Inactive</label>
                                             </td>
                                             <td :class="textClassBody">
-                                                {{ vehicle.make }}
+                                                {{ model.name }}
                                             </td>
                                             <td :class="textClassBody">
-                                                {{ vehicle.model }}
+                                                {{ model.code }}
                                             </td>
-                                            <td :class="textClassBody">
-                                                {{ vehicle.year }}
-                                            </td>
-                                            <td :class="textClassBody">
-                                                {{ vehicle.color }}
-                                            </td>
-                                            <td :class="textClassBody">
-                                                {{ vehicle.mileage }}
-                                            </td>
-                                            <td :class="textClassBody">
-                                                {{ vehicle.fuel_type }}
-                                            </td>
-                                            <td :class="textClassBody">
-                                                {{ vehicle.price }}
-                                            </td>
-                                            <td :class="textClassBody">
+
+                                            <td :class="iconClassBody">
                                                 <a href="javascript:void(0)" @click.prevent="
-                                                    editVehicle(vehicle.id)
-                                                    ">
+                                                    editCarModel(model.id)
+                                                    " class="p-2 float-end">
                                                     <font-awesome-icon icon="fa-solid fa-pen" class="text-ash" />
+                                                </a>
+                                                <a href="javascript:void(0)" @click.prevent="deleteCarModel(model.id)"
+                                                    class="p-2 float-end">
+                                                    <font-awesome-icon icon="fa-solid fa-trash" class="text-ash" />
                                                 </a>
                                             </td>
                                         </tr>
@@ -299,13 +263,13 @@
         </template>
 
         <template #modals>
-            <div class="modal fade" id="newVehicleModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
-                aria-labelledby="newVehicleModal" aria-hidden="true">
+            <div class="modal fade" id="newCarModelModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="newCarModelModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-mb" role="document">
                     <div class="modal-content p-2">
                         <div class="modal-header">
                             <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
-                                New Vehicle
+                                New Vehicle Model
                             </h5>
                             <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">
@@ -316,56 +280,32 @@
                         <div class="modal-body p-0">
                             <div class="card-plain">
                                 <div class="card-body">
-                                    <form role="form text-left" @submit.prevent="createVehicle"
+                                    <form role="form text-left" @submit.prevent="createCarModel"
                                         enctype="multipart/form-data">
-                                        <div class="row mb-1">
-                                            <div for="make" class="col-md-3 col-form-label">
-                                                MAKE
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="make"
-                                                    id="make" v-model="vehicle.make" placeholder="make" required /><small
-                                                    v-if="validationErrors.make" id="msg_make"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.make
-                                                    }}</small>
-                                            </div>
-                                        </div>
+
                                         <div class="row mb-1">
                                             <div for="model" class="col-md-3 col-form-label">
-                                                MODEL
+                                                Model
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="model"
-                                                    id="model" v-model="vehicle.model" placeholder="model" required />
-                                                <small v-if="validationErrors.model
-                                                    " id="msg_model"
+                                                <input type="text" class="form-control form-control-sm" name="name"
+                                                    id="model" v-model="model.name" placeholder="model" required /><small
+                                                    v-if="validationErrors.name" id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.model
                                                     }}</small>
                                             </div>
                                         </div>
                                         <div class="row mb-1">
-                                            <div for="year" class="col-md-3 col-form-label">
-                                                YEAR
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="year"
-                                                    id="year" v-model="vehicle.year" placeholder="year" required />
-                                                <small v-if="validationErrors.year" id="msg_name"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.year
-                                                    }}</small>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-1">
                                             <div for="condition" class="col-md-3 col-form-label">
-                                                CONDITION
+                                                STATUS
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="condition"
-                                                    id="condition" v-model="vehicle.condition" placeholder="condition"
-                                                    required />
+                                                <select name="status" id="status" class="form-select" aria-label="status"
+                                                    required v-model="model.status">
+                                                    <option selected value="0">Inactive</option>
+                                                    <option value="1">Active</option>
+                                                </select>
                                                 <small v-if="validationErrors.condition
                                                     " id="msg_condition"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -373,64 +313,6 @@
                                                     }}</small>
                                             </div>
                                         </div>
-                                        <div class="row mb-1">
-                                            <div for="color" class="col-md-3 col-form-label">
-                                                COLOR
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="color"
-                                                    id="color" v-model="vehicle.color" placeholder="color" required />
-                                                <small v-if="validationErrors.color
-                                                    " id="msg_color"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.color
-                                                    }}</small>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-1">
-                                            <div for="mileage" class="col-md-3 col-form-label">
-                                                MILEAGE
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="mileage"
-                                                    id="mileage" v-model="vehicle.mileage" placeholder="mileage" required />
-                                                <small v-if="validationErrors.mileage
-                                                    " id="msg_name"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.mileage
-                                                    }}</small>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-1">
-                                            <div for="fuel_type" class="col-md-3 col-form-label">
-                                                FUEL TYPE
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="fuel_type" class="form-control form-control-sm"
-                                                    name="fuel_type" id="fuel_type" v-model="vehicle.fuel_type"
-                                                    placeholder="fuel type" required />
-                                                <small v-if="validationErrors.fuel_type
-                                                    " id="msg_name"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.fuel_type
-                                                    }}</small>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-1">
-                                            <div for="price" class="col-md-3 col-form-label">
-                                                PRICE
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="price" class="form-control form-control-sm" name="price"
-                                                    id="price" v-model="vehicle.price" placeholder="fuel type"
-                                                    required /><small v-if="validationErrors.price
-                                                        " id="msg_name"
-                                                    class="text-danger form-text text-error-msg error">{{
-                                                        validationErrors.price
-                                                    }}</small>
-                                            </div>
-                                        </div>
-
                                         <div class="text-right mt-2">
                                             <button type="submit" class="btn btn-round custom-button btn-sm mb-0">
                                                 <font-awesome-icon icon="fa-solid fa-floppy-disk" />
@@ -444,6 +326,71 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- vehicle model edit modal -->
+            <div class="modal fade" id="editCarModelModal" data-backdrop="static" tabindex="-1" role="dialog"
+                aria-labelledby="editCarModelModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-weight-bolder breadcrumb-text text-gradient" id="add_brandLabel">
+                                Edit Model
+                            </h5>
+                            <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <font-awesome-icon icon="fa-solid fa-xmark" />
+                                </span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="card-plain">
+                                <div class="card-body m-2">
+                                    <form role="form text-left" @submit.prevent="updateCarModel"
+                                        enctype="multipart/form-data">
+
+                                        <div class="row mb-1">
+                                            <div for="name" class="col-md-3 col-form-label">NAME</div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control form-control-sm" name="name"
+                                                    id="name" v-model="edit_model.name" placeholder="Name" required />
+                                                <small v-if="validationErrors.name" id="msg_name"
+                                                    class="text-danger form-text text-error-msg error">{{
+                                                        validationErrors.name }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-1">
+                                            <div for="condition" class="col-md-3 col-form-label">
+                                                STATUS
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select name="status" id="status" class="form-select" aria-label="status"
+                                                    required v-model="edit_model.status">
+                                                    <option value="0">Inactive</option>
+                                                    <option value="1">Active</option>
+                                                </select>
+                                                <small v-if="validationErrors.condition
+                                                    " id="msg_condition"
+                                                    class="text-danger form-text text-error-msg error">{{
+                                                        validationErrors.condition
+                                                    }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="text-right mt-2">
+                                            <button type=" submit" class="btn btn-round btn-outline--info btn-sm mb-0">
+                                                <font-awesome-icon icon="fa-solid fa-floppy-disk" />
+                                                UPDATE
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </template>
     </AppLayout>
 </template>
@@ -485,11 +432,12 @@ const page = ref(1);
 const perPage = ref([25, 50, 100]);
 const pageCount = ref(25);
 const pagination = ref({});
-const vehicle = ref({});
-const vehicles = ref([]);
-const checkVehicleItems = ref([]);
+const model = ref({});
+const models = ref([]);
+const checkModelItems = ref([]);
 const checkAllItems = ref(false);
-const searchVehicle = ref({});
+const searchModel = ref({});
+const edit_model = ref({});
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -559,7 +507,7 @@ const errorMessage = (message) => {
 };
 
 onMounted(() => {
-    getVehicles();
+    getModels();
 });
 
 function setPage(newPage) {
@@ -579,70 +527,115 @@ function perPageChange() {
 async function reload() {
     loading_bar.value.start();
     const tableData = (
-        await axios.get(route("vehicles.all"), {
+        await axios.get(route("model.all"), {
             params: {
                 page: page.value,
                 per_page: pageCount.value,
                 "filter[search]": search.value,
-                search_vehicle_make: searchVehicle.value.make,
-                search_vehicle_model: searchVehicle.value.model,
-                search_vehicle_color: searchVehicle.value.color,
+
             },
         })
     ).data;
 
-    vehicles.value = tableData.data;
+    models.value = tableData.data;
     pagination.value = tableData.meta;
 
     loading_bar.value.finish();
 }
 
-async function getVehicles() {
+async function getModels() {
     loading_bar.value.start();
-    const response = (await axios.get(route("vehicles.all"))).data;
-    vehicles.value = response.data;
+    const response = (await axios.get(route("model.all"))).data;
+    models.value = response.data;
     pagination.value = response.meta;
     loading_bar.value.finish();
 }
 
-async function createVehicle() {
+async function createCarModel() {
     resetValidationErrors();
     try {
-        const response = (
-            await axios.post(route("vehicles.store"), vehicle.value)
-        ).data;
-        window.location.href = route("vehicles.edit", response.id);
-        vehicle.value = {};
-        $("#newVehicleModal").modal("hide");
-        successMessage("Vehicle created successfully");
+
+        await axios.post(route("model.store"), model.value);
+        model.value = {};
+        $("#newCarModelModal").modal("hide");
+        reload();
+        successMessage("Vehicle Model created successfully");
+    } catch (error) {
+        convertValidationError(error);
+
+    }
+}
+
+
+async function editCarModel(modelId) {
+    resetValidationErrors();
+    try {
+        const response = (await axios.get(route("model.get", modelId))).data;
+        edit_model.value = response.data;
+        $("#editCarModelModal").modal("show");
     } catch (error) {
         convertValidationError(error);
     }
 }
 
-function editVehicle(vehicleId) {
-    window.location.href = route("vehicles.edit", vehicleId);
+async function updateCarModel() {
+    resetValidationErrors();
+    try {
+        await axios.post(
+            route("model.update", edit_model.value.id),
+            edit_model.value
+        );
+        reload();
+        $("#editCarModelModal").modal("hide");
+        edit_model.value = {};
+        successMessage("Vehicle Model updated successfully");
+    } catch (error) {
+        convertValidationNotification(error);
+    }
 }
 
-async function newVehicle() {
+async function deleteCarModel(modelId) {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#C00202",
+            cancelButtonColor: "#6CA925",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(route("model.delete", modelId)).then((response) => {
+                    reload();
+                });
+            }
+            successMessage("Vehicle MOdel deleted successfully");
+        });
+    } catch (error) {
+        convertValidationNotification(error);
+    }
+}
+
+async function newCarModel() {
     loading_bar.value.start();
-    vehicle.value = {};
-    $("#newVehicleModal").modal("show");
+    model.value = {};
+    $("#newCarModelModal").modal("show");
     loading_bar.value.finish();
 }
 
 function clearFilters() {
-    searchVehicle.value = {};
+    search.value = null;
     reload();
 }
 
 async function inactiveSelectedItems() {
     loading_bar.value.start();
-    const ids = checkVehicleItems.value.map((item) => item.id);
+    const ids = checkModelItems.value.map((item) => item.id);
     await axios
-        .post(route("vehicles.inactive.selected"), { ids })
+        .post(route("model.inactive.selected"), { ids })
         .then((response) => {
-            checkVehicleItems.value = [];
+            checkModelItems.value = [];
             reload();
         });
     loading_bar.value.finish();
@@ -650,11 +643,11 @@ async function inactiveSelectedItems() {
 
 async function activeSelectedItems() {
     loading_bar.value.start();
-    const ids = checkVehicleItems.value.map((item) => item.id);
+    const ids = checkModelItems.value.map((item) => item.id);
     await axios
-        .post(route("vehicles.active.selected"), { ids })
+        .post(route("model.active.selected"), { ids })
         .then((response) => {
-            checkVehicleItems.value = [];
+            checkModelItems.value = [];
             reload();
         });
     loading_bar.value.finish();
@@ -663,16 +656,16 @@ async function activeSelectedItems() {
 function selectAll(event) {
     loading_bar.value.start();
     if (event.target.checked === false) {
-        checkVehicleItems.value = [];
+        checkModelItems.value = [];
     } else {
-        checkVehicleItems.value = vehicles.value.map((vehicle) => vehicle.id);
+        checkModelItems.value = model.value.map((model) => model.id);
     }
     loading_bar.value.finish();
 }
 
 async function deleteSelectedItems() {
     try {
-        if (checkVehicleItems.value && checkVehicleItems.value.length > 0) {
+        if (checkModelItems.value && checkModelItems.value.length > 0) {
             const result = await Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -685,14 +678,14 @@ async function deleteSelectedItems() {
 
             if (result.isConfirmed) {
                 loading_bar.value.start();
-                const ids = checkVehicleItems.value.map((item) => item.id);
+                const ids = checkModelItems.value.map((item) => item.id);
                 await axios
-                    .post(route("vehicles.delete.selected"), { ids })
+                    .post(route("model.delete.selected"), { ids })
                     .then((response) => {
                         reload();
-                        checkVehicleItems.value = [];
+                        checkModelItems.value = [];
                     });
-                successMessage("Vehicle deleted successfully");
+                successMessage("Vehicle Model deleted successfully");
             }
         }
     } catch (error) {

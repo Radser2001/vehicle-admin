@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Make;
+namespace App\Http\Requests\CarModel;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateModelRequest extends FormRequest
+class CreateCarModelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CreateModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => ['required', 'string', 'unique:car_models,code'],
+            // 'code' => ['required', 'string', 'unique:car_models,code'],
             'name' => ['required', 'string', 'max:255'],
         ];
     }

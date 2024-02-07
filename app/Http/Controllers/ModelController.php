@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Filters\FuzzyFilter;
-use App\Http\Requests\Make\CreateModelRequest;
-use App\Http\Requests\Make\UpdateModelRequest;
+use App\Http\Requests\CarModel\CreateCarModelRequest;
+use App\Http\Requests\CarModel\UpdateCarModelRequest;
 use App\Http\Resources\DataResource;
 use App\Models\CarModel;
 use domain\Facades\CarModelFacade\CarModelFacade;
@@ -22,7 +22,7 @@ class ModelController extends ParentController
      */
     public function index()
     {
-        return Inertia::render('Settings/Make/All');
+        return Inertia::render('Settings/Model/All');
     }
 
     /**
@@ -43,10 +43,10 @@ class ModelController extends ParentController
     /**
      * store
      *
-     * @param  CreateModelRequest $request
+     * @param  CreateCarModelRequest $request
      * @return void
      */
-    public function store(CreateModelRequest $request)
+    public function store(CreateCarModelRequest $request)
     {
         return CarModelFacade::store($request->all());
     }
@@ -65,11 +65,11 @@ class ModelController extends ParentController
     /**
      * update
      *
-     * @param  UpdateModelRequest $request
+     * @param  UpdateCarModelRequest $request
      * @param  int $modelId
      * @return void
      */
-    public function update(UpdateModelRequest $request, int $modelId)
+    public function update(UpdateCarModelRequest $request, int $modelId)
     {
         return CarModelFacade::update($request->all(), $modelId);
     }

@@ -38,7 +38,7 @@ class MakeService
      */
     public function store(array $data)
     {
-        //slug of name
+
         $data['code'] = Str::slug($data['name']);
         return $this->make->create($data);
     }
@@ -66,6 +66,7 @@ class MakeService
     public function update(array $data, int $make_id)
     {
         $make = $this->make->find($make_id);
+        $make['code'] = Str::slug($make['name']);
         return $make->update($this->edit($make, $data));
     }
 
