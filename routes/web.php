@@ -77,6 +77,7 @@ Route::prefix('/vehicles')->group(function () {
 Route::prefix('make')->group(function () {
     Route::get('/', [MakeController::class, "index"])->name('make.index');
     Route::get('/all', [MakeController::class, "all"])->name('make.all');
+    Route::get('/count', [MakeController::class, "count"])->name('make.count');
     Route::post('/store', [MakeController::class, "store"])->name('make.store');
     Route::get('/{make_id}/get', [MakeController::class, "get"])->name('make.get');
     Route::post('/{make_id}/update', [MakeController::class, "update"])->name('make.update');
@@ -91,6 +92,7 @@ Route::prefix('make')->group(function () {
 Route::prefix('model')->group(function () {
     Route::get('/', [ModelController::class, "index"])->name('model.index');
     Route::get('/all', [ModelController::class, "all"])->name('model.all');
+    Route::get('/count', [ModelController::class, "count"])->name('model.count');
     Route::post('/store', [ModelController::class, "store"])->name('model.store');
     Route::get('/{model_id}/get', [ModelController::class, "get"])->name('model.get');
     Route::post('/{model_id}/update', [ModelController::class, "update"])->name('model.update');
@@ -105,6 +107,7 @@ Route::prefix('model')->group(function () {
 Route::prefix('category')->group(function () {
     Route::get('/', [CategoryController::class, "index"])->name('category.index');
     Route::get('/all', [CategoryController::class, "all"])->name('category.all');
+    Route::get('/count', [CategoryController::class, "count"])->name('category.count');
     Route::post('/store', [CategoryController::class, "store"])->name('category.store');
     Route::get('/{category_id}/get', [CategoryController::class, "get"])->name('category.get');
     Route::post('/{category_id}/update', [CategoryController::class, "update"])->name('category.update');
