@@ -49,19 +49,24 @@
                                 <div for="purchase_uom" class="col-form-label">
                                     MAKE
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="code" id="make"
-                                    v-model="searchVehicle.make" placeholder="Make" @keyup="getSearch" />
+                                <select v-model="searchVehicle.make" @change="getSearch"
+                                    class="form-control form-control-sm" name="make" id="make">
+                                    <option v-for="make in makes" :value="make.name">{{ make.name }}</option>
+                                </select>
+
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     MODEL
                                 </div>
-                                <input type="text" class="form-control form-control-sm" name="name" id="name"
-                                    v-model="searchVehicle.model" placeholder="Model" @keyup="getSearch" />
+                                <select v-model="searchVehicle.model" @change="getSearch"
+                                    class="form-control form-control-sm" name="model" id="model">
+                                    <option v-for="model in models" :value="model.name">{{ model.name }}</option>
+                                </select>
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
-                                    COLOR
+                                    Category
                                 </div>
                                 <input type="text" class="form-control form-control-sm" name="contact" id="contact"
                                     v-model="searchVehicle.color" placeholder="Color" @keyup="getSearch" />
@@ -325,9 +330,14 @@
                                                 MAKE
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="make"
-                                                    id="make" v-model="vehicle.make" placeholder="make" required /><small
-                                                    v-if="validationErrors.make" id="msg_make"
+                                                <!-- <input type="text" class="form-control form-control-sm" name="make"
+                                                    id="make" v-model="vehicle.make" placeholder="make" required /> -->
+                                                <select v-model="vehicle.make" @change="getSearch"
+                                                    class="form-control form-control-sm" name="make" id="make">
+                                                    <option v-for="make in makes" :value="make.name">{{ make.name }}
+                                                    </option>
+                                                </select>
+                                                <small v-if="validationErrors.make" id="msg_make"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.make
                                                     }}</small>
@@ -338,8 +348,13 @@
                                                 MODEL
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control form-control-sm" name="model"
-                                                    id="model" v-model="vehicle.model" placeholder="model" required />
+                                                <!-- <input type="text" class="form-control form-control-sm" name="model"
+                                                    id="model" v-model="vehicle.model" placeholder="model" required /> -->
+                                                <select v-model="vehicle.model" @change="getSearch"
+                                                    class="form-control form-control-sm" name="model" id="model">
+                                                    <option v-for="model in models" :value="model.name">{{ model.name }}
+                                                    </option>
+                                                </select>
                                                 <small v-if="validationErrors.model
                                                     " id="msg_model"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -479,8 +494,7 @@ import {
     faXmark,
     faPen,
 } from "@fortawesome/free-solid-svg-icons";
-import { watch } from "vue";
-
+import VueMultiselect from 'vue-multiselect'
 const textClassHead = ref("text-start text-uppercase");
 const textClassBody = ref("text-start");
 const iconClassHead = ref("text-center");
@@ -497,6 +511,10 @@ const vehicles = ref([]);
 const checkVehicleItems = ref([]);
 const checkAllItems = ref(false);
 const searchVehicle = ref({});
+
+const makes = ref([]);
+const models = ref([]);
+const categories = ref([]);
 
 const validationMessage = ref(null);
 const validationErrors = ref({});
@@ -568,6 +586,9 @@ const errorMessage = (message) => {
 
 onMounted(() => {
     getVehicles();
+    getMakes();
+    getModels();
+    getCategories();
 });
 
 function setPage(newPage) {
@@ -576,6 +597,7 @@ function setPage(newPage) {
 }
 
 function getSearch() {
+    console.log(searchVehicle.value.make);
     page.value = 1;
     reload();
 }
@@ -609,6 +631,28 @@ async function getVehicles() {
     loading_bar.value.start();
     const response = (await axios.get(route("vehicles.all"))).data;
     vehicles.value = response.data;
+    pagination.value = response.meta;
+    loading_bar.value.finish();
+}
+
+async function getMakes() {
+    loading_bar.value.start();
+    const response = (await axios.get(route("make.all"))).data;
+    makes.value = response.data;
+    pagination.value = response.meta;
+    loading_bar.value.finish();
+}
+async function getModels() {
+    loading_bar.value.start();
+    const response = (await axios.get(route("model.all"))).data;
+    models.value = response.data;
+    pagination.value = response.meta;
+    loading_bar.value.finish();
+}
+async function getCategories() {
+    loading_bar.value.start();
+    const response = (await axios.get(route("category.all"))).data;
+    categories.value = response.data;
     pagination.value = response.meta;
     loading_bar.value.finish();
 }

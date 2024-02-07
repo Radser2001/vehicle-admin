@@ -4,7 +4,7 @@
 @import url("../src/js/plugins/nucleo/css/nucleo.css");
 @import url("https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css");
-/* @import url('vue-select/dist/vue-select.css'); */
+@import url('../../node_modules/vue-multiselect/dist/vue-multiselect.css');
 /* @import url('https://rsms.me/inter/inter.css'); */
 /* Language: scss */
 @import url("./style.scss");
