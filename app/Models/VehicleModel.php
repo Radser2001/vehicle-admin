@@ -11,6 +11,9 @@ class VehicleModel extends Model
     use HasFactory;
     use SoftDeletes;
 
+    // change the table name
+    protected $table = 'models';
+
     protected $fillable = [
         'name',
         'code',
