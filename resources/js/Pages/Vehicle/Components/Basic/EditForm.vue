@@ -10,10 +10,14 @@
                     <div class="col-md-10">
                         <!-- <input type="text" class="form-control form-control-sm" name="make" id="make"
                             v-model="vehicle.make" /> -->
-                        <select v-model="vehicle.make" class="form-control form-control-sm" name="make" id="make">
+                        <!-- <select v-model="vehicle.make" class="form-control form-control-sm" name="make" id="make">
                             <option v-for="make in makes" :value="make.name">{{ make.name }}
                             </option>
-                        </select>
+                        </select> -->
+
+                        <Multiselect v-model="select_make" :options="makes" :showLabels="false" :close-on-select="true"
+                            :clear-on-select="false" :searchable="true" placeholder="Select Make" label="name"
+                            track-by="id" />
                         <small v-if="validationErrors.make" id="msg_make"
                             class="text-danger form-text text-error-msg error">{{ validationErrors.code }}</small>
                     </div>
@@ -22,10 +26,13 @@
                     <div for="model" class="col-md-2 col-form-label">MODEL</div>
                     <div class="col-md-10">
 
-                        <select v-model="vehicle.model" class="form-control form-control-sm" name="model" id="model">
+                        <!-- <select v-model="vehicle.model" class="form-control form-control-sm" name="model" id="model">
                             <option v-for="model in models" :value="model.name">{{ model.name }}
                             </option>
-                        </select>
+                        </select> -->
+                        <Multiselect v-model="select_model" :options="models" :showLabels="false" :close-on-select="true"
+                            :clear-on-select="false" :searchable="true" placeholder="Select Model" label="name"
+                            track-by="id" />
                         <!-- <input type="text" class="form-control form-control-sm" name="model" id="model"
                             v-model="vehicle.model" /> -->
                         <small v-if="validationErrors.model" id="msg_model"
@@ -37,11 +44,14 @@
                     <div class="col-md-10">
                         <!-- <input type="text" class="form-control form-control-sm" name="category" id="category"
                             v-model="vehicle.category" /> -->
-                        <select v-model="vehicle.category" class="form-control form-control-sm" name="category"
+                        <Multiselect v-model="select_category" :options="categories" :showLabels="false"
+                            :close-on-select="true" :clear-on-select="false" :searchable="true"
+                            placeholder="Select Category" label="name" track-by="id" />
+                        <!-- <select v-model="vehicle.category" class="form-control form-control-sm" name="category"
                             id="category">
                             <option v-for="category in categories" :value="category.name">{{ category.name }}
                             </option>
-                        </select>
+                        </select> -->
                         <small v-if="validationErrors.category" id="msg_name"
                             class="text-danger form-text text-error-msg error">{{ validationErrors.category }}</small>
                     </div>
@@ -152,15 +162,19 @@ const categories = ref([]);
 const validationMessage = ref(null);
 const validationErrors = ref({});
 
+const select_category = ref(null);
+const select_make = ref(null);
+const select_model = ref(null);
+
 library.add(faHouse);
 library.add(faFloppyDisk);
 library.add(faTrash);
 
 onMounted(() => {
-    getVehicle();
     getMakes();
     getModels();
     getCategories();
+    getVehicle();
 });
 
 function resetValidationErrors() {
@@ -214,6 +228,15 @@ const errorMessage = (message) => {
 async function getVehicle() {
     const response = (await axios.get(route("vehicles.get", vehicle_id))).data;
     vehicle.value = response.data;
+    select_category.value = categories.value.find(
+        (category) => category.name === vehicle.value.category
+    );
+    select_make.value = makes.value.find(
+        (make) => make.name === vehicle.value.make
+    );
+    select_model.value = models.value.find(
+        (model) => model.name === vehicle.value.model
+    );
 }
 
 async function getMakes() {
@@ -240,6 +263,15 @@ async function getCategories() {
 
 async function updateVehicleData() {
     resetValidationErrors();
+    if (select_category.value) {
+        vehicle.value.category = select_category.value.name;
+    }
+    if (select_make.value) {
+        vehicle.value.make = select_make.value.name;
+    }
+    if (select_model.value) {
+        vehicle.value.model = select_model.value.name;
+    }
     try {
         await axios.post(route("vehicles.update", vehicle_id), vehicle.value);
 
