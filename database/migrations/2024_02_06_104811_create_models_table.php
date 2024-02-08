@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->bigInteger('status')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
