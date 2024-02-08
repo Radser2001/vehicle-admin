@@ -143,7 +143,7 @@
                                             <th :class="iconClassHead">
                                                 Status
                                             </th>
-                                            <th :class="iconClassHead">Make</th>
+                                            <th :class="textClassHead">Make</th>
                                             <th :class="textClassHead">
                                                 Code
                                             </th>
