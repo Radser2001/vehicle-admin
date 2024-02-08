@@ -71,7 +71,7 @@
                                         <div class="col-4 text-end">
                                             <div
                                                 class="text-center icon icon-shape bg-gradient-green shadow-danger rounded-circle">
-                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                                <font-awesome-icon icon="fa-solid fa-boxes-stacked" color="#ffffff" />
                                             </div>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                         <div class="col-4 text-end">
                                             <div
                                                 class="text-center icon icon-shape bg-gradient-primary shadow-danger rounded-circle">
-                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                                <font-awesome-icon icon="fa-solid fa-warehouse" color="#ffffff" />
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                         <div class="col-4 text-end">
                                             <div
                                                 class="text-center icon icon-shape bg-gradient-indigo shadow-danger rounded-circle">
-                                                <font-awesome-icon icon="fa-solid fa-truck" color="#ffffff" />
+                                                <font-awesome-icon icon="fa-solid fa-chart-simple" color="#ffffff" />
                                             </div>
                                         </div>
                                     </div>
@@ -135,13 +135,15 @@
 
 <script setup>
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHouse, faTruck } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faTruck, faWarehouse, faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import { Head, Link } from "@inertiajs/vue3";
 import { ref, onBeforeMount } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 library.add(faHouse);
 library.add(faTruck);
+library.add(faWarehouse);
+library.add(faChartSimple);
 
 const total_vehicles = ref(null);
 const total_models = ref(null);

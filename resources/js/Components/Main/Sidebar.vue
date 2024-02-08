@@ -35,7 +35,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" href="#settingsMenu" data-toggle="collapse" aria-expanded="true">
-                                <font-awesome-icon icon="fa-solid fa-gear " /><span class="ml-2">Settings</span>
+                                <font-awesome-icon icon="fa-solid fa-gears" /><span class="ml-2">Settings</span>
                             </a>
                             <ul class="list-unstyled" id="settingsMenu">
                                 <li class="nav-item">
@@ -43,7 +43,7 @@
                                         active:
                                             route().current() == 'make.index',
                                     }" class="nav-link active-preloader ml-4" :href="route('make.index')">
-                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-gear" />
                                     <span class="ml-2 hide-menu">Make</span>
                                     </Link>
                                 </li>
@@ -52,7 +52,7 @@
                                         active:
                                             route().current() == 'model.index',
                                     }" class="nav-link active-preloader ml-4" :href="route('model.index')">
-                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-gear" />
                                     <span class="ml-2 hide-menu">Model</span>
                                     </Link>
                                 </li>
@@ -61,7 +61,7 @@
                                         active:
                                             route().current() == 'category.index',
                                     }" class="nav-link active-preloader ml-4" :href="route('category.index')">
-                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-car" />
+                                    <font-awesome-icon class="icon_item-icon" icon="fa-solid fa-gear" />
                                     <span class="ml-2 hide-menu">Category</span>
                                     </Link>
                                 </li>
@@ -81,12 +81,14 @@
 import { Link } from "@inertiajs/vue3";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faGear, faDesktop, faTruck, faCar } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faDesktop, faTruck, faCar, faGears, faBoxesStacked } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faTruck);
 library.add(faDesktop);
 library.add(faCar);
 library.add(faGear);
+library.add(faGears);
+library.add(faBoxesStacked);
 
 
 const currentUrl = window.location.pathname;

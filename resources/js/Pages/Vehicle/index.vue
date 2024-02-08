@@ -49,32 +49,42 @@
                                 <div for="purchase_uom" class="col-form-label">
                                     MAKE
                                 </div>
-                                <select v-model="searchVehicle.make" @change="getSearch"
+                                <!-- <select v-model="searchVehicle.make" @change="getSearch"
                                     class="form-control form-control-sm" name="make" id="make">
                                     <option v-for="make in makes" :value="make.name">{{ make.name }}</option>
-                                </select>
+                                </select> -->
+                                <Multiselect v-model="select_search_make" :options="makes" :showLabels="false"
+                                    :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Make" label="name" track-by="id" />
 
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     MODEL
                                 </div>
-                                <select v-model="searchVehicle.model" @change="getSearch"
+                                <!-- <select v-model="searchVehicle.model" @change="getSearch"
                                     class="form-control form-control-sm" name="model" id="model">
                                     <option v-for="model in models" :value="model.name">{{ model.name }}</option>
-                                </select>
+                                </select> -->
+                                <Multiselect v-model="select_search_model" :options="models" :showLabels="false"
+                                    :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Model" label="name" track-by="id" />
+
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     CATEGORY
                                 </div>
-                                <!-- <input type="text" class="form-control form-control-sm" name="contact" id="contact"
-                                    v-model="searchVehicle.category" placeholder="Category" @keyup="getSearch" /> -->
-                                <select v-model="searchVehicle.category" @change="getSearch"
+
+                                <Multiselect v-model="select_search_category" :options="categories" :showLabels="false"
+                                    :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Category" label="name" track-by="id" />
+
+                                <!-- <select v-model="searchVehicle.category" @change="getSearch"
                                     class="form-control form-control-sm" name="category" id="category">
                                     <option v-for="category in categories" :value="category.name">{{ category.name }}
                                     </option>
-                                </select>
+                                </select> -->
                             </div>
                             <div class="col-md-2 mt-4 column__left___padding">
                                 <a href="javascript:void(0)" @click.prevent="clearFilters"
@@ -337,11 +347,14 @@
                                             <div class="col-md-9">
                                                 <!-- <input type="text" class="form-control form-control-sm" name="make"
                                                     id="make" v-model="vehicle.make" placeholder="make" required /> -->
-                                                <select v-model="vehicle.make" class=" form-control form-control-sm"
+                                                <Multiselect v-model="select_make" :options="makes" :showLabels="false"
+                                                    :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                                    placeholder="Select Make" label="name" track-by="id" />
+                                                <!-- <select v-model="vehicle.make" class=" form-control form-control-sm"
                                                     name="make" id="make">
                                                     <option v-for="make in makes" :value="make.name">{{ make.name }}
                                                     </option>
-                                                </select>
+                                                </select> -->
                                                 <small v-if="validationErrors.make" id="msg_make"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.make
@@ -355,11 +368,14 @@
                                             <div class="col-md-9">
                                                 <!-- <input type="text" class="form-control form-control-sm" name="model"
                                                     id="model" v-model="vehicle.model" placeholder="model" required /> -->
-                                                <select v-model="vehicle.model" class=" form-control form-control-sm"
+                                                <Multiselect v-model="select_model" :options="models" :showLabels="false"
+                                                    :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                                    placeholder="Select Model" label="name" track-by="id" />
+                                                <!-- <select v-model="vehicle.model" class=" form-control form-control-sm"
                                                     name="model" id="model">
                                                     <option v-for="model in models" :value="model.name">{{ model.name }}
                                                     </option>
-                                                </select>
+                                                </select> -->
                                                 <small v-if="validationErrors.model
                                                     " id="msg_model"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -375,12 +391,16 @@
                                                 <!-- <input type="text" class="form-control form-control-sm" name="category"
                                                     id="category" v-model="vehicle.category" placeholder="category"
                                                     required /> -->
-                                                <select v-model="vehicle.category" @change="getSearch"
+                                                <!-- <select v-model="vehicle.category" @change="getSearch"
                                                     class="form-control form-control-sm" name="category" id="category">
                                                     <option v-for="category in categories" :value="category.name">{{
                                                         category.name }}
                                                     </option>
-                                                </select>
+                                                </select> -->
+                                                <Multiselect v-model="select_category" :options="categories"
+                                                    :showLabels="false" :close-on-select="true" :clear-on-select="false"
+                                                    :searchable="true" placeholder="Select Category" label="name"
+                                                    track-by="id" />
                                                 <small v-if="validationErrors.category
                                                     " id="msg_category"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -394,21 +414,21 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control form-control-sm" name="year"
-                                                    id="year" v-model="vehicle.year" required />
+                                                    id="year" v-model="vehicle.year" placeholder="Year" required />
                                                 <small v-if="validationErrors.year" id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.year
                                                     }}</small>
                                             </div>
                                         </div>
+
                                         <div class="row mb-1">
                                             <div for="condition" class="col-md-3 col-form-label">
                                                 CONDITION
                                             </div>
                                             <div class="col-md-9">
                                                 <select class="form-control form-control-sm" v-model="vehicle.condition"
-                                                    name="condition" id="condition" required>
-
+                                                    name="condition" id="condition" placeholder="Condition" required>
                                                     <option selected value="1">New</option>
                                                     <option value="0">Used</option>
                                                 </select>
@@ -420,14 +440,13 @@
                                                     }}</small>
                                             </div>
                                         </div>
-
                                         <div class="row mb-1">
                                             <div for="mileage" class="col-md-3 col-form-label">
                                                 MILEAGE
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control form-control-sm" name="mileage"
-                                                    id="mileage" v-model="vehicle.mileage" required />
+                                                    id="mileage" v-model="vehicle.mileage" placeholder="Mileage" required />
                                                 <small v-if="validationErrors.mileage
                                                     " id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
@@ -443,7 +462,7 @@
                                                 <select class="form-control form-control-sm" v-model="vehicle.fuel_type"
                                                     name="fuel_type" id="fuel_type" required>
 
-                                                    <option value="Petrol (Gasoline)">Petrol (Gasoline)</option>
+                                                    <option selected value="Petrol (Gasoline)">Petrol (Gasoline)</option>
                                                     <option value="Diesel">Diesel</option>
                                                     <option value="Hybrid">Hybrid</option>
                                                     <option value="Natural Gas">Natural Gas</option>
@@ -461,8 +480,8 @@
                                                 PRICE
                                             </div>
                                             <div class="col-md-9">
-                                                <input type="price" class="form-control form-control-sm" name="price"
-                                                    id="price" v-model="vehicle.price" required /><small v-if="validationErrors.price
+                                                <input type="price" placeholder="Price" class="form-control form-control-sm"
+                                                    name="price" id="price" v-model="vehicle.price" required /><small v-if="validationErrors.price
                                                         " id="msg_name"
                                                     class="text-danger form-text text-error-msg error">{{
                                                         validationErrors.price
@@ -488,7 +507,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -530,6 +549,14 @@ const checkVehicleItems = ref([]);
 const checkAllItems = ref(false);
 const searchVehicle = ref({});
 
+const select_search_category = ref(null);
+const select_search_model = ref(null);
+const select_search_make = ref(null);
+
+const select_category = ref(null);
+const select_make = ref(null);
+const select_model = ref(null);
+
 const makes = ref([]);
 const models = ref([]);
 const categories = ref([]);
@@ -552,6 +579,32 @@ library.add(faCircleMinus);
 library.add(faTrash);
 library.add(faXmark);
 library.add(faPen);
+
+
+watch(select_search_category, (select_search_category) => {
+    select_search_category
+        ? (searchVehicle.value.category = select_search_category.name)
+        : (searchVehicle.value.category = null);
+
+    getSearch();
+})
+
+watch(select_search_model, (select_search_model) => {
+    select_search_model
+        ? (searchVehicle.value.model = select_search_model.name)
+        : (searchVehicle.value.model = null);
+
+    getSearch();
+})
+
+watch(select_search_make, (select_search_make) => {
+    select_search_make
+        ? (searchVehicle.value.make = select_search_make.name)
+        : (searchVehicle.value.make = null);
+
+    getSearch();
+})
+
 
 function resetValidationErrors() {
     validationErrors.value = {};
@@ -615,7 +668,6 @@ function setPage(newPage) {
 }
 
 function getSearch() {
-    console.log(searchVehicle.value.make);
     page.value = 1;
     reload();
 }
@@ -623,6 +675,8 @@ function getSearch() {
 function perPageChange() {
     reload();
 }
+
+
 
 async function reload() {
     loading_bar.value.start();
@@ -678,6 +732,15 @@ async function getCategories() {
 async function createVehicle() {
     resetValidationErrors();
     try {
+        if (select_category.value) {
+            vehicle.value.category = select_category.value.name;
+        }
+        if (select_make.value) {
+            vehicle.value.make = select_make.value.name;
+        }
+        if (select_model.value) {
+            vehicle.value.model = select_model.value.name;
+        }
         const response = (
             await axios.post(route("vehicles.store"), vehicle.value)
         ).data;
@@ -702,6 +765,9 @@ async function newVehicle() {
 }
 
 function clearFilters() {
+    select_search_category.value = null
+    select_search_model.value = null
+    select_search_make.value = null
     searchVehicle.value = {};
     reload();
 }
