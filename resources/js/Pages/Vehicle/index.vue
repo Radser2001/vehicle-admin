@@ -49,32 +49,42 @@
                                 <div for="purchase_uom" class="col-form-label">
                                     MAKE
                                 </div>
-                                <select v-model="searchVehicle.make" @change="getSearch"
+                                <!-- <select v-model="searchVehicle.make" @change="getSearch"
                                     class="form-control form-control-sm" name="make" id="make">
                                     <option v-for="make in makes" :value="make.name">{{ make.name }}</option>
-                                </select>
+                                </select> -->
+                                <Multiselect v-model="select_search_make" :options="makes" class="z__index"
+                                    :showLabels="false" :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Make" label="name" track-by="id" />
 
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     MODEL
                                 </div>
-                                <select v-model="searchVehicle.model" @change="getSearch"
+                                <!-- <select v-model="searchVehicle.model" @change="getSearch"
                                     class="form-control form-control-sm" name="model" id="model">
                                     <option v-for="model in models" :value="model.name">{{ model.name }}</option>
-                                </select>
+                                </select> -->
+                                <Multiselect v-model="select_search_model" :options="models" class="z__index"
+                                    :showLabels="false" :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Model" label="name" track-by="id" />
+
                             </div>
                             <div class="col-md-2 column__right___padding column__left___padding">
                                 <div for="purchase_uom" class="col-form-label">
                                     CATEGORY
                                 </div>
-                                <!-- <input type="text" class="form-control form-control-sm" name="contact" id="contact"
-                                    v-model="searchVehicle.category" placeholder="Category" @keyup="getSearch" /> -->
-                                <select v-model="searchVehicle.category" @change="getSearch"
+
+                                <Multiselect v-model="select_search_category" :options="categories" class="z__index"
+                                    :showLabels="false" :close-on-select="true" :clear-on-select="false" :searchable="true"
+                                    placeholder="Select Category" label="name" track-by="id" />
+
+                                <!-- <select v-model="searchVehicle.category" @change="getSearch"
                                     class="form-control form-control-sm" name="category" id="category">
                                     <option v-for="category in categories" :value="category.name">{{ category.name }}
                                     </option>
-                                </select>
+                                </select> -->
                             </div>
                             <div class="col-md-2 mt-4 column__left___padding">
                                 <a href="javascript:void(0)" @click.prevent="clearFilters"
@@ -488,7 +498,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -530,6 +540,10 @@ const checkVehicleItems = ref([]);
 const checkAllItems = ref(false);
 const searchVehicle = ref({});
 
+const select_search_category = ref(null);
+const select_search_model = ref(null);
+const select_search_make = ref(null);
+
 const makes = ref([]);
 const models = ref([]);
 const categories = ref([]);
@@ -552,6 +566,32 @@ library.add(faCircleMinus);
 library.add(faTrash);
 library.add(faXmark);
 library.add(faPen);
+
+
+watch(select_search_category, (select_search_category) => {
+    select_search_category
+        ? (searchVehicle.value.category = select_search_category.name)
+        : (searchVehicle.value.category = null);
+
+    getSearch();
+})
+
+watch(select_search_model, (select_search_model) => {
+    select_search_model
+        ? (searchVehicle.value.model = select_search_model.name)
+        : (searchVehicle.value.model = null);
+
+    getSearch();
+})
+
+watch(select_search_make, (select_search_make) => {
+    select_search_make
+        ? (searchVehicle.value.make = select_search_make.name)
+        : (searchVehicle.value.make = null);
+
+    getSearch();
+})
+
 
 function resetValidationErrors() {
     validationErrors.value = {};
@@ -615,7 +655,6 @@ function setPage(newPage) {
 }
 
 function getSearch() {
-    console.log(searchVehicle.value.make);
     page.value = 1;
     reload();
 }
@@ -623,6 +662,8 @@ function getSearch() {
 function perPageChange() {
     reload();
 }
+
+
 
 async function reload() {
     loading_bar.value.start();
@@ -702,6 +743,9 @@ async function newVehicle() {
 }
 
 function clearFilters() {
+    select_search_category.value = null
+    select_search_model.value = null
+    select_search_make.value = null
     searchVehicle.value = {};
     reload();
 }

@@ -27,7 +27,7 @@
         "laravel-permission-to-vuejs": "^3.0.2",
         "lodash": "^4.17.21",
         "sweetalert2": "^11.10.4",
-        "vue-multiselect": "^3.0.0-beta.3",
+         "vue-multiselect": "^3.0.0-alpha.2",
         "vue3-apexcharts": "^1.4.4"
     }
 }
